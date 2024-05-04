@@ -6,10 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Carbon Footrint Tracker</title>
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 </head>
 
 {{-- styles --}}
@@ -22,6 +18,9 @@
     .links {
         text-decoration: none;
         color: black;
+        padding: 10px;
+        font-size: 17px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif
     }
 
     .background {
@@ -30,24 +29,44 @@
         width: 100vw;
     }
 
-    .nav {
+    .main-content-section {
         display: flex;
-        height: 100dvh;
-        width: 100vw;
+        flex-direction: column;
         justify-content: center;
-        align-items: center;
         position: relative;
+        height: 100dvh;
+    }
+
+    .nav-section {
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .about-section {
+        display: flex;
+        position: relative;
+        bottom: 10%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        align-self: center;
+        margin: 2px;
+        height: 100%;
+        width: 300px;
+    }
+
+    .about-section * {
+        font-family: Verdana, Geneva, Tahoma, sans-serif
     }
 
 </style>
 
 <body>
-    <img class="background" src="http://carbon-footprint-tracking-app.test/storage/images/welcome_bg.jpg" alt="">
-    <div class="nav">
-        <div >
-        </div>
+    <img class="background" src="http://carbon-footprint-tracking-app.test/storage/images/welcome_1.jpg" alt="">
+    <div class="main-content-section">
         @if (Route::has('login'))
-            <nav >
+            <nav class="nav-section">
                 @auth
                     <a href="{{ url('/dashboard') }}" class="links">
                         Dashboard
@@ -65,6 +84,10 @@
                 @endauth
             </nav>
         @endif
+        <div class="about-section">
+            <h2>EcoTrack</h2>
+            <p>The app that let's you track your carbon footprint and share it with your friends!</p>
+        </div>
         </div>
 </body>
 
