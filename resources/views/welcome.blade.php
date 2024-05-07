@@ -51,9 +51,8 @@
         justify-content: center;
         align-items: flex-start;
         align-self: center;
-        margin: 2px;
+        margin: 10px;
         height: 100%;
-        width: 300px;
     }
 
     .about-section * {
