@@ -19,4 +19,8 @@ Route::middleware([
     Route::get('/my_feed', function () {
         return view('feed');
     })->name('my_feed');
+
 });
+
+
+
