@@ -13,7 +13,6 @@ class CreatePost extends Component
     public $user_id;
     public $user_name;
     public $post_modal_open = false;
-
     // @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
 
     public function closeModal() 

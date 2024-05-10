@@ -1,15 +1,19 @@
 <x-app-layout>
-  <x-slot name="header">
+  <x-slot name="header" class="flex flex-row">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
           {{ __('My Feed') }}
       </h2>
   </x-slot>
 
-  <div class="py-12">
-      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-          <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-              <livewire:CreatePost />
-          </div>
-      </div>
+  <div class="flex flex-row w-screen m-2">
+
+    <x-side-nav title="Test"/>
+
+    <div class="max-w-7xl mx-auto sm:px-6  flex basis-8/12 w-full">
+        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg sm:rounded-lg w-full">
+            <h2>Test</h2>
+        </div>
+    </div>
+
   </div>
 </x-app-layout>
