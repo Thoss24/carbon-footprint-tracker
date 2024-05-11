@@ -20,7 +20,7 @@ $maxWidth = [
     style="display: none;"
 >
     <div class="fixed inset-0 transform transition-all">
-        <div class="absolute inset-0 bg-gray-500 opacity-75" wire:click='closeModal'></div>
+        <div class="absolute inset-0 bg-gray-500 opacity-75 hover:cursor-pointer" wire:click='closeModal'></div>
     </div>
 
     <div class="mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full {{ $maxWidth }} sm:mx-auto">

@@ -7,11 +7,11 @@
 
   <div class="flex flex-row w-screen m-2">
 
-    <x-side-nav title="Test"/>
+    <x-side-nav/>
 
     <div class="max-w-7xl mx-auto sm:px-6  flex basis-8/12 w-full">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg sm:rounded-lg w-full">
-            <h2>Test</h2>
+           <livewire:posts />
         </div>
     </div>
 
