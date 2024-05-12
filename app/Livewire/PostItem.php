@@ -8,7 +8,8 @@ use Livewire\Component;
 class PostItem extends Component
 {
     #[Reactive]
-    public $post;
+    public $user_name;
+    public $post_content;
    
     public function render()
     {

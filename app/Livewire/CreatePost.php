@@ -38,6 +38,8 @@ class CreatePost extends Component
             'content' => $this->post_content,
             'user_id' => $this->user_id,
         ]);
+
+        $this->dispatch('post-created', post: $this->post_content);
         
         $this->closeModal();
     }

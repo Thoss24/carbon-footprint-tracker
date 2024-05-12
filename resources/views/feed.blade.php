@@ -5,12 +5,12 @@
       </h2>
   </x-slot>
 
-  <div class="flex flex-row w-screen m-2">
+  <div class="flex flex-row w-screen">
 
     <x-side-nav/>
 
-    <div class="max-w-7xl mx-auto sm:px-6  flex basis-8/12 w-full">
-        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg sm:rounded-lg w-full">
+    <div class="max-w-7xl mx-auto flex basis-8/12 w-full bg-transparent">
+        <div class="overflow-hidden shadow-xl sm:rounded-lg sm:rounded-lg w-full m-2">
            <livewire:posts />
         </div>
     </div>

@@ -5,11 +5,15 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                
+    <div class="flex flex-row w-screen">
+
+        <x-side-nav/>
+    
+        <div class="max-w-7xl mx-auto flex basis-8/12 w-full bg-transparent">
+            <div class="overflow-hidden shadow-xl sm:rounded-lg sm:rounded-lg w-full m-2">
+               <livewire:personal-feed />
             </div>
         </div>
-    </div>
+    
+      </div>
 </x-app-layout>
