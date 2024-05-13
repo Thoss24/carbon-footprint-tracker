@@ -10,6 +10,7 @@ class PostItem extends Component
     #[Reactive]
     public $user_name;
     public $post_content;
+    public $post_id;
    
     public function render()
     {

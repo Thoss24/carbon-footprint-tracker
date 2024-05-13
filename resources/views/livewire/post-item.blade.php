@@ -8,4 +8,8 @@
     <div>
         <p>{{ $post_content }}</p>
     </div>
+    {{-- get post id and compare it to currently authenticated user id --}}
+    @if($post_id == auth()->id())
+        <button class="flex bg-emerald-400 w-fit rounded m-2">Delete</button>
+    @endif
 </div>

@@ -14,7 +14,7 @@ class PersonalFeed extends Component
     public $user_id;
     public $user_name;
 
-    #[On('post-created')]
+    #[On('post-created-personal')]
     public function mount()
     {
         $user = Auth::user();

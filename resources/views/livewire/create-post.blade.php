@@ -4,7 +4,7 @@
     <div>
         <x-modal class="h-dvh">
             <div class="h-60">
-                <form wire:submit='createPost' class="m-4">
+                <form wire:submit='submitForm' class="m-4">
 
                     <fieldset class="flex flex-row justify-between">
                         <div class="flex flex-row gap-2 p-2">
@@ -22,6 +22,7 @@
                     <textarea type="text" wire:model='post_content' class="resize-none h-36 border-none m-1 p-1 focus:outline-emerald-300 focus:ring focus:ring-emerald-200" placeholder="What's on your mind..." ></textarea>
                     <button type="submit" class="flex justify-end p-4">Create Post</button>
                     </fieldset>
+                  
 
                     
                 </form>
