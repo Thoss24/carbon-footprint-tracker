@@ -2,7 +2,6 @@
 
 namespace App\Livewire;
 use Livewire\Component;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use Livewire\Attributes\On; 
 

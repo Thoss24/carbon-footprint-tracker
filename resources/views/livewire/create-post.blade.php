@@ -22,8 +22,6 @@
                     <textarea type="text" wire:model='post_content' class="resize-none h-36 border-none m-1 p-1 focus:outline-emerald-300 focus:ring focus:ring-emerald-200" placeholder="What's on your mind..." ></textarea>
                     <button type="submit" class="flex justify-end p-4">Create Post</button>
                     </fieldset>
-                  
-
                     
                 </form>
             </div>

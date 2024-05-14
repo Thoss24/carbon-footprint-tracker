@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Route;
 
 class CreatePost extends Component
 {
@@ -32,7 +33,10 @@ class CreatePost extends Component
         $user = Auth::user();
         $this->user_id = $user->id;
         $this->user_name = $user->name;
-        $this->curr_route = Request::url();
+
+        $route = Route::current();
+        $routeName = $route->getName();
+        $this->curr_route = $routeName;
     }
 
     // create post my feed
@@ -59,13 +63,10 @@ class CreatePost extends Component
 
     public function submitForm()
     {
-        $path = parse_url($this->curr_route, PHP_URL_PATH);
-        $route = basename($path); 
-
-        if ($route == 'my_feed') {
+        if ($this->curr_route == 'my_feed') {
             $this->createPost();
             $this->dispatch('post-created', post: $this->post_content);
-        } elseif ($route == 'dashboard') {
+        } elseif ($this->curr_route == 'dashboard') {
             $this->createPostPersonal();
             $this->dispatch('post-created-personal', post: $this->post_content);
         }

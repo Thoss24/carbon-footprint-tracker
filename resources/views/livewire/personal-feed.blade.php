@@ -5,6 +5,6 @@
     @endphp --}}
 
     @foreach ($personal_posts as $post)
-        <livewire:post-item :user_name="$post->user->name" :post_id="$post->user_id" :post_content="$post->content"/>
+        <livewire:post-item :user_name="$post->user->name" :post_id="$post->user_id" :post_content="$post->content" :key="$post->id"/>
     @endforeach
 </div>
