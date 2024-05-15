@@ -15,6 +15,7 @@ class PersonalFeed extends Component
     public $user_name;
 
     #[On('post-created-personal')]
+    #[On('post-deleted')]
     public function mount()
     {
         $user = Auth::user();

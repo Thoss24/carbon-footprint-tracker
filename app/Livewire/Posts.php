@@ -11,6 +11,7 @@ class Posts extends Component
     public $posts;
 
     #[On('post-created')]
+    #[On('post-deleted')]
     public function mount()
     {
        // $this->posts =  Post::with('user')->get();
