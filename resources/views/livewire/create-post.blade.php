@@ -1,19 +1,18 @@
-<div x-data="{ modalOpen: false }">
+<div x-data="{ modalOpen: false }" >
     {{-- @if($post_modal_open) --}}
     <button class="bg-emerald-400 p-2 m-4 rounded" x-on:click='modalOpen = true'>New Post</button>
 
     <div
-    
     x-show="modalOpen"
     x-transition
-    class="jetstream-modal fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50 dvh"
+    class=" fixed inset-0 overflow-y-auto py-6 sm:px-0 z-50"
     style="display: none;">
 
     <div class="fixed inset-0 transform transition-all">
         <div class="absolute inset-0 bg-gray-500 opacity-75 hover:cursor-pointer" x-on:click='modalOpen = false'></div>
     </div>
 
-    <div class="mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto">
+    <div class="mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all m-4">
         <div class="h-60">
             <form wire:submit='submitForm' class="m-4">
 
