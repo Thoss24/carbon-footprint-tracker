@@ -13,13 +13,22 @@ class PostItem extends Component
     public $post_content;
     public $post_id;
     public $user_id;
+    public $post_item_modal = false;
+
+    public function showPostItemModal()
+    {   
+        $this->post_item_modal = true;
+    }
+
+    public function hidePostItemModal()
+    {   
+        $this->post_item_modal = false;
+    }
 
     public function deletePost()
     {
-        // DB::table('posts')->where('id', $this->post_id)->delete();
         $post = Post::find($this->post_id);
 
-        // Delete the post using the ORM
         $post->delete();
         $this->dispatch('post-deleted', post: $this->post_id);
     }

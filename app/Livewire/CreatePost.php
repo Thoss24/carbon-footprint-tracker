@@ -14,19 +14,8 @@ class CreatePost extends Component
     public $post_content;
     public $user_id;
     public $user_name;
-    public $post_modal_open = false;
     public $curr_route;
     // @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
-
-    public function closeModal() 
-    {
-        $this->post_modal_open = false;
-    }
-
-    public function openModal() 
-    {
-        $this->post_modal_open = true;
-    }
 
     public function mount() 
     {
