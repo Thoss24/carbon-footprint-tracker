@@ -1,20 +1,20 @@
-<div x-data="{ modalOpen: false }" >
+<div x-data="{ modalOpen: false }" class="w-full">
     {{-- @if($post_modal_open) --}}
     <button class="bg-emerald-400 p-2 m-4 rounded" x-on:click='modalOpen = true'>New Post</button>
 
     <div
     x-show="modalOpen"
     x-transition
-    class=" fixed inset-0 overflow-y-auto py-6 sm:px-0 z-50"
+    class=" fixed inset-0 overflow-y-auto py-6 sm:px-0 z-50 w-full"
     style="display: none;">
 
     <div class="fixed inset-0 transform transition-all">
         <div class="absolute inset-0 bg-gray-500 opacity-75 hover:cursor-pointer" x-on:click='modalOpen = false'></div>
     </div>
 
-    <div class="mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all m-4">
-        <div class="h-60">
-            <form wire:submit='submitForm' class="m-4">
+    <div class="flex bg-white rounded-lg overflow-hidden shadow-xl transform transition-all m-4">
+       
+            <form wire:submit='createPost' class="w-full">
 
                 <fieldset class="flex flex-row justify-between">
                     <div class="flex flex-row gap-2 p-2">
@@ -34,7 +34,7 @@
                 </fieldset>
                 
             </form>
-        </div>
+      
     </div>
     
     </div>

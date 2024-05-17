@@ -1,10 +1,10 @@
-<div>
-    {{-- {"id":7,"created_at":"2024-05-12T12:13:42.000000Z","updated_at":"2024-05-12T12:13:42.000000Z","content":"New post","user_id":2} --}}
-    {{-- @php
-        echo json_encode($personal_posts) . "\n<br>";
-    @endphp --}}
-
+<div x-data="{ modalOpen: false }">
+<div class="flex flex-col bg-transparent gap-2">
     @foreach ($personal_posts as $post)
         <livewire:post-item :user_name="$post->user->name" :post_id="$post->id" :user_id="$post->user_id" :post_content="$post->content" :key="$post->id"/>
     @endforeach
+</div>
+{{-- modal content --}}
+<x-modal/>
+
 </div>

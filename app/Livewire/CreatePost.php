@@ -14,7 +14,6 @@ class CreatePost extends Component
     public $post_content;
     public $user_id;
     public $user_name;
-    public $curr_route;
     // @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
 
     public function mount() 
@@ -22,10 +21,6 @@ class CreatePost extends Component
         $user = Auth::user();
         $this->user_id = $user->id;
         $this->user_name = $user->name;
-
-        $route = Route::current();
-        $routeName = $route->getName();
-        $this->curr_route = $routeName;
     }
 
     // create post my feed
@@ -34,32 +29,10 @@ class CreatePost extends Component
         Post::create([
             'content' => $this->post_content,
             'user_id' => $this->user_id,
+            'creator_name' => $this->user_name
         ]);
-        
-        $this->closeModal();
-    }
 
-    // create post personal feed - was causing errors using same dispatch method in createPost on different pages
-    public function createPostPersonal()
-    {
-        Post::create([
-            'content' => $this->post_content,
-            'user_id' => $this->user_id,
-        ]);
-        
-        $this->closeModal();
-    }
-
-    public function submitForm()
-    {
-        if ($this->curr_route == 'my_feed') {
-            $this->createPost();
-            $this->dispatch('post-created', post: $this->post_content);
-        } elseif ($this->curr_route == 'dashboard') {
-            $this->createPostPersonal();
-            $this->dispatch('post-created-personal', post: $this->post_content);
-        }
-       
+        $this->dispatch('post-created', post: $this->post_content);
     }
 
     public function render()

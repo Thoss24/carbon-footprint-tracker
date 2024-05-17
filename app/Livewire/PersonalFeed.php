@@ -11,10 +11,11 @@ class PersonalFeed extends Component
 {
 
     public $personal_posts;
+    public $post_content;
     public $user_id;
     public $user_name;
 
-    #[On('post-created-personal')]
+    #[On('post-created')]
     #[On('post-deleted')]
     public function mount()
     {

@@ -13,17 +13,6 @@ class PostItem extends Component
     public $post_content;
     public $post_id;
     public $user_id;
-    public $post_item_modal = false;
-
-    public function showPostItemModal()
-    {   
-        $this->post_item_modal = true;
-    }
-
-    public function hidePostItemModal()
-    {   
-        $this->post_item_modal = false;
-    }
 
     public function deletePost()
     {
@@ -31,6 +20,11 @@ class PostItem extends Component
 
         $post->delete();
         $this->dispatch('post-deleted', post: $this->post_id);
+    }
+
+    public function openModal()
+    {
+        $this->dispatch('post-modal-opened', postContent: $this->post_content, userName: $this->user_name);
     }
    
     public function render()
