@@ -13,6 +13,7 @@ class PostItem extends Component
     public $post_content;
     public $post_id;
     public $user_id;
+    public $auth_user_id;
 
     public function deletePost()
     {
@@ -24,7 +25,7 @@ class PostItem extends Component
 
     public function openModal()
     {
-        $this->dispatch('post-modal-opened', postContent: $this->post_content, userName: $this->user_name);
+        $this->dispatch('post-modal-opened', postContent: $this->post_content, userName: $this->user_name, authUserId: $this->auth_user_id, postUserId: $this->user_id);
     }
    
     public function render()
