@@ -5,8 +5,8 @@
         
         style="display: none;">
         <div class="fixed inset-0 transform transition-all">
-            <div class="absolute inset-0 bg-gray-500 opacity-75 hover:cursor-pointer" x-on:click='postItemMenuOpen = false; modalOpen = false' >
-            </div>
+            <div id="backdrop" class="absolute inset-0 bg-gray-500 opacity-75 hover:cursor-pointer" x-on:click='postItemMenuOpen = false; modalOpen = false'>
+        </div>
         </div>
         <div class="flex bg-white rounded-lg overflow-hidden shadow-xl transform transition-all m-4">
             <form wire:submit='submitForm' class="w-full">
@@ -17,13 +17,13 @@
                     </div>
                     <div class="flex gap-6 p-2 justify-center items-center">
                         {{-- conditionally render menu & delete button if post belongs to authenticated user --}}
-                        <div id="post-dropdown-container" class="hidden">
+                        <div id="post-dropdown-container" class="hidden relative items-center flex-col">
                             <i class="fa fa-caret-up ease-in-out transform duration-300 hover:cursor-pointer" id="arrow-icon" x-on:click="postItemMenuOpen = ! postItemMenuOpen"></i>
-                            <div x-show="postItemMenuOpen" x-transition>
-                                <button type="button">Delete</button>
+                            <div x-show="postItemMenuOpen" class="absolute bg-red-300 top-full rounded-xl shadow-xl transform transition-all mt-2" x-transition>
+                                <button type="button" class=" hover:cursor-pointer text-sm p-1" x-on:click='deletePostModalOpen = true'>Delete post?</button>
                             </div>
                         </div>
-                        <i class="fa fa-times" x-on:click='postItemMenuOpen = false; modalOpen = false' aria-hidden="true"></i>
+                        <i id="close-post" class="fa fa-times" x-on:click='postItemMenuOpen = false; modalOpen = false' aria-hidden="true"></i>
 
                     </div>
                 </fieldset>
@@ -49,10 +49,10 @@
             const postDropdownContainer = document.getElementById('post-dropdown-container');
             if (event.authUserId === event.postUserId) {
                 postDropdownContainer.classList.remove('hidden')
-                postDropdownContainer.classList.add('flex')
+                postDropdownContainer.classList.add('inline-flex')
             } else {
                 postDropdownContainer.classList.add('hidden')
-                postDropdownContainer.classList.add('flex')
+                postDropdownContainer.classList.add('inline-flex')
             }
         });
     });
@@ -61,6 +61,16 @@
     const arrowIcon = document.getElementById('arrow-icon');
     arrowIcon.addEventListener('click', () => {
         arrowIcon.classList.toggle('rotate-180')
+    });
+
+    const backdrop = document.getElementById('backdrop');
+    backdrop.addEventListener('click', () => {
+        arrowIcon.classList.remove('rotate-180')
+    });
+
+    const closePostButton = document.getElementById('close-post');
+    closePostButton.addEventListener('click', () => {
+        arrowIcon.classList.remove('rotate-180')
     });
 
 </script>
