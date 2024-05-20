@@ -6,7 +6,7 @@
     @endforeach
 </div>
 
-<x-modal user_id="{{ $user_id }}"/>
+<x-post-item-modal user_id="{{ $user_id }}"/>
 
 </div>
 

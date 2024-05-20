@@ -8,7 +8,7 @@
             <div id="backdrop" class="absolute inset-0 bg-gray-500 opacity-75 hover:cursor-pointer" x-on:click='postItemMenuOpen = false; modalOpen = false'>
         </div>
         </div>
-        <div class="flex bg-white rounded-lg overflow-hidden shadow-xl transform transition-all m-4">
+        <div class="flex flex-col bg-white rounded-lg overflow-hidden shadow-xl transform transition-all m-4">
             <form wire:submit='submitForm' class="w-full">
                 <fieldset class="flex flex-row justify-between">
                     <div class="flex flex-row gap-2 p-2">
@@ -19,8 +19,8 @@
                         {{-- conditionally render menu & delete button if post belongs to authenticated user --}}
                         <div id="post-dropdown-container" class="hidden relative items-center flex-col">
                             <i class="fa fa-caret-up ease-in-out transform duration-300 hover:cursor-pointer" id="arrow-icon" x-on:click="postItemMenuOpen = ! postItemMenuOpen"></i>
-                            <div x-show="postItemMenuOpen" class="absolute bg-red-300 top-full rounded-xl shadow-xl transform transition-all mt-2" x-transition>
-                                <button type="button" class=" hover:cursor-pointer text-sm p-1" x-on:click='deletePostModalOpen = true'>Delete post?</button>
+                            <div x-show="postItemMenuOpen" class="absolute bg-gray-200 hover:outline hover:outline-red-300 hover:bg-red-100 top-full rounded-xl shadow-xl transform mt-2" x-transition>
+                                <button type="button" class="text-sm p-1" x-on:click='deletePostModalOpen = true'>Delete post?</button>
                             </div>
                         </div>
                         <i id="close-post" class="fa fa-times" x-on:click='postItemMenuOpen = false; modalOpen = false' aria-hidden="true"></i>
@@ -31,7 +31,9 @@
                     <p id="post_content"></p>
                 </fieldset>
             </form>
+            <livewire:comments /> 
         </div>
+        <form ></form>
     </div>
 </div>
 

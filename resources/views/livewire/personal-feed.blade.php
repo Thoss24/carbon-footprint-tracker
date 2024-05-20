@@ -5,6 +5,6 @@
     @endforeach
 </div>
 {{-- modal content --}}
-<x-modal user_id="{{ $user_id }}"/>
+<x-post-item-modal user_id="{{ $user_id }}"/>
 
 </div>
