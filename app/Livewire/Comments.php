@@ -13,16 +13,16 @@ class Comments extends Component
     public $user_id;
     public $user_name;
     public $post_id;
+    public $post_comments;
 
     protected $listeners = [
-        'post-modal-opened' => 'getPostInfo',
+        'send-post-id' => 'getPostId',
     ];
 
-    public function getPostInfo($data)
+    public function getPostId($data)
     {
-        //$this->dispatchBrowserEvent('show-debugger');
-      // print_r($data);
-        $this->post_id = $data;
+        $this->post_id = $data['data'];
+        $this->post_comments = Comment::where('post_id', $this->post_id)->get();
     }
 
     public function mount()
@@ -30,6 +30,7 @@ class Comments extends Component
         $user = Auth::user();
         $this->user_id = $user->id;
         $this->user_name = $user->name;
+          
     }
 
     public function createComment()
@@ -37,6 +38,7 @@ class Comments extends Component
         Comment::create([
             'content' => $this->comment_content,
             'user_id' => $this->user_id,
+            'post_id' => $this->post_id
         ]);
     }
 

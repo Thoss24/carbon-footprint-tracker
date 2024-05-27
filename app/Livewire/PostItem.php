@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 use Livewire\Attributes\Reactive;
+use App\Models\Comment;
 use App\Models\Post;
 
 use Livewire\Component;
@@ -24,7 +25,8 @@ class PostItem extends Component
 
     public function openModal()
     {
-        $this->dispatch('post-modal-opened', postContent: $this->post_content, userName: $this->user_name, authUserId: $this->auth_user_id, postUserId: $this->user_id, postId: $this->post_id);
+        $this->dispatch('post-modal-opened', postContent: $this->post_content, userName: $this->user_name, authUserId: $this->auth_user_id, postUserId: $this->user_id);
+        $this->dispatch('send-post-id', ['data' => $this->post_id]);
     }
    
     public function render()
