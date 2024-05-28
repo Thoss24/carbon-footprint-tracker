@@ -33,7 +33,7 @@
             </form>
             <livewire:comments /> 
         </div>
-        <form ></form>
+        
     </div>
 </div>
 
@@ -41,6 +41,19 @@
     // {{-- listen for post-modal-opened event (dispatched from PostItem.php) and pass event data to post item modal --}}
     document.addEventListener('livewire:init', () => {
         Livewire.on('post-modal-opened', (event) => {
+
+            const commentsSection = document.getElementById('post-comments-section');
+
+            const backdrop = document.getElementById('backdrop');
+            backdrop.addEventListener('click', () => {
+                commentsSection.innerHTML = '';
+            });
+
+            const closePostButton = document.getElementById('close-post');
+            closePostButton.addEventListener('click', () => {
+                commentsSection.innerHTML = '';
+            });
+
             // display post creator name and post content
             const postContentElement = document.getElementById('post_content');
             const userNameElement = document.getElementById('user_name'); 
@@ -57,22 +70,22 @@
                 postDropdownContainer.classList.add('inline-flex')
             }
         });
-    });
 
-    // add rotation animation to arrow icon
-    const arrowIcon = document.getElementById('arrow-icon');
-    arrowIcon.addEventListener('click', () => {
-        arrowIcon.classList.toggle('rotate-180')
-    });
+        // add rotation animation to arrow icon
+        const arrowIcon = document.getElementById('arrow-icon');
+        arrowIcon.addEventListener('click', () => {
+            arrowIcon.classList.toggle('rotate-180');
+        });
 
-    const backdrop = document.getElementById('backdrop');
-    backdrop.addEventListener('click', () => {
-        arrowIcon.classList.remove('rotate-180')
-    });
+        const backdrop = document.getElementById('backdrop');
+        backdrop.addEventListener('click', () => {
+            arrowIcon.classList.remove('rotate-180');
+        });
 
-    const closePostButton = document.getElementById('close-post');
-    closePostButton.addEventListener('click', () => {
-        arrowIcon.classList.remove('rotate-180')
+        const closePostButton = document.getElementById('close-post');
+        closePostButton.addEventListener('click', () => {
+            arrowIcon.classList.remove('rotate-180');
+        });
     });
 
 </script>

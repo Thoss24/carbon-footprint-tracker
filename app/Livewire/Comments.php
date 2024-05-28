@@ -22,7 +22,9 @@ class Comments extends Component
     public function getPostId($data)
     {
         $this->post_id = $data['data'];
+        
         $this->post_comments = Comment::where('post_id', $this->post_id)->get();
+
     }
 
     public function mount()
