@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On; 
 
 class Comments extends Component
 {   
@@ -27,12 +28,17 @@ class Comments extends Component
 
     }
 
+    #[On('comment-created')]
+    public function getAllComments()
+    {
+        $this->post_comments = Comment::where('post_id', $this->post_id)->get();
+    }
+
     public function mount()
     {
         $user = Auth::user();
         $this->user_id = $user->id;
         $this->user_name = $user->name;
-          
     }
 
     public function createComment()
@@ -42,6 +48,8 @@ class Comments extends Component
             'user_id' => $this->user_id,
             'post_id' => $this->post_id
         ]);
+
+        $this->dispatch('comment-created', content: $this->comment_content);
     }
 
     public function render()
