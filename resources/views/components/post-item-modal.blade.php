@@ -5,7 +5,7 @@
         
         style="display: none;">
         <div class="fixed inset-0 transform transition-all">
-            <div id="backdrop" class="absolute inset-0 bg-gray-500 opacity-75 hover:cursor-pointer" x-on:click='postItemMenuOpen = false; modalOpen = false'>
+            <div id="backdrop" class="absolute inset-0 bg-gray-500 opacity-75 hover:cursor-pointer" x-on:click='postItemMenuOpen = false; commentsSectionOpen = false; modalOpen = false'>
         </div>
         </div>
         <div class="flex flex-col bg-white rounded-lg overflow-hidden shadow-xl transform transition-all m-4">
@@ -44,21 +44,25 @@
 
             const commentsSection = document.getElementById('post-comments-section');
 
-            const backdrop = document.getElementById('backdrop');
-            backdrop.addEventListener('click', () => {
-                commentsSection.innerHTML = '';
-            });
-
-            const closePostButton = document.getElementById('close-post');
-            closePostButton.addEventListener('click', () => {
-                commentsSection.innerHTML = '';
-            });
-
             // display post creator name and post content
             const postContentElement = document.getElementById('post_content');
             const userNameElement = document.getElementById('user_name'); 
             postContentElement.textContent = event.postContent;
             userNameElement.textContent = event.userName;
+
+            const backdrop = document.getElementById('backdrop');
+            backdrop.addEventListener('click', () => {
+                commentsSection.innerHTML = '';
+                postContentElement.textContent = '';
+                userNameElement.textContent = '';
+            });
+
+            const closePostButton = document.getElementById('close-post');
+            closePostButton.addEventListener('click', () => {
+                commentsSection.innerHTML = '';
+                postContentElement.textContent = '';
+                userNameElement.textContent = '';
+            });
 
             // display menu & delete post button if post belongs to currently authenticated user
             const postDropdownContainer = document.getElementById('post-dropdown-container');

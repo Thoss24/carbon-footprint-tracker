@@ -1,4 +1,4 @@
-<div x-data="{ modalOpen: false, postItemMenuOpen: false }">
+<div x-data="{ modalOpen: false, postItemMenuOpen: false, commentsSectionOpen: false }">
 
 <div class="flex flex-col gap-2 bg-transparent">
     @foreach ($posts as $post)
