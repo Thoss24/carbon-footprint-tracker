@@ -1,7 +1,7 @@
 @props(['user_id'])
 
 <div class="w-full">
-    <div x-show="modalOpen" x-transition class=" fixed inset-0 overflow-y-auto py-6 sm:px-0 z-50 w-full"
+    <div x-show="modalOpen" x-transition.delay.50ms class=" fixed inset-0 overflow-y-auto py-6 sm:px-0 z-50 w-full"
         
         style="display: none;">
         <div class="fixed inset-0 transform transition-all">
@@ -49,20 +49,6 @@
             const userNameElement = document.getElementById('user_name'); 
             postContentElement.textContent = event.postContent;
             userNameElement.textContent = event.userName;
-
-            const backdrop = document.getElementById('backdrop');
-            backdrop.addEventListener('click', () => {
-                commentsSection.innerHTML = '';
-                postContentElement.textContent = '';
-                userNameElement.textContent = '';
-            });
-
-            const closePostButton = document.getElementById('close-post');
-            closePostButton.addEventListener('click', () => {
-                commentsSection.innerHTML = '';
-                postContentElement.textContent = '';
-                userNameElement.textContent = '';
-            });
 
             // display menu & delete post button if post belongs to currently authenticated user
             const postDropdownContainer = document.getElementById('post-dropdown-container');

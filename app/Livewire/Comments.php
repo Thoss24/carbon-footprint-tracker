@@ -10,7 +10,7 @@ use Livewire\Attributes\On;
 class Comments extends Component
 {   
 
-    public $comment_content;
+    public $comment_content = '';
     public $user_id;
     public $user_name;
     public $post_id;

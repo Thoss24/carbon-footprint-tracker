@@ -1,13 +1,16 @@
-<div>
+<div x-data="{ comment: @entangle('comment_content') }">
     <form wire:submit='createComment' class="flex flex-col justify-center items-end p-3 gap-4">
         <textarea type="text" wire:model='comment_content'
             class="flex resize-none h-16 border-none p-1 focus:outline-emerald-300 focus:ring focus:ring-emerald-200 w-full"
             placeholder="Write a reply...">
         </textarea>
-        {{-- :class='bg-emerald-400 p-1 rounded-xl' --}}
+        <p x-text="comment.length"></p>
         <button id="create-comment-btn"
-        :class="{$comment_content == '' ? 'bg-red-400' : 'bg-emerald-400'}"
-        type="submit" @if ($comment_content == '') disabled @endif>Comment</button>
+        x-bind:disabled="!comment.length > 0"
+        
+        class="p-1 rounded-xl"
+        x-bind:class="comment.length > 0 ? 'bg-emerald-500 cursor-pointer' : 'bg-red-400 cursor-not-allowed'" 
+        type="submit">Comment</button>
     </form>
     <div class="p-3">
         {{-- loading data  --}}
@@ -36,9 +39,7 @@
 </div>
 
 <script>
-    const validateInput = (event) => {
-        const createCommentBtn = document.getElementById('create-comment-btn');
-
-        console.log(event)
-    }
+    
 </script>
+
+
