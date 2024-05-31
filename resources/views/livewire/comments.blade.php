@@ -25,11 +25,20 @@
         <div wire:loading.remove wire:target="$post_comments" id="post-comments-section" x-show="commentsSectionOpen"
             class="flex flex-col gap-2">
 
-            @if (is_object($post_comments) && count($post_comments) > 0)
-                @foreach ($post_comments as $post_comment)
+            @if (is_object($comments) && count($comments) > 0)
+                @foreach ($comments as $post_comment)
                     <x-post-comment content="{{ $post_comment->content }}" userName="{{ $post_comment->user->name }}"
                         profilePhoto="{{ $post_comment->user->profile_photo_path }}" />
                 @endforeach
+                <div wire:loading.delay>
+                    Loading more items...
+                </div>
+            
+                <div
+                    id="infinite-scroll-trigger"
+                    wire:click="loadMore"
+                    class="w-full p-2"
+                >See more comments</div>
             @else
                 <h3>No comments to show...</h3>
             @endif

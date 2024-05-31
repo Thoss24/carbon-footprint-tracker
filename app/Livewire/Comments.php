@@ -6,15 +6,20 @@ use Livewire\Component;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On; 
+use Livewire\WithPagination;
 
 class Comments extends Component
 {   
+
+    use WithPagination;
 
     public $comment_content = '';
     public $user_id;
     public $user_name;
     public $post_id;
     public $post_comments;
+    public $perPage = 5;
+    public $lastId = null;
 
     protected $listeners = [
         'send-post-id' => 'getPostId',
@@ -24,14 +29,14 @@ class Comments extends Component
     {
         $this->post_id = $data['data'];
         
-        $this->post_comments = Comment::where('post_id', $this->post_id)->get();
+        //$this->post_comments = Comment::where('post_id', $this->post_id)->paginate(5);
 
     }
 
     #[On('comment-created')]
     public function getAllComments()
     {
-        $this->post_comments = Comment::where('post_id', $this->post_id)->get();
+        //$this->post_comments = Comment::where('post_id', $this->post_id)->paginate(5);
     }
 
     public function mount()
@@ -52,8 +57,25 @@ class Comments extends Component
         $this->dispatch('comment-created', content: $this->comment_content);
     }
 
+    public function loadMore()
+    {
+        $this->perPage += 5;
+        $this->render();
+    }
+
+    #[On('comment-created')]
     public function render()
     {
-        return view('livewire.comments');
+
+        $this->post_comments = Comment::where('post_id', $this->post_id)
+        ->when($this->lastId, function ($query) {
+            $query->where('id', '>', $this->lastId);
+        })
+        ->take($this->perPage)
+        ->get();
+
+        return view('livewire.comments', [
+            'comments' => $this->post_comments,
+        ]);
     }
 }
