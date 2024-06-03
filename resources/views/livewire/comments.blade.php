@@ -4,7 +4,7 @@
             class="flex resize-none h-16 border-none p-1 focus:outline-emerald-300 focus:ring focus:ring-emerald-200 w-full"
             placeholder="Write a reply...">
         </textarea>
-        <p x-text="comment.length"></p>
+        <p>{{ $perPage }}</p>
         <button id="create-comment-btn"
         x-bind:disabled="!comment.length > 0"
         
@@ -33,12 +33,14 @@
                 <div wire:loading.delay>
                     Loading more items...
                 </div>
-            
+                
+                @if (count($comments) >= $perPage)
                 <div
                     id="infinite-scroll-trigger"
                     wire:click="loadMore"
                     class="w-full p-2"
                 >See more comments</div>
+                @endif
             @else
                 <h3>No comments to show...</h3>
             @endif

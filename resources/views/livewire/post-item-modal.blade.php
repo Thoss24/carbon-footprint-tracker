@@ -5,7 +5,7 @@
         
         style="display: none;">
         <div class="fixed inset-0 transform transition-all">
-            <div id="backdrop" class="absolute inset-0 bg-gray-500 opacity-75 hover:cursor-pointer" x-on:click='postItemMenuOpen = false; commentsSectionOpen = false; modalOpen = false'>
+            <div id="backdrop" class="absolute inset-0 bg-gray-500 opacity-75 hover:cursor-pointer" wire:click='resetPerPage' x-on:click='postItemMenuOpen = false; commentsSectionOpen = false; modalOpen = false;'>
         </div>
         </div>
         <div class="flex flex-col bg-white rounded-lg overflow-hidden shadow-xl transform transition-all m-4">

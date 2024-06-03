@@ -22,7 +22,7 @@ class Comments extends Component
     public $lastId = null;
 
     protected $listeners = [
-        'send-post-id' => 'getPostId',
+        'send-post-id' => 'getPostId'
     ];
 
     public function getPostId($data)
@@ -30,15 +30,8 @@ class Comments extends Component
         $this->post_id = $data['data'];
         
         //$this->post_comments = Comment::where('post_id', $this->post_id)->paginate(5);
-
     }
-
-    #[On('comment-created')]
-    public function getAllComments()
-    {
-        //$this->post_comments = Comment::where('post_id', $this->post_id)->paginate(5);
-    }
-
+    
     public function mount()
     {
         $user = Auth::user();
@@ -63,10 +56,15 @@ class Comments extends Component
         $this->render();
     }
 
+    #[On('reset-comments-pages')]
+    public function resetPerPage()
+    {
+        $this->perPage = 5;
+    }
+
     #[On('comment-created')]
     public function render()
     {
-
         $this->post_comments = Comment::where('post_id', $this->post_id)
         ->when($this->lastId, function ($query) {
             $query->where('id', '>', $this->lastId);
