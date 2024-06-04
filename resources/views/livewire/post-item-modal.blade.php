@@ -1,15 +1,16 @@
 @props(['user_id'])
 
 <div class="w-full">
-    <div x-show="modalOpen" x-transition.delay.50ms class=" fixed inset-0 overflow-y-auto py-6 sm:px-0 z-50 w-full"
-        
-        style="display: none;">
+    <div x-show="modalOpen" x-transition.delay.50ms
+        class="flex flex-col fixed inset-0 overflow-y-auto py-6 sm:px-0 z-50 w-full" style="display: none;">
         <div class="fixed inset-0 transform transition-all">
-            <div id="backdrop" class="absolute inset-0 bg-gray-500 opacity-75 hover:cursor-pointer" wire:click='resetPerPage' x-on:click='postItemMenuOpen = false; commentsSectionOpen = false; modalOpen = false;'>
+            <div id="backdrop" class="absolute inset-0 bg-gray-500 opacity-75 hover:cursor-pointer"
+                wire:click='resetPerPage'
+                x-on:click='postItemMenuOpen = false; commentsSectionOpen = false; modalOpen = false;'>
+            </div>
         </div>
-        </div>
-        <div class="flex flex-col bg-white rounded-lg overflow-hidden shadow-xl transform transition-all m-4">
-            <form wire:submit='submitForm' class="w-full">
+        <div class="flex flex-col bg-white rounded-lg overflow-y-auto shadow-xl transform transition-all m-4 min-h-96">
+            <form wire:submit='submitForm' class="w-full h-full">
                 <fieldset class="flex flex-row justify-between">
                     <div class="flex flex-row gap-2 p-2">
                         <img src="" alt="Profile pic">
@@ -18,22 +19,27 @@
                     <div class="flex gap-6 p-2 justify-center items-center">
                         {{-- conditionally render menu & delete button if post belongs to authenticated user --}}
                         <div id="post-dropdown-container" class="hidden relative items-center flex-col">
-                            <i class="fa fa-caret-up ease-in-out transform duration-300 hover:cursor-pointer" id="arrow-icon" x-on:click="postItemMenuOpen = ! postItemMenuOpen"></i>
-                            <div x-show="postItemMenuOpen" class="absolute bg-gray-200 hover:outline hover:outline-red-300 hover:bg-red-100 top-full rounded-xl shadow-xl transform mt-2" x-transition>
-                                <button type="button" class="text-sm p-1" x-on:click='deletePostModalOpen = true'>Delete post?</button>
+                            <i class="fa fa-caret-up ease-in-out transform duration-300 hover:cursor-pointer"
+                                id="arrow-icon" x-on:click="postItemMenuOpen = ! postItemMenuOpen"></i>
+                            <div x-show="postItemMenuOpen" x-transition.delay.50ms
+                                class="absolute bg-gray-200 hover:outline hover:outline-red-300 hover:bg-red-100 top-full rounded-xl shadow-xl transform mt-2 min-h-max"
+                                x-transition>
+                                <button type="button" class="text-sm p-1"
+                                    x-on:click='deletePostModalOpen = true'>Delete post?</button>
                             </div>
                         </div>
-                        <i id="close-post" class="fa fa-times" x-on:click='postItemMenuOpen = false; modalOpen = false' aria-hidden="true"></i>
-
+                        <i id="close-post" class="fa fa-times" wire:click='resetPerPage'
+                            x-on:click='postItemMenuOpen = false; commentsSectionOpen = false; modalOpen = false'
+                            aria-hidden="true"></i>
                     </div>
                 </fieldset>
                 <fieldset class="flex flex-col p-2">
                     <p id="post_content"></p>
                 </fieldset>
             </form>
-            <livewire:comments /> 
+            <livewire:comments />
         </div>
-        
+
     </div>
 </div>
 
@@ -46,7 +52,7 @@
 
             // display post creator name and post content
             const postContentElement = document.getElementById('post_content');
-            const userNameElement = document.getElementById('user_name'); 
+            const userNameElement = document.getElementById('user_name');
             postContentElement.textContent = event.postContent;
             userNameElement.textContent = event.userName;
 
@@ -77,5 +83,4 @@
             arrowIcon.classList.remove('rotate-180');
         });
     });
-
 </script>
