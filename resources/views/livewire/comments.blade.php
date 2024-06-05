@@ -23,8 +23,7 @@
         {{-- displaying data --}}
         <button x-on:click='commentsSectionOpen = ! commentsSectionOpen'>See comments</button>
         <div wire:loading.remove wire:target="$post_comments" id="post-comments-section" x-show="commentsSectionOpen"
-            class="flex flex-col h-96 gap-2 overflow-y-auto"
-
+            class="flex flex-col h-96 gap-2"
             >
 
             @if (is_object($comments) && count($comments) > 0)
