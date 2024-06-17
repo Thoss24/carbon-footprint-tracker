@@ -9,7 +9,7 @@
                 x-on:click='postItemMenuOpen = false; commentsSectionOpen = false; modalOpen = false;'>
             </div>
         </div>
-        <div class="flex flex-col bg-white rounded-lg overflow-y-auto shadow-xl transform transition-all m-4 min-h-96">
+        <div class="flex flex-col m-4 bg-white rounded-lg overflow-y-auto shadow-xl transform transition-all min-h-96">
             <form wire:submit='submitForm' class="w-full h-full">
                 <fieldset class="flex flex-row justify-between">
                     <div class="flex flex-row gap-2 p-2">

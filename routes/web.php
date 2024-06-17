@@ -16,9 +16,13 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/my_feed', function () {
+    Route::get('/my-feed', function () {
         return view('feed');
-    })->name('my_feed');
+    })->name('my-feed');
+
+    Route::get('/log-carbon-footprint', function () {
+        return view('log-carbon-footprint');
+    })->name('log-carbon-footprint');
 
 });
 

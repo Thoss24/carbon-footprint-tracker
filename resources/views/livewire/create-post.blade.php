@@ -12,7 +12,7 @@
         <div class="absolute inset-0 bg-gray-500 opacity-75 hover:cursor-pointer" x-on:click='modalOpen = false'></div>
     </div>
 
-    <div class="flex bg-white rounded-lg overflow-hidden shadow-xl transform transition-all m-4">
+    <div class="flex bg-white rounded-lg overflow-hidden shadow-xl transform transition-all ml-4 mr-4">
        
             <form wire:submit='createPost' class="w-full">
 
