@@ -10,6 +10,8 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Post;
+use App\Models\Comment;
+use App\Models\Household;
 
 class User extends Authenticatable
 {
@@ -72,5 +74,10 @@ class User extends Authenticatable
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function houshold()
+    {
+        return $this->hasMany(Household::class);
     }
 }
