@@ -20,9 +20,9 @@ Route::middleware([
         return view('feed');
     })->name('my-feed');
 
-    Route::get('/log-carbon-footprint', function () {
-        return view('log-carbon-footprint');
-    })->name('log-carbon-footprint');
+    Route::get('/log-household-carbon-footprint', function () {
+        return view('household-carbon-footprint');
+    })->name('household-carbon-footprint');
 
 });
 
