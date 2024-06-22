@@ -10,14 +10,23 @@ class Household extends Model
 {
     use HasFactory;
 
+    protected $table = 'household';
+
     protected $fillable = [
         'electricity',
+        'electricity_metric',
         'natural_gas',
+        'natural_gas_metric',
         'heating_oil',
+        'heating_oil_metric',
         'coal',
+        'coal_metric',
         'lpg',
+        'lpg_metric',
         'propane',
+        'propane_metric',
         'wood',
+        'wood_metric',
         'user_id'
     ];
 

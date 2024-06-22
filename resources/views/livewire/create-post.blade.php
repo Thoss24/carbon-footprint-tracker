@@ -1,6 +1,6 @@
 <div x-data="{ modalOpen: false }" class="w-full">
     {{-- @if($post_modal_open) --}}
-    <button class="bg-emerald-400 p-2 m-4 rounded" x-on:click='modalOpen = true'>New Post</button>
+    <but`ton class="bg-emerald-400 p-2 m-4 rounded" x-on:click='modalOpen = true'>New Post</button>
 
     <div
     x-show="modalOpen"
