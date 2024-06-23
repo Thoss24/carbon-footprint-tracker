@@ -5,40 +5,57 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Household as HouseholdModel;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On; 
 
 class Household extends Component
 {
 
     public $user_id;
+    public $carbonFootrpintHistoryData;
+    public $previousEntriesShowing = false;
+    // carbon footrpint data properties
     public $electricity = 0;
-    public $electricity_metric = 'kWh'; // default value
+    public $electricity_metric = 'kWh';
     public $natural_gas = 0;
-    public $natural_gas_metric = 'kWh'; // default value
+    public $natural_gas_metric = 'kWh';
     public $heating_oil = 0;
-    public $heating_oil_metric = 'kWh'; // default value
+    public $heating_oil_metric = 'kWh';
     public $coal = 0;
-    public $coal_metric = 'kg'; // default value
+    public $coal_metric = 'kg';
     public $lpg = 0;
-    public $lpg_metric = 'lpg'; // default value
+    public $lpg_metric = 'lpg';
     public $propane = 0;
-    public $propane_metric = 'litres'; // default value
+    public $propane_metric = 'litres';
     public $wood = 0;
-    public $wood_metric = 'kg'; // default value
+    public $wood_metric = 'kg';
 
     public function render()
     {
         return view('livewire.household');
     }
 
+    #[On('entry-deleted')]
     public function mount() 
     {
         $user = Auth::user();
         $this->user_id = $user->id;
+        $this->carbonFootrpintHistoryData = HouseholdModel::where('user_id', $this->user_id)->get();
+    }
+
+    public function togglePreviousEntriesDisplay() 
+    {
+        $this->previousEntriesShowing = ! $this->previousEntriesShowing;
+    }
+
+    public function deleteEntry($id)
+    {
+        // delete row where row['user_id'] == Auth()user_id
+        HouseholdModel::where('id', $id)->delete();
+        $this->dispatch('entry-deleted', id: $id);
     }
 
     public function submitCarbonFootrpintData() 
     {
-
         HouseholdModel::create([
             'electricity' => $this->electricity,
             'electricity metric' => $this->electricity_metric,

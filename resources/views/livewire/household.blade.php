@@ -74,4 +74,17 @@
         </fieldset>
         <button type="submit">Add</button>
     </form>
+
+    <section>
+        <button wire:click='togglePreviousEntriesDisplay'>{{$previousEntriesShowing ? 'Hide' : 'Show'}} previous entries</button>
+        @if ($previousEntriesShowing)
+        <div>
+            @if ($carbonFootrpintHistoryData != null)
+                @foreach ($carbonFootrpintHistoryData as $entry)
+                <x-carbon-data-history-entry :tableRow="$entry" :wire:click="'deleteEntry'"/>
+                @endforeach
+            @endif
+        </div>
+        @endif
+    </section>
 </div>
