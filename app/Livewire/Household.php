@@ -12,7 +12,6 @@ class Household extends Component
 
     public $user_id;
     public $carbonFootrpintHistoryData;
-    public $previousEntriesShowing = false;
     // carbon footrpint data properties
     public $electricity = 0;
     public $electricity_metric = 'kWh';
@@ -35,16 +34,12 @@ class Household extends Component
     }
 
     #[On('entry-deleted')]
+    #[On('entry-added')]
     public function mount() 
     {
         $user = Auth::user();
         $this->user_id = $user->id;
         $this->carbonFootrpintHistoryData = HouseholdModel::where('user_id', $this->user_id)->get();
-    }
-
-    public function togglePreviousEntriesDisplay() 
-    {
-        $this->previousEntriesShowing = ! $this->previousEntriesShowing;
     }
 
     public function deleteEntry($id)
@@ -73,5 +68,7 @@ class Household extends Component
             'wood metric' => $this->wood_metric,
             'user_id' => $this->user_id
         ]);
+
+        $this->dispatch('entry-added');
     }
 }

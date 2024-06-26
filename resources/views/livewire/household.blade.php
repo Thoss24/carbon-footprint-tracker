@@ -1,5 +1,8 @@
-<div>
-    <form action="" wire:submit='submitCarbonFootrpintData'>
+
+
+<div x-data="{ previousEntriesDisplaying: false }">
+    <x-dialog-modal title="Title test" content="Content test" />
+    <form wire:submit='submitCarbonFootrpintData'>
         <legend>Household carbon footprint</legend>
         <fieldset>
             <label for="electricity">Electricity</label>
@@ -73,18 +76,17 @@
             </div>
         </fieldset>
         <button type="submit">Add</button>
+        <button>Test display</button>
     </form>
 
     <section>
-        <button wire:click='togglePreviousEntriesDisplay'>{{$previousEntriesShowing ? 'Hide' : 'Show'}} previous entries</button>
-        @if ($previousEntriesShowing)
-        <div>
+        <button x-on:click="previousEntriesDisplaying = ! previousEntriesDisplaying"> previous entries</button>
+        <div x-show="previousEntriesDisplaying">
             @if ($carbonFootrpintHistoryData != null)
                 @foreach ($carbonFootrpintHistoryData as $entry)
                 <x-carbon-data-history-entry :tableRow="$entry" :wire:click="'deleteEntry'"/>
                 @endforeach
             @endif
         </div>
-        @endif
     </section>
 </div>
