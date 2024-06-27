@@ -12,6 +12,7 @@ class Household extends Component
 
     public $user_id;
     public $carbonFootrpintHistoryData;
+    public $responseMessage = '';
     // carbon footrpint data properties
     public $electricity = 0;
     public $electricity_metric = 'kWh';
@@ -51,7 +52,8 @@ class Household extends Component
 
     public function submitCarbonFootrpintData() 
     {
-        HouseholdModel::create([
+
+        $household = HouseholdModel::create([
             'electricity' => $this->electricity,
             'electricity metric' => $this->electricity_metric,
             'natural_gas' => $this->natural_gas,
@@ -69,6 +71,11 @@ class Household extends Component
             'user_id' => $this->user_id
         ]);
 
-        $this->dispatch('entry-added');
+        if ($household) {
+            $this->dispatch('entry-added');
+            $this->responseMessage = 'Data inserted successfully!';
+        } else {
+            $this->responseMessage = 'Data could not be inserted.';
+        }
     }
 }

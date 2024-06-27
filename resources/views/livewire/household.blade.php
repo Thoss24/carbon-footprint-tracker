@@ -1,8 +1,11 @@
 
 
-<div x-data="{ previousEntriesDisplaying: false }">
+<div x-data="{ previousEntriesDisplaying: false, conformationModalDisplaying: false }">
+    <div x-show='conformationModalDisplaying'>
     <x-dialog-modal title="Title test" content="Content test" />
-    <form wire:submit='submitCarbonFootrpintData'>
+    </div>
+    <h2 x-text="conformationModalDisplaying"></h2>
+    <form>
         <legend>Household carbon footprint</legend>
         <fieldset>
             <label for="electricity">Electricity</label>
@@ -75,8 +78,14 @@
                 </select>
             </div>
         </fieldset>
-        <button type="submit">Add</button>
-        <button>Test display</button>
+        <div class="flex flex-row">
+        <button x-on:click='conformationModalDisplaying = true' type="button">Add</button>
+        <p id="response-message" style="color:#0C9266; margin-left: 4px;">
+        @if ($responseMessage)
+        {{$responseMessage}}
+        @endif
+        </p>
+        </div>
     </form>
 
     <section>
@@ -90,3 +99,18 @@
         </div>
     </section>
 </div>
+
+<script>
+    // {{-- listen for post-modal-opened event (dispatched from PostItem.php) and pass event data to post item modal --}}
+    document.addEventListener('livewire:init', () => {
+        Livewire.on('entry-added', (event) => {
+            
+            const responseMessageElement = document.getElementById('response-message');
+
+            setTimeout(() => {
+                responseMessageElement.style.display = "none";
+            }, 3000);
+
+        });
+    });
+</script>
