@@ -6,5 +6,4 @@
 </div>
 {{-- modal content --}}
 <livewire:post-item-modal user_id="{{ $user_id }}"/>
-
 </div>

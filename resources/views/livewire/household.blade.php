@@ -1,14 +1,12 @@
-
-
 <div x-data="{ previousEntriesDisplaying: false, conformationModalDisplaying: false }">
     <div x-show='conformationModalDisplaying'>
-    <x-dialog-modal title="Title test" content="Content test" />
+    <x-dialog-modal title="Add Household Carbon Footprint Data" content="Are you sure you want to submit this data?" submitData='submitCarbonFootrpintData' modalDisplaying='conformationModalDisplaying'/>
     </div>
-    <h2 x-text="conformationModalDisplaying"></h2>
-    <form>
-        <legend>Household carbon footprint</legend>
+    <p class="underline text-xl p-2">Household carbon footprint</p>
+    <form class="mt-2 p-2">
+        
         <fieldset>
-            <label for="electricity">Electricity</label>
+            <label for="electricity">Electricity</label>                  
             <div>
                 <input type="number" wire:model='electricity' placeholder="0">
                 <select name="electricity_metric" id="electricity_metric" wire:model='electricity_metric'>
@@ -79,7 +77,7 @@
             </div>
         </fieldset>
         <div class="flex flex-row">
-        <button x-on:click='conformationModalDisplaying = true' type="button">Add</button>
+        <button x-on:click='conformationModalDisplaying = true' type="button" class=" p-1 m-1 rounded">Add</button>
         <p id="response-message" style="color:#0C9266; margin-left: 4px;">
         @if ($responseMessage)
         {{$responseMessage}}
@@ -88,8 +86,8 @@
         </div>
     </form>
 
-    <section>
-        <button x-on:click="previousEntriesDisplaying = ! previousEntriesDisplaying"> previous entries</button>
+    <section class="flex flex-col justify-center">
+        <button x-on:click="previousEntriesDisplaying = ! previousEntriesDisplaying" class="bg-emerald-400 p-1 m-1 rounded">See my previous entries</button>
         <div x-show="previousEntriesDisplaying">
             @if ($carbonFootrpintHistoryData != null)
                 @foreach ($carbonFootrpintHistoryData as $entry)
@@ -113,4 +111,5 @@
 
         });
     });
+
 </script>
