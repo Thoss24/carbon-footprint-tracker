@@ -1,12 +1,13 @@
 <div x-data="{ previousEntriesDisplaying: false, conformationModalDisplaying: false }">
     <div x-show='conformationModalDisplaying'>
-    <x-dialog-modal title="Add Household Carbon Footprint Data" content="Are you sure you want to submit this data?" submitData='submitCarbonFootrpintData' modalDisplaying='conformationModalDisplaying'/>
+        <x-dialog-modal title="Add Household Carbon Footprint Data" content="Are you sure you want to submit this data?"
+            submitData='submitCarbonFootrpintData' modalDisplaying='conformationModalDisplaying' />
     </div>
     <p class="underline text-xl p-2">Household carbon footprint</p>
     <form class="mt-2 p-2">
-        
+
         <fieldset>
-            <label for="electricity">Electricity</label>                  
+            <label for="electricity">Electricity</label>
             <div>
                 <input type="number" wire:model='electricity' placeholder="0">
                 <select name="electricity_metric" id="electricity_metric" wire:model='electricity_metric'>
@@ -77,21 +78,23 @@
             </div>
         </fieldset>
         <div class="flex flex-row">
-        <button x-on:click='conformationModalDisplaying = true' type="button" class=" p-1 m-1 rounded">Add</button>
-        <p id="response-message" style="color:#0C9266; margin-left: 4px;">
-        @if ($responseMessage)
-        {{$responseMessage}}
-        @endif
-        </p>
+            <button x-on:click='conformationModalDisplaying = true' type="button" class=" p-1 m-1 rounded">Add</button>
+            <p id="response-message" style="color:#0C9266; margin-left: 4px;">
+                @if ($responseMessage)
+                    {{ $responseMessage }}
+                @endif
+            </p>
         </div>
     </form>
 
     <section class="flex flex-col justify-center">
-        <button x-on:click="previousEntriesDisplaying = ! previousEntriesDisplaying" class="bg-emerald-400 p-1 m-1 rounded">See my previous entries</button>
+        <button x-on:click="previousEntriesDisplaying = ! previousEntriesDisplaying"
+            class="bg-emerald-400 p-1 m-1 rounded"
+            x-text="previousEntriesDisplaying ? 'Hide my previous entries' : 'See my previous entries'"></button>
         <div x-show="previousEntriesDisplaying">
             @if ($carbonFootrpintHistoryData != null)
                 @foreach ($carbonFootrpintHistoryData as $entry)
-                <x-carbon-data-history-entry :tableRow="$entry" :wire:click="'deleteEntry'"/>
+                    <x-carbon-data-history-entry :tableRow="$entry" :wire:click="'deleteEntry'" />
                 @endforeach
             @endif
         </div>
@@ -102,7 +105,7 @@
     // {{-- listen for post-modal-opened event (dispatched from PostItem.php) and pass event data to post item modal --}}
     document.addEventListener('livewire:init', () => {
         Livewire.on('entry-added', (event) => {
-            
+
             const responseMessageElement = document.getElementById('response-message');
 
             setTimeout(() => {
@@ -111,5 +114,4 @@
 
         });
     });
-
 </script>
