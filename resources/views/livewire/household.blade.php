@@ -79,7 +79,7 @@
         </fieldset>
         <div class="flex flex-row">
             <button x-on:click='conformationModalDisplaying = true' type="button" class=" p-1 m-1 rounded">Add</button>
-            <p id="response-message" style="color:#0C9266; margin-left: 4px;">
+            <p id="response-message" class="ml-4 text-emerald-400">
                 @if ($responseMessage)
                     {{ $responseMessage }}
                 @endif
