@@ -1,11 +1,10 @@
 <div x-data="{ previousEntriesDisplaying: false, conformationModalDisplaying: false }">
-    <div x-show='conformationModalDisplaying'>
-        <x-dialog-modal title="Add Household Carbon Footprint Data" content="Are you sure you want to submit this data?"
-            submitData='submitCarbonFootrpintData' modalDisplaying='conformationModalDisplaying' />
-    </div>
+    
+    <x-dialog-modal title="Add Household Carbon Footprint Data" content="Are you sure you want to submit this data?"
+        submitData='submitCarbonFootrpintData'/>
+  
     <p class="underline text-xl p-2">Household carbon footprint</p>
     <form class="mt-2 p-2">
-
         <fieldset>
             <label for="electricity">Electricity</label>
             <div>
@@ -90,7 +89,8 @@
     <section class="flex flex-col justify-center">
         <button x-on:click="previousEntriesDisplaying = ! previousEntriesDisplaying"
             class="bg-emerald-400 p-1 m-1 rounded"
-            x-text="previousEntriesDisplaying ? 'Hide my previous entries' : 'See my previous entries'"></button>
+            x-text="previousEntriesDisplaying ? 'Hide my previous entries' : 'See my previous entries'">
+        </button>
         <div x-show="previousEntriesDisplaying">
             @if ($carbonFootrpintHistoryData != null)
                 @foreach ($carbonFootrpintHistoryData as $entry)
@@ -104,6 +104,7 @@
 <script>
     // {{-- listen for post-modal-opened event (dispatched from PostItem.php) and pass event data to post item modal --}}
     document.addEventListener('livewire:init', () => {
+
         Livewire.on('entry-added', (event) => {
 
             const responseMessageElement = document.getElementById('response-message');
