@@ -48,6 +48,7 @@ class Household extends Component
         // delete row where row['user_id'] == Auth()user_id
         HouseholdModel::where('id', $id)->delete();
         $this->dispatch('entry-deleted', id: $id);
+        $this->responseMessage = '';
     }
 
     public function submitCarbonFootrpintData() 

@@ -24,6 +24,18 @@ Route::middleware([
         return view('household-carbon-footprint');
     })->name('household-carbon-footprint');
 
+    Route::get('/log-transport-carbon-footprint', function () {
+        return view('transport-carbon-footprint');
+    })->name('transport-carbon-footprint');
+
+    Route::get('/log-secondary-carbon-footprint', function () {
+        return view('secondary-carbon-footprint');
+    })->name('secondary-carbon-footprint');
+
+    Route::get('/find-friends', function () {
+        return view('find-friends');
+    })->name('find-friends');
+
 });
 
 

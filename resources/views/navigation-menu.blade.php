@@ -1,24 +1,39 @@
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden space-x-4 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden space-x-4 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link href="{{ route('my-feed') }}" :active="request()->routeIs('my-feed')">
                         {{ 'My Feed' }}
                     </x-nav-link>
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden space-x-4 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="{{ route('find-friends') }}" :active="request()->routeIs('find-friends')">
+                        {{ 'Find Friends' }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-4 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link href="{{ route('household-carbon-footprint') }}" :active="request()->routeIs('household-carbon-footprint')">
                         {{ 'Log Household Carbon Footprint' }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-4 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="{{ route('transport-carbon-footprint') }}" :active="request()->routeIs('transport-carbon-footprint')">
+                        {{ 'Log Transport Carbon Footprint' }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-4 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="{{ route('secondary-carbon-footprint') }}" :active="request()->routeIs('secondary-carbon-footprint')">
+                        {{ 'Log Secondary Carbon Footprint' }}
                     </x-nav-link>
                 </div>
             </div>
@@ -161,8 +176,17 @@
             <x-responsive-nav-link href="{{ route('my-feed') }}" :active="request()->routeIs('my-feed')">
                 {{ __('My Feed') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('find-friends') }}" :active="request()->routeIs('find-friends')">
+                {{ __('Find Friends') }}
+            </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('household-carbon-footprint') }}" :active="request()->routeIs('household-carbon-footprint')">
                 {{ __('Log Household Carbon Footprint') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('transport-carbon-footprint') }}" :active="request()->routeIs('transport-carbon-footprint')">
+                {{ __('Log Transport Carbon Footprint') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('secondary-carbon-footprint') }}" :active="request()->routeIs('secondary-carbon-footprint')">
+                {{ __('Log Secondary Carbon Footprint') }}
             </x-responsive-nav-link>
         </div>
 

@@ -94,7 +94,7 @@
         <div x-show="previousEntriesDisplaying">
             @if ($carbonFootrpintHistoryData != null)
                 @foreach ($carbonFootrpintHistoryData as $entry)
-                    <x-carbon-data-history-entry :tableRow="$entry" :wire:click="'deleteEntry'" />
+                    <x-household-data-history-entry :tableRow="$entry" :wire:click="'deleteEntry'" />
                 @endforeach
             @endif
         </div>
@@ -105,14 +105,16 @@
     // {{-- listen for post-modal-opened event (dispatched from PostItem.php) and pass event data to post item modal --}}
     document.addEventListener('livewire:init', () => {
 
-        Livewire.on('entry-added', (event) => {
+        const responseMessageElement = document.getElementById('response-message');
 
-            const responseMessageElement = document.getElementById('response-message');
+        Livewire.on('entry-added', (event) => {
 
             setTimeout(() => {
                 responseMessageElement.style.display = "none";
             }, 3000);
 
         });
+
+
     });
 </script>

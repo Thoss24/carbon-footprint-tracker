@@ -1,11 +1,11 @@
 @props(['title' => null, 'content' => null, 'submitData' => function () {}])
 {{-- Where this component is used, the parent needs to have an x-data property called "conformationModalDisplaying" to toggle this modal's display --}}
-<div class="w-full flex justify-center" x-show='conformationModalDisplaying'>
+<div class="w-full h-full flex justify-center relative" x-show='conformationModalDisplaying'>
     <div class="fixed inset-0 transform transition-all">
         <div x-on:click='conformationModalDisplaying = ! conformationModalDisplaying' id="backdrop" class="absolute inset-0 bg-gray-200 opacity-50 hover:cursor-pointer"></div>
     </div>
 
-    <div class="flex flex-col m-4 bg-white rounded-lg overflow-y-auto shadow-xl transform transition-all p-2 fixed">
+    <div class="flex flex-col m-4 bg-white rounded-lg overflow-y-auto shadow-xl transform transition-all p-2 fixed top-20 ">
         <div class="text-lg font-medium text-gray-900">
             {{ $title }}
         </div>
