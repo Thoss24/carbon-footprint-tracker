@@ -1,15 +1,15 @@
-<div x-data="{ previousEntriesDisplaying: false, conformationModalDisplaying: false }">
+<div x-data="{ previousEntriesDisplaying: false, conformationModalDisplaying: false }" class="p-2">
     
     <x-dialog-modal title="Add Household Carbon Footprint Data" content="Are you sure you want to submit this data?"
         submitData='submitCarbonFootrpintData'/>
   
-    <p class="underline text-xl p-2">Household carbon footprint</p>
-    <form class="mt-2 p-2">
+    <h1 class="underline text-xl">Household carbon footprint</h1>
+    <form class="mt-2">
         <fieldset>
             <label for="electricity">Electricity</label>
             <div>
-                <input type="number" wire:model='electricity' placeholder="0">
-                <select name="electricity_metric" id="electricity_metric" wire:model='electricity_metric'>
+                <input type="number" wire:model='electricity' placeholder="0" class="border w-fit border-gray-300 rounded-md px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500">
+                <select name="electricity_metric" id="electricity_metric" wire:model='electricity_metric' class="border w-fit border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500">
                     <option value="kWh" selected>kWh</option>
                 </select>
             </div>
@@ -17,8 +17,8 @@
         <fieldset>
             <label for="natural-gas">Natural gas</label>
             <div>
-                <input type="number" wire:model='natural_gas' placeholder="0">
-                <select name="natural_gas_metric" id="natural_gas_metric" wire:model='natural_gas_metric'>
+                <input type="number" wire:model='natural_gas' placeholder="0" class="border w-fit border-gray-300 rounded-md px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500">
+                <select name="natural_gas_metric" id="natural_gas_metric" wire:model='natural_gas_metric' class="border w-fit border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500">
                     <option value="kWh">kWh</option>
                     <option value="therms">Therms</option>
                     <option value="GBP">GBP</option>
@@ -28,8 +28,8 @@
         <fieldset>
             <label for="heating-oil">Heating oil</label>
             <div>
-                <input type="number" wire:model='heating_oil' placeholder="0">
-                <select name="heating_oil_metric" id="heating_oil_metric" wire:model='heating_oil_metric'>
+                <input type="number" wire:model='heating_oil' placeholder="0" class="border w-fit border-gray-300 rounded-md px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500">
+                <select name="heating_oil_metric" id="heating_oil_metric" wire:model='heating_oil_metric' class="border w-fit border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500">
                     <option value="kWh" selected="selected">kWh</option>
                     <option value="litres">Litres</option>
                     <option value="gallons">Gallons</option>
@@ -39,8 +39,8 @@
         <fieldset>
             <label for="Coal">Coal</label>
             <div>
-                <input type="number" wire:model='coal' placeholder="0">
-                <select name="coal_metric" id="coal_metric" wire:model='coal_metric'>
+                <input type="number" wire:model='coal' placeholder="0" class="border w-fit border-gray-300 rounded-md px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500">
+                <select name="coal_metric" id="coal_metric" wire:model='coal_metric' class="border w-fit border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500">
                     <option value="kWh" selected>kWh</option>
                     <option value="kg">kg</option>
                 </select>
@@ -49,8 +49,8 @@
         <fieldset>
             <label for="lpg">LPG (liquified Petroleum Gas)</label>
             <div>
-                <input type="number" wire:model='lpg' placeholder="0">
-                <select name="lpg_metric" id="lpg_metric" wire:model='lpg_metric'>
+                <input type="number" wire:model='lpg' placeholder="0" class="border w-fit border-gray-300 rounded-md px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500">
+                <select name="lpg_metric" id="lpg_metric" wire:model='lpg_metric' class="border w-fit border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500">
                     <option value="litres" selected>Litres</option>
                     <option value="therms">Therms</option>
                     <option value="gallons">Gallons</option>
@@ -60,8 +60,8 @@
         <fieldset>
             <label for="propane">Propane</label>
             <div>
-                <input type="number" wire:model='propane' placeholder="0">
-                <select name="propane_metric" id="propane_metric" wire:model='propane_metric'>
+                <input type="number" wire:model='propane' placeholder="0" class="border w-fit border-gray-300 rounded-md px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500">
+                <select name="propane_metric" id="propane_metric" wire:model='propane_metric' class="border w-fit border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500">
                     <option value="litres" selected>Litres</option>
                     <option value="gallons">Gallons</option>
                 </select>
@@ -70,8 +70,8 @@
         <fieldset>
             <label for="wood">Wood</label>
             <div>
-                <input type="number" wire:model='wood' placeholder="0">
-                <select name="wood_metric" id="wood_metric" wire:model='wood_metric'>
+                <input type="number" wire:model='wood' placeholder="0" class="border w-fit border-gray-300 rounded-md px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500">
+                <select name="wood_metric" id="wood_metric" wire:model='wood_metric' class="border w-fit border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500" >
                     <option value="kg" selected>kg</option>
                 </select>
             </div>
