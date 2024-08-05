@@ -32,10 +32,6 @@ Route::middleware([
         return view('secondary-carbon-footprint');
     })->name('secondary-carbon-footprint');
 
-    Route::get('/find-friends', function () {
-        return view('find-friends');
-    })->name('find-friends');
-
 });
 
 

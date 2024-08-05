@@ -17,11 +17,6 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-4 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="{{ route('find-friends') }}" :active="request()->routeIs('find-friends')">
-                        {{ 'Find Friends' }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-4 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link href="{{ route('household-carbon-footprint') }}" :active="request()->routeIs('household-carbon-footprint')">
                         {{ 'Log Household Carbon Footprint' }}
                     </x-nav-link>
@@ -175,9 +170,6 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('my-feed') }}" :active="request()->routeIs('my-feed')">
                 {{ __('My Feed') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ route('find-friends') }}" :active="request()->routeIs('find-friends')">
-                {{ __('Find Friends') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('household-carbon-footprint') }}" :active="request()->routeIs('household-carbon-footprint')">
                 {{ __('Log Household Carbon Footprint') }}

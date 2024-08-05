@@ -7,22 +7,28 @@ use App\Models\User;
 
 class FindFriends extends Component
 {       
-
     public $users;
+    public $queried_users;
+    public $query;
 
-    public function getAllUsers()
+    public function searchForUser()
     {
-        $this->users = User::all();
+        if ($this->query == '') {
+            $this->queried_users = [];
+            return;
+        };
+
+        foreach ($this->users as $idx => $user) {
+            // echo "User -- : " . print_r($user, true);
+            if (str_contains($user->name, $this->query)) {
+                $this->queried_users[$idx] = $user;
+            }
+        }
     }
 
     public function mount()
     {
-        $this->getAllUsers();
-    }
-
-    public function searchForUser()
-    {
-
+        $this->users = User::all();
     }
 
     public function render()
