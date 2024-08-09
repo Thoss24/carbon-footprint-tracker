@@ -50,8 +50,5 @@
     </div>
 </div>
 
-<script>
-    
-</script>
 
 

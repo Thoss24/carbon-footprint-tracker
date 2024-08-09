@@ -10,17 +10,11 @@
             wire:keydown="searchForUser"
         >
     </div>
-    <div>
-        {{-- @php
-        echo "Users: " . print_r($users, true)
-        @endphp --}}
+    <div class="flex p-2 items-start">
         @if (!empty($queried_users))
         @foreach ($queried_users as $user)
-            {{-- @php
-                echo "User: " . print_r($user, true)
-            @endphp --}}
             <x-user-shell wire:key="{{ $user->id }}" id="{{ $user->id }}" name="{{ $user->name }}"
-                profile_photo_path="{{ $user->profile_photo_path }}" />
+                profile_photo_path="{{ $user->profile_photo_path }}"/>
         @endforeach
         @endif
     </div>

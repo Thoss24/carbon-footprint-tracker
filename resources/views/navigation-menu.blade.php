@@ -31,6 +31,10 @@
                         {{ 'Log Secondary Carbon Footprint' }}
                     </x-nav-link>
                 </div>
+                
+                <div class="hidden space-x-4 sm:-my-px sm:ms-10 sm:flex">
+                    <livewire:notifications />
+                </div>
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">

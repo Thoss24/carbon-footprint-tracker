@@ -19,8 +19,7 @@ class FindFriends extends Component
         };
 
         foreach ($this->users as $idx => $user) {
-            // echo "User -- : " . print_r($user, true);
-            if (str_contains($user->name, $this->query)) {
+            if (preg_match("/\b" . preg_quote(str_replace(" ", "\s*", $this->query), "/") . "\b/i", $user->name)) {
                 $this->queried_users[$idx] = $user;
             }
         }
