@@ -1,4 +1,4 @@
-
+@props(['title' => null, 'content' => null, 'submitData' => function () {}])
 {{-- Where this component is used, the parent needs to have an x-data property called "conformationModalDisplaying" to toggle this modal's display --}}
 <div class="w-full h-full flex justify-center relative" x-show='conformationModalDisplaying'>
     <div class="fixed inset-0 transform transition-all">
@@ -15,8 +15,8 @@
         </div>
 
         <div class="flex flex-row gap-2">
-        {{-- <button wire:click='{{$submitData}}' x-on:click='conformationModalDisplaying = ! conformationModalDisplaying'>Yes</button>
-        <button x-on:click='conformationModalDisplaying = ! conformationModalDisplaying'>No</button> --}}
+        <button wire:click='{{$submitData}}' x-on:click='conformationModalDisplaying = ! conformationModalDisplaying'>Yes</button>
+        <button x-on:click='conformationModalDisplaying = ! conformationModalDisplaying'>No</button>
         </div>
     </div>
 </div>

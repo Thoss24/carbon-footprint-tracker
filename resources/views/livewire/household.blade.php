@@ -1,6 +1,6 @@
 <div x-data="{ previousEntriesDisplaying: false, conformationModalDisplaying: false }" class="p-2">
     
-    <x-dialog-modal title="Add Household Carbon Footprint Data" content="Are you sure you want to submit this data?"
+    <x-dialog-confirmation-modal title="Add Household Carbon Footprint Data" content="Are you sure you want to submit this data?"
         submitData='submitCarbonFootrpintData'/>
   
     <h1 class="underline text-xl">Household carbon footprint</h1>
