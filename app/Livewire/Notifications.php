@@ -19,7 +19,15 @@ class Notifications extends Component
         $user = Auth::user();
         $this->user_id = $user->id;
 
-        $this->pending_friend_requests = Friend_request::where('receiver_id', '=', $this->user_id, 'and')->where('status', '=', 'pending',)->get();
+        $this->pending_friend_requests = Friend_request::where('receiver_id', '=', $this->user_id, 'and')
+        ->where('status', '=', 'pending',)
+        ->join('users as sender', 'friend_request.sender_id', '=', 'sender.id')
+        ->join('users as receiver', 'friend_request.receiver_id', '=', 'receiver.id')
+        ->select('friend_request.*',
+        'sender.name as sender_name',
+        'receiver.name as receiver_name'
+        )
+        ->get();
         $this->pending_friend_requests_count = count($this->pending_friend_requests);
     }
 
