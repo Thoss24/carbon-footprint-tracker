@@ -14,6 +14,7 @@
         <div class="max-w-7xl mx-auto flex basis-8/12 w-full bg-transparent">
             <div class="overflow-hidden shadow-xl sm:rounded-lg w-full m-2">
                 <livewire:personal-feed />
+                <livewire:notifications />
             </div>
         </div>
 

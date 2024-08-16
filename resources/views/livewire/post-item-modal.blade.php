@@ -17,17 +17,6 @@
                         <h3 id="user_name"></h3>
                     </div>
                     <div class="flex gap-6 p-2 justify-center items-center">
-                        {{-- conditionally render menu & delete button if post belongs to authenticated user --}}
-                        <div id="post-dropdown-container" class="hidden relative items-center flex-col">
-                            <i class="fa fa-caret-up ease-in-out transform duration-300 hover:cursor-pointer"
-                                id="arrow-icon" x-on:click="postItemMenuOpen = ! postItemMenuOpen"></i>
-                            <div x-show="postItemMenuOpen" x-transition.delay.50ms
-                                class="absolute bg-gray-200 hover:outline hover:outline-red-300 hover:bg-red-100 top-full rounded-xl shadow-xl transform mt-2 min-h-max"
-                                x-transition>
-                                <button type="button" class="text-sm p-1"
-                                    x-on:click='deletePostModalOpen = true'>Delete post?</button>
-                            </div>
-                        </div>
                         <i id="close-post" class="fa fa-times" wire:click='resetPerPage'
                             x-on:click='postItemMenuOpen = false; commentsSectionOpen = false; modalOpen = false'
                             aria-hidden="true"></i>

@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Livewire;
-
 use Livewire\Component;
 use App\Models\Friend_request;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On; 
 
 class Notifications extends Component
 {
@@ -13,6 +13,7 @@ class Notifications extends Component
     public $pending_friend_requests;
     public $pending_friend_requests_count;
     public $accepted_friend_requests;
+    public $notification_id;
 
     public function mount()
     {   
@@ -30,6 +31,7 @@ class Notifications extends Component
         ->get();
         $this->pending_friend_requests_count = count($this->pending_friend_requests);
     }
+
 
     public function render()
     {

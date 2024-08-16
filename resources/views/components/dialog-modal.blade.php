@@ -15,8 +15,8 @@
         </div>
 
         <div class="flex flex-row gap-2">
-        {{-- <button wire:click='{{$submitData}}' x-on:click='conformationModalDisplaying = ! conformationModalDisplaying'>Yes</button>
-        <button x-on:click='conformationModalDisplaying = ! conformationModalDisplaying'>No</button> --}}
+        <button wire:click='{{$submitData}}' x-on:click='conformationModalDisplaying = ! conformationModalDisplaying'>Yes</button>
+        <button x-on:click='conformationModalDisplaying = ! conformationModalDisplaying'>No</button>
         </div>
     </div>
 </div>

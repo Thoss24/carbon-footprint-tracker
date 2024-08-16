@@ -5,7 +5,6 @@ namespace App\Livewire;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
-use Livewire\Attributes\On; 
 
 class PersonalFeed extends Component
 {
@@ -15,8 +14,6 @@ class PersonalFeed extends Component
     public $user_id;
     public $user_name;
 
-    #[On('post-created')]
-    #[On('post-deleted')]
     public function mount()
     {
         $user = Auth::user();
