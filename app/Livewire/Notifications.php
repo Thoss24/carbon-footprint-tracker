@@ -13,8 +13,9 @@ class Notifications extends Component
     public $pending_friend_requests;
     public $pending_friend_requests_count;
     public $accepted_friend_requests;
-    public $notification_id;
 
+    #[On('friend_request_rejected')]
+    #[On('friend_request_accepted')]
     public function mount()
     {   
         $user = Auth::user();
@@ -29,9 +30,20 @@ class Notifications extends Component
         'receiver.name as receiver_name'
         )
         ->get();
-        $this->pending_friend_requests_count = count($this->pending_friend_requests);
+        #$this->pending_friend_requests_count = count($this->pending_friend_requests);
     }
+    
+    public function acceptRequest($requestId)
+    {
+              // Fetch the model instance
+              $request = Friend_request::find($requestId);
 
+              // // Modify the model's attributes
+              $request->status = 'accepted';
+      
+              // // Save the updated model
+              $request->save();
+    }
 
     public function render()
     {

@@ -33,7 +33,7 @@
                 </div>
                 
                 <div class="hidden space-x-4 sm:-my-px sm:ms-10 sm:flex">
-                    <livewire:notifications />
+                    {{-- <livewire:notifications /> --}}
                 </div>
             </div>
 

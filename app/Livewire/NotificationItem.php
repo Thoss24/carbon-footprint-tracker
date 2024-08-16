@@ -5,10 +5,11 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Friend_request;
 
-class NotificationItem extends Notifications
+class NotificationItem extends Component
 {
 
     public $sender_name;
+    public $receiver_name;
     public $request_id;
 
     public function acceptRequest()
@@ -20,7 +21,6 @@ class NotificationItem extends Notifications
         $request->status = 'accepted';
 
         // // Save the updated model
-        
         if ($request->save()) {
             $this->dispatch('friend_request_accepted', request: $this->request_id);
         };
