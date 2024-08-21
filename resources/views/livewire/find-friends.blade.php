@@ -1,4 +1,4 @@
-<div class="bg-white p-1">
+<div class="bg-white m-4 w-96">
     <h1 class="text-xl underline">Find friends</h1>
     {{-- name, profile_photo_path --}}
     <div class="flex flex-col mt-2">
@@ -10,7 +10,7 @@
             wire:keydown="searchForUser"
         >
     </div>
-    <div class="flex p-2 items-start">
+    <div class="flex flex-col p-2 items-start">
         @if (!empty($queried_users))
         @foreach ($queried_users as $user)
             <x-user-shell wire:key="{{ $user->id }}" id="{{ $user->id }}" name="{{ $user->name }}"

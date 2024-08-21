@@ -27,7 +27,8 @@ class FindFriends extends Component
 
     public function mount()
     {
-        $this->users = User::all();
+        $this->users = User::all(); 
+        // get all users where an existing friendship does not exist 
     }
 
     public function render()

@@ -1,6 +1,9 @@
 <div x-data="{ postModalOpen: false }" class="w-full">
     {{-- @if ($post_modal_open) --}}
-    <button class="bg-emerald-400 p-2 m-4 rounded" x-on:click='postModalOpen = true'>New Post</button>
+    <div class="flex flex-col p-2 m-4">
+    <h3>Say whats on your mind...</h3>
+    <button class="bg-emerald-400 flex w-fit p-1 rounded" x-on:click='postModalOpen = true'>New Post</button>
+    </div>
 
     <div x-show="postModalOpen" x-transition class=" fixed inset-0 overflow-y-auto py-6 sm:px-0 z-50 w-full"
         style="display: none;">
