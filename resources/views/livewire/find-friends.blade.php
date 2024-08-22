@@ -1,5 +1,5 @@
 <div class="bg-white m-4 w-96">
-    <h1 class="text-xl underline">Find friends</h1>
+    <h2 class="text-xl underline">Find friends</h2>
     {{-- name, profile_photo_path --}}
     <div class="flex flex-col mt-2">
         <label for="search_friends">Search for friend</label>
@@ -10,6 +10,9 @@
             wire:keydown="searchForUser"
         >
     </div>
+    @php
+        echo "users: " . print_r($users, true) . "\n<br>";
+    @endphp
     <div class="flex flex-col p-2 items-start">
         @if (!empty($queried_users))
         @foreach ($queried_users as $user)

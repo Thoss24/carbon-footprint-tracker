@@ -1,7 +1,7 @@
 
 <div class="flex shadow flex-col p-1">
     <div class="notification-area">
-    <p class="text-xs">Friend request from <strong class="text-sm">{{ $sender_name }} {{ $request_id }}</strong></p>
+    <p class="text-xs">Friend request from <strong class="text-sm">{{ $sender_name }}</strong></p>
       <div>
           <button wire:click='acceptRequest' class="text-sm hover:cursor-pointer">Accept <span style="color: green"><i
                       class="fa-solid fa-check fa-xs"></span></i></button>

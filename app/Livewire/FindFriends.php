@@ -29,6 +29,18 @@ class FindFriends extends Component
     {
         $this->users = User::all(); 
         // get all users where an existing friendship does not exist 
+
+        $this->users = User::select('id', 'name', 'email')
+            ->whereNotIn('id', function ($query) {
+                $query->select('user_id')
+                    ->orWhere('friend_id')
+                    ->from('friendships');
+            })
+            ->whereNotIn('id', function ($query) {
+                $query->select('friend_id')
+                    ->from('friendships');
+            })
+            ->get();
     }
 
     public function render()
