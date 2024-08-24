@@ -2,4 +2,5 @@
   <livewire:CreatePost />
   <livewire:find-friends>
   <livewire:friends-list />
+  <livewire:create-journal-entry />
 </div>

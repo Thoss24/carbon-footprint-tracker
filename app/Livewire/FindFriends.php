@@ -4,12 +4,14 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class FindFriends extends Component
 {       
     public $users;
     public $queried_users;
     public $query;
+    public $user_id; // currently authenticated user
 
     public function searchForUser()
     {
@@ -27,18 +29,19 @@ class FindFriends extends Component
 
     public function mount()
     {
-        $this->users = User::all(); 
-        // get all users where an existing friendship does not exist 
 
-        $this->users = User::select('id', 'name', 'email')
+        $user = Auth::user();
+        $this->user_id = $user->id;
+        
+        $this->users = User::where('id', '!=', $this->user_id)
             ->whereNotIn('id', function ($query) {
                 $query->select('user_id')
-                    ->orWhere('friend_id')
-                    ->from('friendships');
-            })
-            ->whereNotIn('id', function ($query) {
-                $query->select('friend_id')
-                    ->from('friendships');
+                    ->orWhere('friend_id', $this->user_id)
+                    ->from('friendships')
+                    ->where(function ($q)  {
+                        $q->where('user_id', $this->user_id)
+                            ->orWhere('friend_id', $this->user_id);
+                    });
             })
             ->get();
     }

@@ -4,7 +4,6 @@
             class="flex resize-none h-16 border-none p-1 focus:outline-emerald-300 focus:ring focus:ring-emerald-200 w-full"
             placeholder="Write a reply...">
         </textarea>
-        <p>{{ $perPage }}</p>
         <button id="create-comment-btn"
         x-bind:disabled="!comment.length > 0"
         
@@ -20,8 +19,6 @@
                 <span class="ml-2">Loading...</span>
             </div>
         </div>
-        {{-- displaying data --}}
-        <button x-on:click='commentsSectionOpen = ! commentsSectionOpen'>See comments</button>
         <div wire:loading.remove wire:target="$post_comments" id="post-comments-section" x-show="commentsSectionOpen"
             class="flex flex-col h-96 gap-2"
             >
@@ -47,6 +44,8 @@
             @endif
 
         </div>
+        {{-- displaying data --}}
+        <button x-on:click='commentsSectionOpen = ! commentsSectionOpen'>See comments</button>
     </div>
 </div>
 
