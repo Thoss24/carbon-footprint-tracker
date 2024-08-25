@@ -5,6 +5,11 @@
   
     <h1 class="underline text-xl">Household carbon footprint</h1>
     <form class="mt-2">
+        <p>Num: {{$num_people_in_household}}</p>
+        <fieldset>
+            <label for="num_people_in_household">How many people are in your household?</label>
+            <input wire:model='num_people_in_household' id="num_people_in_household" type="number">
+        </fieldset>
         <fieldset>
             <label for="electricity">Electricity</label>
             <div>

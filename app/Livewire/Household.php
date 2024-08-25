@@ -13,6 +13,8 @@ class Household extends Component
     public $user_id;
     public $carbonFootrpintHistoryData;
     public $responseMessage = '';
+    public $num_people_in_household = 1;
+
     // carbon footrpint data properties
     public $electricity = 0;
     public $electricity_metric = 'kWh';
@@ -28,6 +30,15 @@ class Household extends Component
     public $propane_metric = 'litres';
     public $wood = 0;
     public $wood_metric = 'kg';
+
+    // emission factors according to the UK Government's Department for Business, Energy & Industrial Strategy (BEIS)
+    public $electricity_factor = 0.2;
+    public $natural_gas_factor = 0.2;
+    public $heating_oil_factor = 2.53;
+    public $coal_factor = 0.3;
+    public $lpg_factor = 0.2;
+    public $propane_factor = 0.2;
+    public $wood_factor = 0.1;
 
     public function render()
     {
@@ -54,6 +65,19 @@ class Household extends Component
     public function submitCarbonFootrpintData() 
     {
 
+        $electricity_co2e_per_member = ($this->electricity / $this->num_people_in_household) * $this->electricity_factor / 1000;  # tonnes
+        $natural_gas_co2e_per_member = ($this->natural_gas / $this->num_people_in_household) * $this->natural_gas_factor / 1000;  # tonnes
+        $heating_oil_co2e_per_member = ($this->heating_oil / $this->num_people_in_household) * $this->heating_oil_factor / 1000;  # tonnes
+        $coal_co2e_per_member = ($this->coal / $this->num_people_in_household) * $this->coal_factor / 1000;  # tonnes
+        $lpg_co2e_per_member = ($this->lpg / $this->num_people_in_household) * $this->lpg_factor / 1000;  # tonnes
+        $propane_co2e_per_member = ($this->propane / $this->num_people_in_household) * $this->propane_factor / 1000;  # tonnes
+        $wood_co2e_per_member = ($this->wood / $this->num_people_in_household) * $this->wood_factor / 1000;  # tonnes
+
+        $total_co2e_per_member = $electricity_co2e_per_member + $natural_gas_co2e_per_member + $heating_oil_co2e_per_member + $coal_co2e_per_member +
+        $lpg_co2e_per_member + $propane_co2e_per_member + $wood_co2e_per_member;
+
+        $total_household_co2e = $total_co2e_per_member * $this->num_people_in_household;
+
         $household = HouseholdModel::create([
             'electricity' => $this->electricity,
             'electricity metric' => $this->electricity_metric,
@@ -69,7 +93,9 @@ class Household extends Component
             'propane metric' => $this->propane_metric,
             'wood' => $this->wood,
             'wood metric' => $this->wood_metric,
-            'user_id' => $this->user_id
+            'user_id' => $this->user_id,
+            'num_people_in_household' => $this->num_people_in_household,
+            'total_household_co2e' => $total_household_co2e
         ]);
 
         if ($household) {

@@ -27,7 +27,9 @@ class Household extends Model
         'propane_metric',
         'wood',
         'wood_metric',
-        'user_id'
+        'user_id',
+        'num_people_in_household',
+        'total_household_co2e'
     ];
 
     public function user() 
