@@ -13,15 +13,22 @@ class HouseHoldDataVisualization extends Component
     public $user_id;
     public $household_entries;
 
-    public $labels = ['January', 'February', 'March', 'April', 'May', 'June'];
-    public $data = [10, 15, 12, 18, 20, 22];
+    public $labels;
 
     public function mount()
     {
         $user = Auth::user();
         $this->user_id = $user->id;
 
-        $this->household_entries = Household::where('user_id', $this->user_id)->get();
+        //$this->household_entries = Household::where('user_id', $this->user_id)->get();
+
+        $this->household_entries = Household::where('user_id', $this->user_id)
+                                   ->pluck('total_household_co2e')
+                                   ->toArray();
+        
+        $this->labels = Household::where('user_id', $this->user_id)
+        ->pluck('created_at')
+        ->toArray();
 
     }
 

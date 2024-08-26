@@ -3,7 +3,7 @@
         <div class="flex flex-row justify-between p-2">
             <div class="flex flex-row gap-2">
                 <img src="" alt="Profile pic">
-                <h3>{{ $user_name }}</h3>
+                <p>{{ $user_name }}</p>
             </div>
         </div>
         <div class="p-2">
