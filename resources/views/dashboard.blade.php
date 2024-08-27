@@ -15,6 +15,7 @@
             <div class="overflow-hidden shadow-xl sm:rounded-lg w-full m-2">
                 <livewire:personal-feed />
                 <livewire:house-hold-data-visualization />
+                <livewire:set-goals />
             </div>
         </div>
 
