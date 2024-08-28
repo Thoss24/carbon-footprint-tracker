@@ -12,7 +12,8 @@ class Goal extends Model
     protected $fillable = [
         'target_date',
         'improve_percentage_goal',
-        'previous_co2e'
+        'previous_co2e',
+        'original_entry_id'
     ];
 
 }
