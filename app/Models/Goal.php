@@ -10,6 +10,7 @@ class Goal extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'target_date',
         'improve_percentage_goal',
         'previous_co2e',

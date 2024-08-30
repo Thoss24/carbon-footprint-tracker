@@ -1,6 +1,16 @@
-<div>
-    <h1>SET GOALS</h1>
-    <h2>PREV {{ $previous_co2e }}</h2>
+<div  x-data="{ prevEntriesModal: false }">
+    <section>
+    <h2>All active goals</h2>
+    @foreach ($previous_goals as $goal)
+        <div>{{$goal->target_date}}</div>
+    @endforeach
+    <h2>All achieved goals</h2>
+    {{-- @foreach ($previous_goals as $goal)
+        <div>{{$goal->target_date}}</div>
+    @endforeach --}}
+    </section>
+    <h2>GOAL REACHED TEST: {{$goal_reached_feedback}}</h2>
+    <h2>Set new goal</h2>
     <form action="" wire:submit='setGoal'>
         <fieldset>
             <label for="type">Energy category</label>
@@ -12,17 +22,12 @@
             </select>
         </fieldset>
         <fieldset>
-            <label for="type">Select previous entry you want to comapre to</label>
-
-
-            @if (!empty($previous_entries))
+            <button x-text="prevEntriesModal ? 'Hide previous entries' : 'Show previous entries to comapre to'" type="button" x-on:click="prevEntriesModal = ! prevEntriesModal" for="type" class=" rounded-xl p-1"></button>
+            <div x-show="prevEntriesModal" name="" id="">
                 @foreach ($previous_entries as $entry)
-                    <button type="button" class="p-2 bg-red-500"
-                        wire:click="selectPrevCo2e('{{ $entry->total_household_co2e }}', '{{ $entry->id }}')">{{ $entry->created_at }}-{{ $entry->total_household_co2e }}
-                    </button>
+                    <div class="hover:cursor-pointer" wire:click="selectPrevCo2e('{{ $entry->total_household_co2e }}', '{{ $entry->id }}')">{{$entry->created_at}} : {{$entry->total_household_co2e}}</div>
                 @endforeach
-            @endif
-
+            </div>
         </fieldset>
         <fieldset>
             <label for="improve_percentage_goal">Target amount to reduce by</label>
