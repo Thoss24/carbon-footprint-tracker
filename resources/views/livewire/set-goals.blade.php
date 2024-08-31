@@ -1,15 +1,16 @@
-<div  x-data="{ prevEntriesModal: false }">
-    <section>
-    <h2>All active goals</h2>
-    @foreach ($previous_goals as $goal)
-        <div>{{$goal->target_date}}</div>
+<div class="flex flex-col mt-4 justify-between bg-white shadow-xl" x-data="{ prevEntriesModal: false }">
+    <h2>Last entry id{{$test_last_entry_id}}</h2>
+    <h2>Last goal id{{$test_last_goal_id}}</h2>
+    <section class="mt-2">
+    <h2 class="text-2xl">All active goals: goals that havent been met yet</h2>
+    @foreach ($active_goals as $active_goal)
+        <x-goal-shell key="{{$active_goal}}" targetDate="{{$active_goal->target_date}}" goalAchieved="{{null}}" previousCo2e="{{$active_goal->previous_co2e}}" type="{{$active_goal->type}}"/>
     @endforeach
-    <h2>All achieved goals</h2>
-    {{-- @foreach ($previous_goals as $goal)
-        <div>{{$goal->target_date}}</div>
-    @endforeach --}}
+    <h2 class="text-2xl">All previous goals: acheived or failed goals</h2>
+    @foreach ($past_goals as $past_goal)
+        <livewire:goal-item :key="$past_goal->id" :goal_id="$past_goal->id" :targetDate="$past_goal->target_date" :goalAchieved="$past_goal->goal_met" :previousCo2e="$past_goal->previous_co2e" :type="$past_goal->type" /> 
+    @endforeach
     </section>
-    <h2>GOAL REACHED TEST: {{$goal_reached_feedback}}</h2>
     <h2>Set new goal</h2>
     <form action="" wire:submit='setGoal'>
         <fieldset>

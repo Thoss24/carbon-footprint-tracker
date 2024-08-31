@@ -104,6 +104,8 @@
             @endif
         </div>
     </section>
+
+    <livewire:house-hold-data-visualization />
 </div>
 
 <script>

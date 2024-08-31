@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Goal;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Household;
+use App\Models\Solution;
 
 class SetGoals extends Component
 {
@@ -17,15 +18,20 @@ class SetGoals extends Component
     public $previous_co2e; // co2e of entry to compare to
     public $type = 'household'; // default value is household
     public $previous_entries; // previous carbon footprint entries by type
-    public $previous_goals; // previous goals by type
-    public $goal_reached_feedback;
+    public $active_goals; // all active goals
+    public $past_goals; // achieved or not achieved goals
+
+    public $test_last_entry;
+    public $test_last_entry_id;
+    public $test_last_goal_id;
 
     public function mount()
     {
         $user = Auth::user();
         $this->user_id = $user->id;
         $this->previous_entries = Household::where('user_id', $this->user_id)->get();
-        $this->previous_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->get();
+        $this->active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
+        $this->past_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 1)->get();
         $this->checkGoalMet();
     }
 
@@ -47,43 +53,54 @@ class SetGoals extends Component
         $this->original_entry_id = $prev_id;
     }
 
-    public function getPreviousEntryData() 
+    public function getPreviousEntryData() // invoked when user changes co2e type
     {
         if ($this->type == 'household') {
             $this->previous_entries = Household::where('user_id', $this->user_id)->get();
-            $this->previous_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->get();
+            $this->active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
+            $this->past_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 1)->get();
             $this->checkGoalMet(); // check goals have been met each time a user changes the co2e type
         } else {
             $this->previous_entries = []; // replace with other co2e types
-            $this->previous_goals  = []; // replace with co2e types
+            $this->active_goals  = []; // replace with co2e types
+            $this->past_goals = [];
         }
     }
 
     public function checkGoalMet()
     {
-        //
         $current_date = date('Y-m-d');
-        $most_recently_submitted_household_data = Household::latest()->first();
-        //$most_recently_submitted_household_data_date = explode(" ", $most_recently_submitted_household_data->created_at)[0];
+        $most_recently_submitted_data = [];
+        
+        switch($this->type){
+            case 'household':
+                $most_recently_submitted_data = Household::latest()->first();
+                break;
+            case 'transport':
+                $most_recently_submitted_data = []; // change when new types are added
+                break;
+            case 'secondary':
+                $most_recently_submitted_data = []; // change when new types are added
+                break;
+        }
 
-        foreach ($this->previous_goals as $goal) {
+        foreach ($this->active_goals as $goal) {
             if ($current_date >= $goal->target_date) {
                 $goal = Goal::find($goal->id);
                 // do claculation to check if % goal was reached
                 // compare most recently submitted household data with target co2e using the target %
                 $co2e_to_compare_against = $goal->previous_co2e;
-                $difference = $most_recently_submitted_household_data->total_household_co2e - $co2e_to_compare_against;
+                $difference = $most_recently_submitted_data->total_household_co2e - $co2e_to_compare_against;
                 $percentage_diff = ($difference / $co2e_to_compare_against) * 100;
 
-                $this->goal_reached_feedback = $percentage_diff;
-
-                if ($percentage_diff > -$goal->improve_percentage_goal) { // goal not met
-                    $this->goal_reached_feedback = "Goal not met"; // provide details on which goal was not met
+                if (-$percentage_diff < -$goal->improve_percentage_goal) { // goal not met    
                     $goal->goal_met = 0;
+                    $goal->goal_seen = 1;
                     $goal->save();
+                    $this->provideSolutions($most_recently_submitted_data->id, $goal->id);
                 } else { // goal met
-                    $this->goal_reached_feedback = "Goal met"; // provide details on which goal was not met 
                     $goal->goal_met = 1;
+                    $goal->goal_seen = 1;
                     $goal->save();
                 }
             }
@@ -93,9 +110,50 @@ class SetGoals extends Component
         // award point if true - otherwise return data telling user goal was not met
     }
 
-    public function provideSolutions()
+    public function provideHouseholdSolutions($entryId, $goalId)
     {
-        // provide some possible solutions based on the submitted carbon footprint data - need to get this data from the household table
+        $this->test_last_entry = Household::find($entryId);
+
+        $this->test_last_entry_id = $entryId;
+        $this->test_last_goal_id = $goalId;
+        // handle solution logic for each type
+
+        // store solutions in an array with specific data for each entry
+        // update db
+
+        Solution::create([
+            'goal_id' => $goalId,
+            'title' => "Placeholder title",
+            'description' => "Placeholder description",
+            'category' => $this->type,
+            'impact_score' => 0,
+        ]);
+
+    }
+
+    public function provideTransportSolutions($entryId, $goalId)
+    {
+        // handle solution logic for each type
+    }
+
+    public function provideSecondarySolutions($entryId, $goalId)
+    {
+        // handle solution logic for each type
+    }
+
+    public function provideSolutions($lastEntryId, $goalId)
+    {
+        switch($this->type){
+            case 'household':
+                $this->provideHouseholdSolutions($lastEntryId, $goalId);
+                break;
+            case 'transport':
+                $this->provideTransportSolutions($lastEntryId, $goalId);
+                break;
+            case 'secondary':
+                $this->provideSecondarySolutions($lastEntryId, $goalId);
+                break;
+        }
     }
 
     public function render()
