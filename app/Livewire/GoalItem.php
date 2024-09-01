@@ -12,12 +12,13 @@ class GoalItem extends Component
     public $goalAchieved;
     public $previousCo2e;
     public $type;
-    public $goal_id;
+    public $goalId;
     public $solutions;
+    public $goalSeen;
 
     public function mount()
     {
-        $this->solutions = Solution::where('goal_id', $this->goal_id)->get();
+        $this->solutions = Solution::where('goal_id', $this->goalId)->get();
     }
 
     public function render()

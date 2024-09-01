@@ -10,7 +10,6 @@ use App\Models\Solution;
 
 class SetGoals extends Component
 {
-  
     public $user_id = 0;
     public $target_date = "1999/12/12"; // yyyy/mm/dd
     public $improve_percentage_goal;
@@ -21,18 +20,17 @@ class SetGoals extends Component
     public $active_goals; // all active goals
     public $past_goals; // achieved or not achieved goals
 
-    public $test_last_entry;
-    public $test_last_entry_id;
-    public $test_last_goal_id;
+    public $test_target_percentage;
+    public $test_actual_percentage;
 
     public function mount()
     {
         $user = Auth::user();
         $this->user_id = $user->id;
         $this->previous_entries = Household::where('user_id', $this->user_id)->get();
-        $this->active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
-        $this->past_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 1)->get();
+        #$this->active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
         $this->checkGoalMet();
+        $this->past_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 1)->get();
     }
 
     public function setGoal()
@@ -84,7 +82,9 @@ class SetGoals extends Component
                 break;
         }
 
-        foreach ($this->active_goals as $goal) {
+        $active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
+
+        foreach ($active_goals as $goal) {
             if ($current_date >= $goal->target_date) {
                 $goal = Goal::find($goal->id);
                 // do claculation to check if % goal was reached
@@ -93,7 +93,10 @@ class SetGoals extends Component
                 $difference = $most_recently_submitted_data->total_household_co2e - $co2e_to_compare_against;
                 $percentage_diff = ($difference / $co2e_to_compare_against) * 100;
 
-                if (-$percentage_diff < -$goal->improve_percentage_goal) { // goal not met    
+                $this->test_target_percentage = $goal->improve_percentage_goal;
+                $this->test_actual_percentage = $percentage_diff;
+
+                if ($percentage_diff < $goal->improve_percentage_goal) { // goal not met    
                     $goal->goal_met = 0;
                     $goal->goal_seen = 1;
                     $goal->save();
@@ -106,28 +109,57 @@ class SetGoals extends Component
             }
         }
 
+        $this->active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
+
         // get current day and compare most recently submitted entry against target date & data - if they are the same, check if percentage goal was reached
         // award point if true - otherwise return data telling user goal was not met
     }
 
     public function provideHouseholdSolutions($entryId, $goalId)
     {
-        $this->test_last_entry = Household::find($entryId);
 
-        $this->test_last_entry_id = $entryId;
-        $this->test_last_goal_id = $goalId;
-        // handle solution logic for each type
+        $recommendations = [];
 
-        // store solutions in an array with specific data for each entry
-        // update db
+        $goal = Goal::find($goalId);
 
-        Solution::create([
-            'goal_id' => $goalId,
-            'title' => "Placeholder title",
-            'description' => "Placeholder description",
-            'category' => $this->type,
-            'impact_score' => 0,
-        ]);
+        $householdToAnalyse = Household::find($entryId);
+        $householdSize = $householdToAnalyse->num_people_in_household;
+        $householdElectricity = $householdToAnalyse->electricity;
+        $householdNaturalGas = $householdToAnalyse->natural_gas;
+        $householdHeatingOil = $householdToAnalyse->heating_oil;
+        $householdCoal = $householdToAnalyse->coal;
+        $householdLpg = $householdToAnalyse->lpg;
+        $householdPropane = $householdToAnalyse->propane;
+        $householdWood = $householdToAnalyse->wood;
+        
+        if (($householdElectricity / $householdSize) > 500) {
+
+            $recommendation = array('Title'=>'Solution to reduce Electricity consumption', 'Description'=>'Choose appliances with a high energy rating, such as A+++, when shopping for new appliances. Take quick showers, turn off running taps when unused, and use the required amount of water while cooking. ');
+
+            array_push($recommendations, $recommendation);
+        }
+        if (($householdNaturalGas / $householdSize) > 300) {
+
+            $recommendation = array('Title'=>'Solution to reduce Natural Gas consumption', 'Description'=>'Turn down the temperature on your radiator or boiler when you`re not using a room. Choose appliances that are designed to use less energy and gas. ');
+
+            array_push($recommendations, $recommendation);
+        }
+        if (($householdHeatingOil / $householdSize) > 30) {
+
+            $recommendation = array('Title'=>'Solution to reduce Heating Oil consumption', 'Description'=>'Insulation helps maintain your home`s temperature and reduce fuel usage. Lower the temperature on your thermostat, even by one degree.');
+
+            array_push($recommendations, $recommendation);
+        }
+
+        foreach ($recommendations as $recommendation) {
+            Solution::create([
+                'goal_id' => $goalId,
+                'title' => $recommendation['Title'],
+                'description' => $recommendation['Description'],
+                'category' => $this->type,
+                'impact_score' => 0,
+            ]);
+        }
 
     }
 
