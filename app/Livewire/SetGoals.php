@@ -150,6 +150,30 @@ class SetGoals extends Component
 
             array_push($recommendations, $recommendation);
         }
+        if (($householdCoal / $householdSize) > 20) {
+
+            $recommendation = array('Title'=>'Solution to reduce Coal consumption', 'Description'=>'Upgrade insulation in walls, roofs, and floors to minimize heat loss. Proper insulation helps maintain indoor temperatures, reducing the need for heating. Identify and seal drafts around windows, doors, and other openings to prevent heat loss. If available, transitioning to natural gas heating can be a cleaner alternative to coal.');
+
+            array_push($recommendations, $recommendation);
+        }
+        if (($householdLpg / $householdSize) > 30) {
+
+            $recommendation = array('Title'=>'Solution to reduce LPG consumption', 'Description'=>'Invest in energy-efficient gas stoves or induction cooktops, which can use gas more efficiently. If you use LPG for heating, consider lowering the thermostat a few degrees. Use microwaves or slow cookers for meals that don’t require a stove, as they can be more efficient.');
+
+            array_push($recommendations, $recommendation);
+        }
+        if (($householdPropane / $householdSize) > 20) {
+
+            $recommendation = array('Title'=>'Solution to reduce Propane consumption', 'Description'=>' Set your thermostat a few degrees lower in winter. Each degree can reduce usage significantly. Set heating schedules to lower temperatures when you’re not home. Insulate attics, walls, and floors to minimize heat loss. Invest in high-efficiency propane appliances, such as furnaces, water heaters, and stoves, which use less fuel.');
+
+            array_push($recommendations, $recommendation);
+        }
+        if (($householdWood / $householdSize) > 40) {
+
+            $recommendation = array('Title'=>'Solution to reduce Propane consumption', 'Description'=>'Enhance insulation in your home to retain heat, reducing the need for wood heating.  Use high-efficiency wood stoves or fireplaces that burn wood more completely and produce less waste. Consider using electric heaters, propane, or natural gas as alternatives to reduce reliance on wood. Use properly seasoned wood, which burns more efficiently and produces less smoke.');
+
+            array_push($recommendations, $recommendation);
+        }
 
         foreach ($recommendations as $recommendation) {
             Solution::create([
