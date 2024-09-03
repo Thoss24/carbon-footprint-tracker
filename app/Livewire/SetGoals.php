@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Goal;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Household;
+use App\Models\Car;
 use App\Models\Solution;
 
 class SetGoals extends Component
@@ -19,9 +20,6 @@ class SetGoals extends Component
     public $previous_entries; // previous carbon footprint entries by type
     public $active_goals; // all active goals
     public $past_goals; // achieved or not achieved goals
-
-    public $test_target_percentage;
-    public $test_actual_percentage;
 
     public function mount()
     {
@@ -53,16 +51,34 @@ class SetGoals extends Component
 
     public function getPreviousEntryData() // invoked when user changes co2e type
     {
-        if ($this->type == 'household') {
-            $this->previous_entries = Household::where('user_id', $this->user_id)->get();
-            $this->active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
-            $this->past_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 1)->get();
-            $this->checkGoalMet(); // check goals have been met each time a user changes the co2e type
-        } else {
-            $this->previous_entries = []; // replace with other co2e types
-            $this->active_goals  = []; // replace with co2e types
-            $this->past_goals = [];
+        switch($this->type){
+            case 'household':
+                $this->previous_entries = Household::where('user_id', $this->user_id)->get();
+                $this->active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
+                $this->past_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 1)->get();
+                $this->checkGoalMet(); // check goals have been met each time a user changes the co2e type
+                break;
+            case 'transport':
+                $this->previous_entries = Car::where('user_id', $this->user_id)->get();
+                $this->active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
+                $this->past_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 1)->get();
+                $this->checkGoalMet(); // check goals have been met each time a user changes the co2e type
+                break;
+            case 'secondary':
+                
+                break;
         }
+
+        // if ($this->type == 'household') {
+        //     $this->previous_entries = Household::where('user_id', $this->user_id)->get();
+        //     $this->active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
+        //     $this->past_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 1)->get();
+        //     $this->checkGoalMet(); // check goals have been met each time a user changes the co2e type
+        // } else {
+        //     $this->previous_entries = []; // replace with other co2e types
+        //     $this->active_goals  = []; // replace with co2e types
+        //     $this->past_goals = [];
+        // }
     }
 
     public function checkGoalMet()
@@ -93,9 +109,6 @@ class SetGoals extends Component
                 $difference = $most_recently_submitted_data->total_household_co2e - $co2e_to_compare_against;
                 $percentage_diff = ($difference / $co2e_to_compare_against) * 100;
 
-                $this->test_target_percentage = $goal->improve_percentage_goal;
-                $this->test_actual_percentage = $percentage_diff;
-
                 if ($percentage_diff < $goal->improve_percentage_goal) { // goal not met    
                     $goal->goal_met = 0;
                     $goal->goal_seen = 1;
@@ -119,8 +132,6 @@ class SetGoals extends Component
     {
 
         $recommendations = [];
-
-        $goal = Goal::find($goalId);
 
         $householdToAnalyse = Household::find($entryId);
         $householdSize = $householdToAnalyse->num_people_in_household;

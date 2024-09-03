@@ -27,7 +27,7 @@
             <button class="bg-emerald-300 p-1 rounded-xl" x-text="prevEntriesModal ? 'Hide previous entries' : 'Show previous entries to comapre to'" type="button" x-on:click="prevEntriesModal = ! prevEntriesModal" for="type" class=" rounded-xl p-1"></button>
             <div x-show="prevEntriesModal" name="" id="">
                 @foreach ($previous_entries as $entry)
-                    <div class="hover:cursor-pointer" wire:click="selectPrevCo2e('{{ $entry->total_household_co2e }}', '{{ $entry->id }}')">{{$entry->created_at}} : {{$entry->total_household_co2e}}</div>
+                    <div class="hover:cursor-pointer" wire:click="selectPrevCo2e('{{ $entry->total_co2e }}', '{{ $entry->id }}')">{{$entry->created_at}} : {{$entry->total_co2e}}</div>
                 @endforeach
             </div>
         </fieldset>
