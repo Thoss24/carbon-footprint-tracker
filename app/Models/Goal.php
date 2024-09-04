@@ -14,7 +14,8 @@ class Goal extends Model
         'target_date',
         'improve_percentage_goal',
         'previous_co2e',
-        'original_entry_id'
+        'original_entry_id',
+        'type'
     ];
 
 }

@@ -41,6 +41,7 @@ class SetGoals extends Component
             'type' => $this->type,
             'original_entry_id' => $this-> original_entry_id
         ]);
+       
     }
 
     public function selectPrevCo2e($co2e, $prev_id)
@@ -58,14 +59,17 @@ class SetGoals extends Component
                 $this->past_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 1)->get();
                 $this->checkGoalMet(); // check goals have been met each time a user changes the co2e type
                 break;
-            case 'transport':
+            case 'car':
                 $this->previous_entries = Car::where('user_id', $this->user_id)->get();
                 $this->active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
                 $this->past_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 1)->get();
                 $this->checkGoalMet(); // check goals have been met each time a user changes the co2e type
                 break;
-            case 'secondary':
-                
+            case 'flights':
+                break;
+            case 'bus & rail':
+                break;
+            case 'bus & rail':
                 break;
         }
 
@@ -88,9 +92,16 @@ class SetGoals extends Component
         
         switch($this->type){
             case 'household':
+                // calculate time betwwen last entry and todays date
                 $most_recently_submitted_data = Household::latest()->first();
                 break;
-            case 'transport':
+            case 'car':
+                $most_recently_submitted_data = []; // change when new types are added
+                break;
+            case 'flights':
+                $most_recently_submitted_data = []; // change when new types are added
+                break;
+            case 'bus & rail':
                 $most_recently_submitted_data = []; // change when new types are added
                 break;
             case 'secondary':
@@ -198,7 +209,17 @@ class SetGoals extends Component
 
     }
 
-    public function provideTransportSolutions($entryId, $goalId)
+    public function provideCarSolutions($entryId, $goalId)
+    {
+        // handle solution logic for each type
+    }
+
+    public function provideFlightsSolutions($entryId, $goalId)
+    {
+        // handle solution logic for each type
+    }
+
+    public function provideBusAndRailSolutions($entryId, $goalId)
     {
         // handle solution logic for each type
     }
@@ -214,8 +235,14 @@ class SetGoals extends Component
             case 'household':
                 $this->provideHouseholdSolutions($lastEntryId, $goalId);
                 break;
-            case 'transport':
-                $this->provideTransportSolutions($lastEntryId, $goalId);
+            case 'car':
+                $this->provideCarSolutions($lastEntryId, $goalId);
+                break;
+            case 'flights':
+                $this->provideFlightsSolutions($lastEntryId, $goalId);
+                break;
+            case 'bus & rail':
+                $this->provideBusAndRailSolutions($lastEntryId, $goalId);
                 break;
             case 'secondary':
                 $this->provideSecondarySolutions($lastEntryId, $goalId);

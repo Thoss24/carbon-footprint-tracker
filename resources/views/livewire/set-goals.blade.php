@@ -1,4 +1,5 @@
 <div class="flex flex-col mt-4 justify-between bg-white shadow-xl" x-data="{ prevEntriesModal: false }">
+    {{$type}}
     <section class="mt-2">
     <h2 class="text-2xl">All active goals: goals that havent been met yet</h2>
     @foreach ($active_goals as $active_goal)
@@ -19,7 +20,9 @@
             <select name="energy_type" id="energy_type" wire:model='type' wire:change='getPreviousEntryData'
                 class="border w-fit border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500">
                 <option value="household" selected>Household</option>
-                <option value="transport" selected>Transport</option>
+                <option value="car" selected>Car</option>
+                <option value="flights" selected>Flights</option>
+                <option value="bus & rail" selected>Bus & Rail</option>
                 <option value="secondary" selected>Secondary</option>
             </select>
         </fieldset>
