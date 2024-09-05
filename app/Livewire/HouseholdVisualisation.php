@@ -25,7 +25,7 @@ class HouseHoldVisualisation extends Component
         $this->user_id = $user->id;
 
         $this->household_entries = Household::where('user_id', $this->user_id)
-                                   ->pluck('total_household_co2e')
+                                   ->pluck('total_co2e')
                                    ->toArray();
         
         $this->labels = Household::where('user_id', $this->user_id)

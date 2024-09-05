@@ -1,5 +1,6 @@
 <div class="flex flex-col mt-4 justify-between bg-white shadow-xl" x-data="{ prevEntriesModal: false }">
-    {{$type}}
+    <p>Test amount: {{$test_amount}}</p>
+    <p>Test electricity: {{$test_electricity}}</p>
     <section class="mt-2">
     <h2 class="text-2xl">All active goals: goals that havent been met yet</h2>
     @foreach ($active_goals as $active_goal)

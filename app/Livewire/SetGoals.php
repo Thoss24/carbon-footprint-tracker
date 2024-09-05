@@ -21,6 +21,9 @@ class SetGoals extends Component
     public $active_goals; // all active goals
     public $past_goals; // achieved or not achieved goals
 
+    public $test_electricity;
+    public $test_amount;
+
     public function mount()
     {
         $user = Auth::user();
@@ -88,6 +91,7 @@ class SetGoals extends Component
     public function checkGoalMet()
     {
         $current_date = date('Y-m-d');
+        $last_entry_date = '';
         $most_recently_submitted_data = [];
         
         switch($this->type){
@@ -111,6 +115,12 @@ class SetGoals extends Component
 
         $active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
 
+        $most_recent_entry_date = explode(' ', $most_recently_submitted_data->created_at)[0];
+
+        $diff_in_seconds = strtotime($most_recent_entry_date) - strtotime($current_date);
+
+        $weeks = trim(floor($diff_in_seconds / (7 * 24 * 60 * 60)), '-');
+
         foreach ($active_goals as $goal) {
             if ($current_date >= $goal->target_date) {
                 $goal = Goal::find($goal->id);
@@ -118,13 +128,14 @@ class SetGoals extends Component
                 // compare most recently submitted household data with target co2e using the target %
                 $co2e_to_compare_against = $goal->previous_co2e;
                 $difference = $most_recently_submitted_data->total_household_co2e - $co2e_to_compare_against;
+
                 $percentage_diff = ($difference / $co2e_to_compare_against) * 100;
 
                 if ($percentage_diff < $goal->improve_percentage_goal) { // goal not met    
                     $goal->goal_met = 0;
                     $goal->goal_seen = 1;
                     $goal->save();
-                    $this->provideSolutions($most_recently_submitted_data->id, $goal->id);
+                    $this->provideSolutions($most_recently_submitted_data->id, $goal->id, $weeks);
                 } else { // goal met
                     $goal->goal_met = 1;
                     $goal->goal_seen = 1;
@@ -139,7 +150,7 @@ class SetGoals extends Component
         // award point if true - otherwise return data telling user goal was not met
     }
 
-    public function provideHouseholdSolutions($entryId, $goalId)
+    public function provideHouseholdSolutions($entryId, $goalId, $weeks)
     {
 
         $recommendations = [];
@@ -154,43 +165,46 @@ class SetGoals extends Component
         $householdPropane = $householdToAnalyse->propane;
         $householdWood = $householdToAnalyse->wood;
         
-        if (($householdElectricity / $householdSize) > 500) {
+        if (($householdElectricity / $householdSize) > 500 * $weeks) {
+
+            $this->test_amount = 500 * $weeks;
+            $this->test_electricity = $householdElectricity / $householdSize;
 
             $recommendation = array('Title'=>'Solution to reduce Electricity consumption', 'Description'=>'Choose appliances with a high energy rating, such as A+++, when shopping for new appliances. Take quick showers, turn off running taps when unused, and use the required amount of water while cooking. ');
 
             array_push($recommendations, $recommendation);
         }
-        if (($householdNaturalGas / $householdSize) > 300) {
+        if (($householdNaturalGas / $householdSize) > 300 * $weeks) {
 
             $recommendation = array('Title'=>'Solution to reduce Natural Gas consumption', 'Description'=>'Turn down the temperature on your radiator or boiler when you`re not using a room. Choose appliances that are designed to use less energy and gas. ');
 
             array_push($recommendations, $recommendation);
         }
-        if (($householdHeatingOil / $householdSize) > 30) {
+        if (($householdHeatingOil / $householdSize) > 30 * $weeks) {
 
             $recommendation = array('Title'=>'Solution to reduce Heating Oil consumption', 'Description'=>'Insulation helps maintain your home`s temperature and reduce fuel usage. Lower the temperature on your thermostat, even by one degree.');
 
             array_push($recommendations, $recommendation);
         }
-        if (($householdCoal / $householdSize) > 20) {
+        if (($householdCoal / $householdSize) > 20 * $weeks) {
 
             $recommendation = array('Title'=>'Solution to reduce Coal consumption', 'Description'=>'Upgrade insulation in walls, roofs, and floors to minimize heat loss. Proper insulation helps maintain indoor temperatures, reducing the need for heating. Identify and seal drafts around windows, doors, and other openings to prevent heat loss. If available, transitioning to natural gas heating can be a cleaner alternative to coal.');
 
             array_push($recommendations, $recommendation);
         }
-        if (($householdLpg / $householdSize) > 30) {
+        if (($householdLpg / $householdSize) > 30 * $weeks) {
 
             $recommendation = array('Title'=>'Solution to reduce LPG consumption', 'Description'=>'Invest in energy-efficient gas stoves or induction cooktops, which can use gas more efficiently. If you use LPG for heating, consider lowering the thermostat a few degrees. Use microwaves or slow cookers for meals that don’t require a stove, as they can be more efficient.');
 
             array_push($recommendations, $recommendation);
         }
-        if (($householdPropane / $householdSize) > 20) {
+        if (($householdPropane / $householdSize) > 20 * $weeks) {
 
             $recommendation = array('Title'=>'Solution to reduce Propane consumption', 'Description'=>' Set your thermostat a few degrees lower in winter. Each degree can reduce usage significantly. Set heating schedules to lower temperatures when you’re not home. Insulate attics, walls, and floors to minimize heat loss. Invest in high-efficiency propane appliances, such as furnaces, water heaters, and stoves, which use less fuel.');
 
             array_push($recommendations, $recommendation);
         }
-        if (($householdWood / $householdSize) > 40) {
+        if (($householdWood / $householdSize) > 40 * $weeks) {
 
             $recommendation = array('Title'=>'Solution to reduce Propane consumption', 'Description'=>'Enhance insulation in your home to retain heat, reducing the need for wood heating.  Use high-efficiency wood stoves or fireplaces that burn wood more completely and produce less waste. Consider using electric heaters, propane, or natural gas as alternatives to reduce reliance on wood. Use properly seasoned wood, which burns more efficiently and produces less smoke.');
 
@@ -209,43 +223,43 @@ class SetGoals extends Component
 
     }
 
-    public function provideCarSolutions($entryId, $goalId)
+    public function provideCarSolutions($entryId, $goalId, $weeks)
     {
         // handle solution logic for each type
     }
 
-    public function provideFlightsSolutions($entryId, $goalId)
+    public function provideFlightsSolutions($entryId, $goalId, $weeks)
     {
         // handle solution logic for each type
     }
 
-    public function provideBusAndRailSolutions($entryId, $goalId)
+    public function provideBusAndRailSolutions($entryId, $goalId, $weeks)
     {
         // handle solution logic for each type
     }
 
-    public function provideSecondarySolutions($entryId, $goalId)
+    public function provideSecondarySolutions($entryId, $goalId, $weeks)
     {
         // handle solution logic for each type
     }
 
-    public function provideSolutions($lastEntryId, $goalId)
+    public function provideSolutions($lastEntryId, $goalId, $weeks)
     {
         switch($this->type){
             case 'household':
-                $this->provideHouseholdSolutions($lastEntryId, $goalId);
+                $this->provideHouseholdSolutions($lastEntryId, $goalId, $weeks);
                 break;
             case 'car':
-                $this->provideCarSolutions($lastEntryId, $goalId);
+                $this->provideCarSolutions($lastEntryId, $goalId, $weeks);
                 break;
             case 'flights':
-                $this->provideFlightsSolutions($lastEntryId, $goalId);
+                $this->provideFlightsSolutions($lastEntryId, $goalId, $weeks);
                 break;
             case 'bus & rail':
-                $this->provideBusAndRailSolutions($lastEntryId, $goalId);
+                $this->provideBusAndRailSolutions($lastEntryId, $goalId, $weeks);
                 break;
             case 'secondary':
-                $this->provideSecondarySolutions($lastEntryId, $goalId);
+                $this->provideSecondarySolutions($lastEntryId, $goalId, $weeks);
                 break;
         }
     }
