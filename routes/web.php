@@ -32,6 +32,10 @@ Route::middleware([
         return view('secondary-carbon-footprint');
     })->name('secondary-carbon-footprint');
 
+    Route::get('/data-history-view/{data_type}', function () {
+        return view('data-history-view');
+    })->name('data-history-view');
+
 });
 
 

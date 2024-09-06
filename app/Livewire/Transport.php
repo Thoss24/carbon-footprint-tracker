@@ -25,6 +25,7 @@ class Transport extends Component
 
     public function addCarData()
     {
+        // add claculations here for total_co2e
         Car::create([
             'user_id' => $this->user_id,
             'mileage' => $this->mileage,

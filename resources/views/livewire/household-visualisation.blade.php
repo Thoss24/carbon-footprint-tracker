@@ -4,6 +4,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <body>
         <div class="mt-4 rounded-xl">
+            <button class="rounded-xl bg-emerald-400 p-1">
+            <a class="no-underline text-white font-medium" href="{{ route('data-history-view', ['data_type' => 'household']) }}">View Household Data History</a>
+            </button>
             <div class="card">
                 <form action="">
                     <select wire:model="chart_type" wire:change="updateChartType">
@@ -12,8 +15,7 @@
                         <option value="bar">Bar Chart</option>
                         <option value="radar">Radar Chart</option>
                     </select>
-                </form>
-    
+                </form>    
                 <div style="width: 100vw; height: 400px" class="card-body">
                     <canvas id="myChart"></canvas>
                     
