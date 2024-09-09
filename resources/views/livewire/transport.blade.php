@@ -4,12 +4,11 @@
         content="Are you sure you want to submit this data?" submitData='addCarData' />
 
     <h1 class="underline text-xl">Transport carbon footprint</h1>
-
     <section>
         <h2 class="underline text-xl">Car</h2>
         <form action="">
             <fieldset class="flex flex-row">
-                <label for="mileage">Mileage: </label>
+                <label for="mileage">Miles Travelled: </label>
                 <input wire:model='mileage' id="mileage" type="number">
                 <select name="mileage_metric" wire:model='mileage_metric' id="mileage_metric">
                     <option value="miles" selected>Miles</option>
@@ -17,10 +16,17 @@
                 </select>
             </fieldset>
             <fieldset>
-                <label for="fuel_used">Fuel used: </label>
+                <label for="fuel_used">Fuel Efficiency: </label>
                 <input wire:model='fuel_used' id="fuel_used" type="number">
                 <select name="fuel_metric" wire:model='fuel_metric' id="fuel_metric">
                     <option value="gallons" selected>Gallons</option>
+                </select>
+            </fieldset>
+            <fieldset>
+                <label for="fuel_used">Fuel Type: </label>
+                <select name="fuel_type" wire:model='fuel_type' id="fuel_type">
+                    <option value="diesel" selected>Diesel</option>
+                    <option value="petrol">Petrol</option>
                 </select>
             </fieldset>
         </form>

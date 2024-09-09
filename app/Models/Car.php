@@ -16,7 +16,9 @@ class Car extends Model
         'mileage',
         'mileage_metric',
         'fuel_used',
-        'fuel_metric'
+        'fuel_type',
+        'fuel_metric',
+        'total_co2e'
     ];
 
     public function user() 

@@ -100,7 +100,7 @@ class SetGoals extends Component
                 $most_recently_submitted_data = Household::latest()->first();
                 break;
             case 'car':
-                $most_recently_submitted_data = []; // change when new types are added
+                $most_recently_submitted_data = Car::latest()->first(); // change when new types are added
                 break;
             case 'flights':
                 $most_recently_submitted_data = []; // change when new types are added
