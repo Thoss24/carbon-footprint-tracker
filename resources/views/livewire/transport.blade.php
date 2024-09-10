@@ -1,9 +1,11 @@
 <div x-data="{ previousTransportEntriesDisplaying: false, conformationModalDisplaying: false }" class="p-2">
 
     <x-dialog-confirmation-modal title="Add Transport Carbon Footprint Data"
-        content="Are you sure you want to submit this data?" submitData='addCarData' />
+        content="Are you sure you want to submit this data?" submitData='addTransportData' />
 
     <h1 class="underline text-xl">Transport carbon footprint</h1>
+
+    {{-- Car transport data --}}
     <section>
         <h2 class="underline text-xl">Car</h2>
         <form action="">
@@ -28,6 +30,19 @@
                     <option value="diesel" selected>Diesel</option>
                     <option value="petrol">Petrol</option>
                 </select>
+            </fieldset>
+
+    {{-- Flights transport data --}}
+    
+        <h2 class="underline text-xl">Flights</h2>
+        
+            <fieldset class="flex flex-row">
+                <label for="distance">Distance Travelled in Miles: </label>
+                <input wire:model='distance' id="distance" type="number">
+            </fieldset>
+            <fieldset>
+                <label for="num_passengers">Number of passengers: </label>
+                <input type="number" id="num_passengers" wire:model='num_passengers'>
             </fieldset>
         </form>
     </section>

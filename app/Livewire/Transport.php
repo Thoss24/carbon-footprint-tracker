@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Car;
+use App\Models\Flights;
 use Illuminate\Support\Facades\Auth;
 
 class Transport extends Component
@@ -12,11 +13,14 @@ class Transport extends Component
     public $responseMessage;
     public $user_id;
     // car variables
-    public $mileage;
+    public $mileage = 0;
     public $mileage_metric = 'miles';
-    public $fuel_used; // fuel used MPG
+    public $fuel_used = 0; // fuel used MPG
     public $fuel_type = 'diesel';
     public $fuel_metric = 'gallons';
+    // flights variables
+    public $distance  = 0;
+    public $num_passengers = 0;
 
     public $test;
 
@@ -26,11 +30,29 @@ class Transport extends Component
         $this->user_id = $user->id;
     }
 
-    public function addCarData()
+    public function addFlightsData()
+    {
+        $emission_factor = 0.14;
+        $total_co2e =  $this->distance * $emission_factor * $this->num_passengers;
+
+        Flights::create([
+            'user_id' => $this->user_id,
+            'distance' => $this->distance,
+            'num_passengers' => $this->num_passengers,
+            'total_co2e' => $total_co2e
+        ]);
+
+    }
+
+    public function addTransportData()
     {
 
-       # $car_co2e_total = $this->mileage 
+        if ($this->mileage == 0 || $this->fuel_used == 0) {
+            $this->addFlightsData();
+            return;
+        }
 
+       # $car_co2e_total = $this->mileage 
        $fuelUsed = $this->mileage / $this->fuel_used;
 
        $emissionFactors = [
@@ -54,7 +76,7 @@ class Transport extends Component
         $this->test = $co2eInTonnes;
 
         // add claculations here for total_co2e
-        Car::create([
+        if (Car::create([
             'user_id' => $this->user_id,
             'mileage' => $this->mileage,
             'mileage_metric' => $this->mileage_metric,
@@ -62,7 +84,9 @@ class Transport extends Component
             'fuel_type' => $this->fuel_type,
             'fuel_metric' => $this->fuel_metric,
             'total_co2e' => $co2eInKg
-        ]);
+        ])) {
+            $this->addFlightsData();
+        };
     }
 
     public function render()
