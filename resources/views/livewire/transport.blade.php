@@ -31,11 +31,8 @@
                     <option value="petrol">Petrol</option>
                 </select>
             </fieldset>
-
     {{-- Flights transport data --}}
-    
         <h2 class="underline text-xl">Flights</h2>
-        
             <fieldset class="flex flex-row">
                 <label for="distance">Distance Travelled in Miles: </label>
                 <input wire:model='distance' id="distance" type="number">
@@ -44,6 +41,50 @@
                 <label for="num_passengers">Number of passengers: </label>
                 <input type="number" id="num_passengers" wire:model='num_passengers'>
             </fieldset>
+    {{-- Bus & Rail transport data --}}
+        <h2 class="underline text-xl">Bus & Rail</h2>
+        <fieldset class="flex flex-row">
+            <label for="bus_distance">Bus miles travelled </label>
+            <input wire:model='bus_distance' id="bus_distance" type="number">
+            <select name="bus_distance_metric" id="bus_distance_metric">
+                <option value="bus_distance_metric" selected>Miles</option>
+            </select>
+        </fieldset>
+        <fieldset class="flex flex-row">
+            <label for="coach_distance">Coach miles travelled </label>
+            <input wire:model='coach_distance' id="coach_distance" type="number">
+            <select name="coach_distance_metric" id="coach_distance_metric">
+                <option value="coach_distance_metric" selected>Miles</option>
+            </select>
+        </fieldset>
+        <fieldset class="flex flex-row">
+            <label for="train_distance">Train miles travelled </label>
+            <input wire:model='train_distance' id="train_distance" type="number">
+            <select name="train_distance_metric" id="train_distance_metric">
+                <option value="train_distance_metric" selected>Miles</option>
+            </select>
+        </fieldset>
+        <fieldset class="flex flex-row">
+            <label for="tram_distance">Tram miles travelled </label>
+            <input wire:model='tram_distance' id="tram_distance" type="number">
+            <select name="tram_distance_metric" id="tram_distance_metric">
+                <option value="tram_distance_metric" selected>Miles</option>
+            </select>
+        </fieldset>
+        <fieldset class="flex flex-row">
+            <label for="subway_distance">Subway miles travelled </label>
+            <input wire:model='subway_distance' id="subway_distance" type="number">
+            <select name="subway_distance_metric" id="subway_distance_metric">
+                <option value="subway_distance_metric" selected>Miles</option>
+            </select>
+        </fieldset>
+        <fieldset class="flex flex-row">
+            <label for="taxi_distance">Taxi miles travelled </label>
+            <input wire:model='taxi_distance' id="taxi_distance" type="number">
+            <select name="taxi_distance_metric" id="taxi_distance_metric">
+                <option value="taxi_distance_metric" selected>Miles</option>
+            </select>
+        </fieldset>
         </form>
     </section>
 
@@ -67,6 +108,8 @@
          
         </div>
     </section> --}}
+
+    <livewire:carbon-footprint-data-visualisation />
 
 </div>
 

@@ -19,7 +19,7 @@
                 <option value="secondary">Secondary</option>
                 <option value="car">Car</option>
                 <option value="flights">Flights</option>
-                <option value="bus & rail">Bus and Rail</option>
+                <option value="bus&rail">Bus and Rail</option>
             </select>
         </div>
         <div class="flex flex-col">
@@ -63,6 +63,9 @@
     </section>
     <section>
     </section>
+
+    {{-- Household carbon footrpint area --}}
+
     @if ($data_type == 'household')
         <div class="container mt-4 overflow-x-auto">
             <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-lg">
@@ -146,32 +149,167 @@
             </table>
         </div>
     @endif
+
+    {{-- Car carbon footprint data area --}}
+
     @if ($data_type == 'car')
-        @foreach ($data_history as $history)
-            <div class="container mt-4 overflow-x-auto">
-                <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-lg">
-                    <thead class="">
-                        <tr class="bg-emerald-500 text-white">
-                            <th class="py-3 px-5 border-b">Mileage</th>
-                            <th class="py-3 px-5 border-b">Fuel used</th>
-                            <th class="py-3 px-5 border-b">Total Co2e</th>
-                            <th class="py-3 px-5 border-b">Created at</th>
+    <div class="container mt-4 overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-lg">
+            <thead>
+                <tr class="bg-emerald-500 text-white">
+                    <th class="py-3 px-5 border-b">Mileage</th>
+                    <th class="py-3 px-5 border-b">Fuel Used</th>
+                    <th class="py-3 px-5 border-b">Total Co2e</th>
+                    <th class="py-3 px-5 border-b">Created at</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (count($comparison_entries) < 2)
+                    @foreach ($data_history as $history)
+                        <tr class="hover:bg-gray-100">
+                            <td class="py-3 px-5 border-b text-center">{{ $history->mileage }}
+                                {{ $history->mileage_metric }}</td>
+                            <td class="py-3 px-5 border-b text-center">{{ $history->fuel_used }}
+                                {{ $history->fuel_used_metric }}</td>
+                            <td class="py-3 px-5 border-b text-center">{{ $history->total_co2e }}</td>
+                            <td class="py-3 px-5 border-b text-center">{{ $history->created_at }}</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($data_history as $history)
-                            <tr class="hover:bg-gray-100">
-                                <td class="py-3 px-5 border-b text-center">{{ $history->mileage }}
-                                    {{ $history->mileage_metric }}</td>
-                                <td class="py-3 px-5 border-b text-center">{{ $history->fuel_used }}
-                                    {{ $history->fuel_metric }}</td>
-                                <td class="py-3 px-5 border-b text-center">{{ $history->total_co2e }}</td>
-                                <td class="py-3 px-5 border-b text-center">{{ $history->created_at }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        @endforeach
-    @endif
+                    @endforeach
+                @else
+                    @foreach ($comparison_entries as $comparison_entry)
+                        <tr class="hover:bg-gray-100">
+                            <td class="py-3 px-5 border-b text-center">{{ $comparison_entry->mileage }}
+                                {{ $comparison_entry->mileage_metric }}
+                                <strong
+                                    class="{{ substr($comparison_entry->mileage_diff, 0, 1) == '-' ? 'text-emerald-400' : 'text-red-400' }}">{{ $comparison_entry->mileage_diff }}</strong>
+                            </td>
+                            <td class="py-3 px-5 border-b text-center">{{ $comparison_entry->fuel_used }}
+                                {{ $comparison_entry->fuel_used_metric }}
+                                <strong class="{{ substr($comparison_entry->fuel_used_diff, 0, 1) == '-' ? 'text-emerald-400' : 'text-red-400' }}">{{ $comparison_entry->fuel_used_diff }}</strong>
+                            </td>
+                            <td class="py-3 px-5 border-b text-center">{{ $comparison_entry->total_co2e }}
+                                <strong class="{{ substr($comparison_entry->total_co2e_diff, 0, 1) == '-' ? 'text-emerald-400' : 'text-red-400' }}">{{ $comparison_entry->total_co2e_diff }}</strong>
+                            </td>
+                            <td class="py-3 px-5 border-b text-center">{{ $comparison_entry->created_at }}</td>
+                        </tr>
+                    @endforeach
+                @endif
+            </tbody>
+        </table>
+    </div>
+@endif
+
+    {{-- Flights carbon footprint data area --}}
+
+@if ($data_type == 'flights')
+    <div class="container mt-4 overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-lg">
+            <thead>
+                <tr class="bg-emerald-500 text-white">
+                    <th class="py-3 px-5 border-b">Distance - Miles</th>
+                    <th class="py-3 px-5 border-b">Total Co2e</th>
+                    <th class="py-3 px-5 border-b">Created at</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (count($comparison_entries) < 2)
+                    @foreach ($data_history as $history)
+                        <tr class="hover:bg-gray-100">
+                            <td class="py-3 px-5 border-b text-center">{{ $history->distance }}
+                                {{ $history->mileage_metric }}</td>
+                            <td class="py-3 px-5 border-b text-center">{{ $history->total_co2e }}</td>
+                            <td class="py-3 px-5 border-b text-center">{{ $history->created_at }}</td>
+                        </tr>
+                    @endforeach
+                @else
+                    @foreach ($comparison_entries as $comparison_entry)
+                        <tr class="hover:bg-gray-100">
+                            <td class="py-3 px-5 border-b text-center">{{ $comparison_entry->distance }}
+                                <strong
+                                    class="{{ substr($comparison_entry->distance_diff, 0, 1) == '-' ? 'text-emerald-400' : 'text-red-400' }}">{{ $comparison_entry->distance_diff }}</strong>
+                            </td>
+                            <td class="py-3 px-5 border-b text-center">{{ $comparison_entry->total_co2e }}
+                                {{ $comparison_entry->total_co2e_metric }}
+                                <strong class="{{ substr($comparison_entry->total_co2e_diff, 0, 1) == '-' ? 'text-emerald-400' : 'text-red-400' }}">{{ $comparison_entry->total_co2e_diff }}</strong>
+                            </td>
+                            <td class="py-3 px-5 border-b text-center">{{ $comparison_entry->created_at }}</td>
+                        </tr>
+                    @endforeach
+                @endif
+            </tbody>
+        </table>
+    </div>
+@endif
+
+    {{-- Bus & rail carbon footprint data area --}}
+
+@if ($data_type == 'bus&rail')
+    <div class="container mt-4 overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-lg">
+            <thead>
+                <tr class="bg-emerald-500 text-white">
+                    <th class="py-3 px-5 border-b">Bus distance</th>
+                    <th class="py-3 px-5 border-b">Coach distance</th>
+                    <th class="py-3 px-5 border-b">Train distance</th>
+                    <th class="py-3 px-5 border-b">Tram distance</th>
+                    <th class="py-3 px-5 border-b">Subway distance</th>
+                    <th class="py-3 px-5 border-b">Taxi distance</th>
+                    <th class="py-3 px-5 border-b">Total Co2e</th>
+                    <th class="py-3 px-5 border-b">Created at</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (count($comparison_entries) < 2)
+                    @foreach ($data_history as $history)
+                        <tr class="hover:bg-gray-100">
+                            <td class="py-3 px-5 border-b text-center">{{ $history->bus_distance }}</td>
+                            <td class="py-3 px-5 border-b text-center">{{ $history->coach_distance }}</td>
+                            <td class="py-3 px-5 border-b text-center">{{ $history->train_distance }}</td>
+                            <td class="py-3 px-5 border-b text-center">{{ $history->tram_distance }}</td>
+                            <td class="py-3 px-5 border-b text-center">{{ $history->subway_distance }}</td>
+                            <td class="py-3 px-5 border-b text-center">{{ $history->taxi_distance }}</td>
+                            <td class="py-3 px-5 border-b text-center">{{ $history->total_co2e }}</td>
+                            <td class="py-3 px-5 border-b text-center">{{ $history->created_at }}</td>
+                        </tr>
+                    @endforeach
+                @else
+                    @foreach ($comparison_entries as $comparison_entry)
+                        <tr class="hover:bg-gray-100">
+                            <td class="py-3 px-5 border-b text-center">{{ $comparison_entry->bus_distance }}
+                                <strong
+                                    class="{{ substr($comparison_entry->bus_distance_diff, 0, 1) == '-' ? 'text-emerald-400' : 'text-red-400' }}">{{ $comparison_entry->bus_distance_diff }}</strong>
+                            </td>
+                            <td class="py-3 px-5 border-b text-center">{{ $comparison_entry->coach_distance }}
+                                <strong
+                                    class="{{ substr($comparison_entry->coach_distance_diff, 0, 1) == '-' ? 'text-emerald-400' : 'text-red-400' }}">{{ $comparison_entry->coach_distance_diff }}</strong>
+                            </td>
+                            <td class="py-3 px-5 border-b text-center">{{ $comparison_entry->train_distance }}
+                                <strong
+                                    class="{{ substr($comparison_entry->train_distance_diff, 0, 1) == '-' ? 'text-emerald-400' : 'text-red-400' }}">{{ $comparison_entry->train_distance_diff }}</strong>
+                            </td>
+                            <td class="py-3 px-5 border-b text-center">{{ $comparison_entry->tram_distance }}
+                                <strong
+                                    class="{{ substr($comparison_entry->tram_distance_diff, 0, 1) == '-' ? 'text-emerald-400' : 'text-red-400' }}">{{ $comparison_entry->tram_distance_diff }}</strong>
+                            </td>
+                            <td class="py-3 px-5 border-b text-center">{{ $comparison_entry->subway_distance }}
+                                <strong
+                                    class="{{ substr($comparison_entry->subway_distance_diff, 0, 1) == '-' ? 'text-emerald-400' : 'text-red-400' }}">{{ $comparison_entry->subway_distance_diff }}</strong>
+                            </td>
+                            <td class="py-3 px-5 border-b text-center">{{ $comparison_entry->taxi_distance }}
+                                <strong
+                                    class="{{ substr($comparison_entry->taxi_distance_diff, 0, 1) == '-' ? 'text-emerald-400' : 'text-red-400' }}">{{ $comparison_entry->taxi_distance_diff }}</strong>
+                            </td>
+                            <td class="py-3 px-5 border-b text-center">{{ $comparison_entry->total_co2e }}
+                                {{ $comparison_entry->total_co2e_metric }}
+                                <strong class="{{ substr($comparison_entry->total_co2e_diff, 0, 1) == '-' ? 'text-emerald-400' : 'text-red-400' }}">{{ $comparison_entry->total_co2e_diff }}</strong>
+                            </td>
+                            <td class="py-3 px-5 border-b text-center">{{ $comparison_entry->created_at }}</td>
+                        </tr>
+                    @endforeach
+                @endif
+            </tbody>
+        </table>
+    </div>
+@endif
+
 </div>

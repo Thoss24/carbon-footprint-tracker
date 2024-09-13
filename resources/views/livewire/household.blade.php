@@ -103,7 +103,7 @@
             @endif
         </div>
     </section>
-    <livewire:household-visualisation />
+    <livewire:carbon-footprint-data-visualisation />
 </div>
 
 <script>

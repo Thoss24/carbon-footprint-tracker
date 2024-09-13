@@ -5,6 +5,8 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Household;
 use App\Models\Car;
+use App\Models\Flights;
+use App\Models\BusAndRail;
 
 class DataHistory extends Component
 {
@@ -34,12 +36,21 @@ class DataHistory extends Component
 
     public function switchType()
     {
+
+        $this->clearComparison();
+
         switch($this->data_type){
             case 'household':
                 $this->data_history = Household::all();
                 break;
             case 'car':
                 $this->data_history = Car::all();
+                break;
+            case 'flights':
+                $this->data_history = Flights::all();
+                break;
+            case 'bus&rail':
+                $this->data_history = BusAndRail::all();
                 break;
         }
     }
@@ -56,6 +67,14 @@ class DataHistory extends Component
             case 'car':
                 $this->compare_entry = Car::find($entryId);
                 $this->compare_to_entries = Car::where('id', '!=', $entryId)->get();
+                break;
+            case 'flights':
+                $this->compare_entry = Flights::find($entryId);
+                $this->compare_to_entries = Flights::where('id', '!=', $entryId)->get();
+                break;
+            case 'bus&rail':
+                $this->compare_entry = BusAndRail::find($entryId);
+                $this->compare_to_entries = BusAndRail::where('id', '!=', $entryId)->get();
                 break;
         }
         // select entry from filtered list 
@@ -110,6 +129,75 @@ class DataHistory extends Component
 
     public function calculateCarDiff()
     {   
+        // mileage
+        $mileage_absolute_diff = $this->compare_entry->mileage - $this->compare_to_entry->mileage;
+        $mileage_average = ($this->compare_entry->mileage + $this->compare_to_entry->mileage) / 2;
+        $this->compare_entry->mileage_diff = round(($mileage_absolute_diff / $mileage_average) * 100, 2) . '%';
+
+        // fuel used
+        $fuel_used_absolute_diff = $this->compare_entry->fuel_used - $this->compare_to_entry->fuel_used;
+        $fuel_used_average = ($this->compare_entry->fuel_used + $this->compare_to_entry->fuel_used) / 2;
+        $this->compare_entry->fuel_used_diff = round(($fuel_used_absolute_diff / $fuel_used_average) * 100, 2) . '%';
+
+        // total co2e used
+        $total_co2e_absolute_diff = $this->compare_entry->total_co2e - $this->compare_to_entry->total_co2e;
+        $total_co2e_average = ($this->compare_entry->total_co2e + $this->compare_to_entry->total_co2e) / 2;
+        $this->compare_entry->total_co2e_diff = round(($total_co2e_absolute_diff / $total_co2e_average) * 100, 2) . '%';
+
+        array_push($this->comparison_entries,  $this->compare_entry);
+    }
+
+    public function calculateFlightsDiff()
+    {   
+        // distance
+        $distance_absolute_diff = $this->compare_entry->distance - $this->compare_to_entry->distance;
+        $distance_average = ($this->compare_entry->distance + $this->compare_to_entry->distance) / 2;
+        $this->compare_entry->distance_diff = round(($distance_absolute_diff / $distance_average) * 100, 2) . '%';
+
+        // total co2e used
+        $total_co2e_absolute_diff = $this->compare_entry->total_co2e - $this->compare_to_entry->total_co2e;
+        $total_co2e_average = ($this->compare_entry->total_co2e + $this->compare_to_entry->total_co2e) / 2;
+        $this->compare_entry->total_co2e_diff = round(($total_co2e_absolute_diff / $total_co2e_average) * 100, 2) . '%';
+
+        array_push($this->comparison_entries,  $this->compare_entry);
+    }
+
+    public function calculateBusAndRailDiff()
+    {   
+        // bus distance
+        $bus_distance_absolute_diff = $this->compare_entry->bus_distance - $this->compare_to_entry->bus_distance;
+        $bus_distance_average = ($this->compare_entry->bus_distance + $this->compare_to_entry->bus_distance) / 2;
+        $this->compare_entry->bus_distance_diff = round(($bus_distance_absolute_diff / $bus_distance_average) * 100, 2) . '%';
+
+        // coach distance
+        $coach_distance_absolute_diff = $this->compare_entry->coach_distance - $this->compare_to_entry->coach_distance;
+        $coach_distance_average = ($this->compare_entry->coach_distance + $this->compare_to_entry->coach_distance) / 2;
+        $this->compare_entry->coach_distance_diff = round(($coach_distance_absolute_diff / $coach_distance_average) * 100, 2) . '%';
+
+        // train distance
+        $train_distance_absolute_diff = $this->compare_entry->train_distance - $this->compare_to_entry->train_distance;
+        $train_distance_average = ($this->compare_entry->train_distance + $this->compare_to_entry->train_distance) / 2;
+        $this->compare_entry->train_distance_diff = round(($train_distance_absolute_diff / $train_distance_average) * 100, 2) . '%';
+
+        // tram distance
+        $tram_distance_absolute_diff = $this->compare_entry->tram_distance - $this->compare_to_entry->tram_distance;
+        $tram_distance_average = ($this->compare_entry->tram_distance + $this->compare_to_entry->tram_distance) / 2;
+        $this->compare_entry->tram_distance_diff = round(($tram_distance_absolute_diff / $tram_distance_average) * 100, 2) . '%';
+
+        // subway distance
+        $subway_distance_absolute_diff = $this->compare_entry->subway_distance - $this->compare_to_entry->subway_distance;
+        $subway_distance_average = ($this->compare_entry->subway_distance + $this->compare_to_entry->subway_distance) / 2;
+        $this->compare_entry->subway_distance_diff = round(($subway_distance_absolute_diff / $subway_distance_average) * 100, 2) . '%';
+
+        // taxi distance
+        $taxi_distance_absolute_diff = $this->compare_entry->taxi_distance - $this->compare_to_entry->taxi_distance;
+        $taxi_distance_average = ($this->compare_entry->taxi_distance + $this->compare_to_entry->taxi_distance) / 2;
+        $this->compare_entry->taxi_distance_diff = round(($taxi_distance_absolute_diff / $taxi_distance_average) * 100, 2) . '%';
+
+        // total co2e used
+        $total_co2e_absolute_diff = $this->compare_entry->total_co2e - $this->compare_to_entry->total_co2e;
+        $total_co2e_average = ($this->compare_entry->total_co2e + $this->compare_to_entry->total_co2e) / 2;
+        $this->compare_entry->total_co2e_diff = round(($total_co2e_absolute_diff / $total_co2e_average) * 100, 2) . '%';
 
         array_push($this->comparison_entries,  $this->compare_entry);
     }
@@ -127,6 +215,16 @@ class DataHistory extends Component
             case 'car':
                 $this->compare_to_entry = Car::find($entryId);
                 $this->calculateCarDiff();
+                array_push($this->comparison_entries,  $this->compare_to_entry);
+                break;
+            case 'flights':
+                $this->compare_to_entry = Flights::find($entryId);
+                $this->calculateFlightsDiff();
+                array_push($this->comparison_entries,  $this->compare_to_entry);
+                break;
+            case 'bus&rail':
+                $this->compare_to_entry = BusAndRail::find($entryId);
+                $this->calculateBusAndRailDiff();
                 array_push($this->comparison_entries,  $this->compare_to_entry);
                 break;
         }

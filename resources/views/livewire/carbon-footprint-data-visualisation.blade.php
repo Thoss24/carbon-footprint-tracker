@@ -10,12 +10,20 @@
             <div class="card">
                 <form action="">
                     <select wire:model="chart_type" wire:change="updateChartType">
-                        <option value="line" selected>Line Chart</option>
-                        <option value="bubble">Bubble Chart</option>
+                        <option value="line" selected>Line Chart</option> 
                         <option value="bar">Bar Chart</option>
-                        <option value="radar">Radar Chart</option>
                     </select>
-                </form>    
+                </form> 
+                @if ($url == 'log-transport-carbon-footprint')
+                    <form action="">
+                        <label for="transport_type">Select transport type</label>
+                        <select wire:model="transport_type" wire:change='updateTransportType'>
+                            <option value="car" selected>Car</option> 
+                            <option value="flights">Flights</option>
+                            <option value="bus&rail">Bus & Rail</option>
+                        </select>
+                    </form>   
+                @endif 
                 <div style="width: 100vw; height: 400px" class="card-body">
                     <canvas id="myChart"></canvas>
                     
@@ -24,8 +32,6 @@
 
                         function createChart(chartType, labels, data) {
                             let ctx = document.getElementById('myChart'); // Get context
-                            // let labels = {!! json_encode($labels) !!}; // Ensure this is updated dynamically
-                            // let data = {!! json_encode($household_entries) !!}; // Ensure this is updated dynamically
 
                             if (myChart) {
                                 myChart.destroy(); // Destroy if already exists
@@ -58,11 +64,11 @@
 
                         document.addEventListener('livewire:init', () => {
                             console.log("INIT");
-                            createChart(@json($chart_type), @json($labels), @json($household_entries)); // Initial chart creation
+                            createChart(@json($chart_type), @json($labels), @json($entries)); // Initial chart creation
 
                             Livewire.on('updateChart', function () {
                                 console.log("Updating chart");
-                                createChart(@this.chart_type, @this.labels, @this.household_entries); // Use @this to access the current Livewire property
+                                createChart(@this.chart_type, @this.labels, @this.entries); // Use @this to access the current Livewire property
                             });
                         });
                     </script>
