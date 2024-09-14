@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Household;
 use App\Models\Car;
 use App\Models\Flights;
+use App\Models\Secondary;
 use App\Models\BusAndRail;
 use Illuminate\Support\Facades\Auth;
 
@@ -78,7 +79,13 @@ class CarbonFootprintDataVisualisation extends Component
 
     public function getSecondaryData()
     {
-        
+        $this->entries = Secondary::where('user_id', $this->user_id)
+        ->pluck('total_co2e')
+        ->toArray();
+
+        $this->labels = Secondary::where('user_id', $this->user_id)
+        ->pluck('created_at')
+        ->toArray();
     }
 
     public function mount()

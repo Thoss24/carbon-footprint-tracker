@@ -7,6 +7,9 @@ use App\Models\Goal;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Household;
 use App\Models\Car;
+use App\Models\Flights;
+use App\Models\BusAndRail;
+use App\Models\Secondary;
 use App\Models\Solution;
 
 class SetGoals extends Component
@@ -69,23 +72,24 @@ class SetGoals extends Component
                 $this->checkGoalMet(); // check goals have been met each time a user changes the co2e type
                 break;
             case 'flights':
+                $this->previous_entries = Flights::where('user_id', $this->user_id)->get();
+                $this->active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
+                $this->past_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 1)->get();
+                $this->checkGoalMet(); // check goals have been met each time a user changes the co2e type
                 break;
             case 'bus & rail':
+                $this->previous_entries = BusAndRail::where('user_id', $this->user_id)->get();
+                $this->active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
+                $this->past_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 1)->get();
+                $this->checkGoalMet(); // check goals have been met each time a user changes the co2e type
                 break;
-            case 'bus & rail':
+            case 'secondary':
+                $this->previous_entries = Secondary::where('user_id', $this->user_id)->get();
+                $this->active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
+                $this->past_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 1)->get();
+                $this->checkGoalMet(); // check goals have been met each time a user changes the co2e type
                 break;
         }
-
-        // if ($this->type == 'household') {
-        //     $this->previous_entries = Household::where('user_id', $this->user_id)->get();
-        //     $this->active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
-        //     $this->past_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 1)->get();
-        //     $this->checkGoalMet(); // check goals have been met each time a user changes the co2e type
-        // } else {
-        //     $this->previous_entries = []; // replace with other co2e types
-        //     $this->active_goals  = []; // replace with co2e types
-        //     $this->past_goals = [];
-        // }
     }
 
     public function checkGoalMet()
@@ -103,13 +107,13 @@ class SetGoals extends Component
                 $most_recently_submitted_data = Car::latest()->first(); // change when new types are added
                 break;
             case 'flights':
-                $most_recently_submitted_data = []; // change when new types are added
+                $most_recently_submitted_data = Flights::latest()->first(); // change when new types are added
                 break;
             case 'bus & rail':
-                $most_recently_submitted_data = []; // change when new types are added
+                $most_recently_submitted_data = BusAndRail::latest()->first(); // change when new types are added
                 break;
             case 'secondary':
-                $most_recently_submitted_data = []; // change when new types are added
+                $most_recently_submitted_data = Secondary::latest()->first(); // change when new types are added
                 break;
         }
 

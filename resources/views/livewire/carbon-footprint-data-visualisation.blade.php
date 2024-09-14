@@ -4,12 +4,32 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <body>
         <div class="mt-4 rounded-xl">
-            <button class="rounded-xl bg-emerald-400 p-1">
-            <a class="no-underline text-white font-medium" href="{{ route('data-history-view', ['data_type' => 'household']) }}">View Household Data History</a>
-            </button>
+            @if ($url == 'log-household-carbon-footprint')
+                <button class="rounded-xl bg-emerald-400 p-1">
+                    <a class="no-underline text-white font-medium" href="{{ route('data-history-view', ['data_type' => 'household']) }}">View Household Data History</a>
+                </button>
+            @elseif ($url == 'log-transport-carbon-footprint')
+                @if ($transport_type == 'car')
+                    <button class="rounded-xl bg-emerald-400 p-1">
+                        <a class="no-underline text-white font-medium" href="{{ route('data-history-view', ['data_type' => 'car']) }}">View Car Data History</a>
+                    </button>
+                @elseif ($transport_type == 'flights')
+                    <button class="rounded-xl bg-emerald-400 p-1">
+                        <a class="no-underline text-white font-medium" href="{{ route('data-history-view', ['data_type' => 'flights']) }}">View Flights Data History</a>
+                    </button>
+                @elseif ($transport_type == 'bus&rail')
+                    <button class="rounded-xl bg-emerald-400 p-1">
+                        <a class="no-underline text-white font-medium" href="{{ route('data-history-view', ['data_type' => 'bus&rail']) }}">View Bus and Rail Data History</a>
+                    </button>
+                @endif
+            @elseif ($url == 'log-secondary-carbon-footprint')
+                <button class="rounded-xl bg-emerald-400 p-1">
+                    <a class="no-underline text-white font-medium" href="{{ route('data-history-view', ['data_type' => 'secondary']) }}">View Secondary Data History</a>
+                </button>
+            @endif
             <div class="card">
                 <form action="">
-                    <select wire:model="chart_type" wire:change="updateChartType">
+                    <select wire:model="chart_type" class="w-fit" wire:change="updateChartType">
                         <option value="line" selected>Line Chart</option> 
                         <option value="bar">Bar Chart</option>
                     </select>
@@ -17,7 +37,7 @@
                 @if ($url == 'log-transport-carbon-footprint')
                     <form action="">
                         <label for="transport_type">Select transport type</label>
-                        <select wire:model="transport_type" wire:change='updateTransportType'>
+                        <select wire:model="transport_type" class="w-fit" wire:change='updateTransportType'>
                             <option value="car" selected>Car</option> 
                             <option value="flights">Flights</option>
                             <option value="bus&rail">Bus & Rail</option>

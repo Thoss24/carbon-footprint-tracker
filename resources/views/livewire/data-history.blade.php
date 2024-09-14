@@ -312,4 +312,81 @@
     </div>
 @endif
 
+    {{-- Secondary carbon footprint data area --}}
+
+@if ($data_type == 'secondary')
+    <div class="container mt-4 overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-lg">
+            <thead>
+                <tr class="bg-emerald-500 text-white">
+                    <th class="py-3 px-5 border-b">Food and Drink</th>
+                    <th class="py-3 px-5 border-b">Pharmaceuticals</th>
+                    <th class="py-3 px-5 border-b">Clothing</th>
+                    <th class="py-3 px-5 border-b">IT equipment</th>
+                    <th class="py-3 px-5 border-b">Telephone</th>
+                    <th class="py-3 px-5 border-b">Insurance</th>
+                    <th class="py-3 px-5 border-b">Educational</th>
+                    <th class="py-3 px-5 border-b">Total Co2e</th>
+                    <th class="py-3 px-5 border-b">Created at</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (count($comparison_entries) < 2)
+                    @foreach ($data_history as $history)
+                        <tr class="hover:bg-gray-100">
+                            <td class="py-3 px-5 border-b text-center">{{ $history->food_and_drink }}</td>
+                            <td class="py-3 px-5 border-b text-center">{{ $history->pharmaceuticals }}</td>
+                            <td class="py-3 px-5 border-b text-center">{{ $history->clothing }}</td>
+                            <td class="py-3 px-5 border-b text-center">{{ $history->it_equipment }}</td>
+                            <td class="py-3 px-5 border-b text-center">{{ $history->telephone }}</td>
+                            <td class="py-3 px-5 border-b text-center">{{ $history->insurance }}</td>
+                            <td class="py-3 px-5 border-b text-center">{{ $history->educational }}</td>
+                            <td class="py-3 px-5 border-b text-center">{{ $history->total_co2e }}</td>
+                            <td class="py-3 px-5 border-b text-center">{{ $history->created_at }}</td>
+                        </tr>
+                    @endforeach
+                @else
+                    @foreach ($comparison_entries as $comparison_entry)
+                        <tr class="hover:bg-gray-100">
+                            <td class="py-3 px-5 border-b text-center">{{ $comparison_entry->food_and_drink }}
+                                <strong
+                                    class="{{ substr($comparison_entry->food_and_drink_diff, 0, 1) == '-' ? 'text-emerald-400' : 'text-red-400' }}">{{ $comparison_entry->food_and_drink_diff }}</strong>
+                            </td>
+                            <td class="py-3 px-5 border-b text-center">{{ $comparison_entry->pharmaceuticals }}
+                                <strong
+                                    class="{{ substr($comparison_entry->pharmaceuticals_diff, 0, 1) == '-' ? 'text-emerald-400' : 'text-red-400' }}">{{ $comparison_entry->pharmaceuticals_diff }}</strong>
+                            </td>
+                            <td class="py-3 px-5 border-b text-center">{{ $comparison_entry->clothing }}
+                                <strong
+                                    class="{{ substr($comparison_entry->clothing_diff, 0, 1) == '-' ? 'text-emerald-400' : 'text-red-400' }}">{{ $comparison_entry->clothing_diff }}</strong>
+                            </td>
+                            <td class="py-3 px-5 border-b text-center">{{ $comparison_entry->it_equipment }}
+                                <strong
+                                    class="{{ substr($comparison_entry->it_equipment_diff, 0, 1) == '-' ? 'text-emerald-400' : 'text-red-400' }}">{{ $comparison_entry->it_equipment_diff }}</strong>
+                            </td>
+                            <td class="py-3 px-5 border-b text-center">{{ $comparison_entry->telephone }}
+                                <strong
+                                    class="{{ substr($comparison_entry->telephone_diff, 0, 1) == '-' ? 'text-emerald-400' : 'text-red-400' }}">{{ $comparison_entry->telephone_diff }}</strong>
+                            </td>
+                            <td class="py-3 px-5 border-b text-center">{{ $comparison_entry->insurance }}
+                                <strong
+                                    class="{{ substr($comparison_entry->insurance_diff, 0, 1) == '-' ? 'text-emerald-400' : 'text-red-400' }}">{{ $comparison_entry->insurance_diff }}</strong>
+                            </td>
+                            <td class="py-3 px-5 border-b text-center">{{ $comparison_entry->educational }}
+                                <strong
+                                    class="{{ substr($comparison_entry->educational_diff, 0, 1) == '-' ? 'text-emerald-400' : 'text-red-400' }}">{{ $comparison_entry->educational_diff }}</strong>
+                            </td>
+                            <td class="py-3 px-5 border-b text-center">{{ $comparison_entry->total_co2e }}
+                                {{ $comparison_entry->total_co2e_metric }}
+                                <strong class="{{ substr($comparison_entry->total_co2e_diff, 0, 1) == '-' ? 'text-emerald-400' : 'text-red-400' }}">{{ $comparison_entry->total_co2e_diff }}</strong>
+                            </td>
+                            <td class="py-3 px-5 border-b text-center">{{ $comparison_entry->created_at }}</td>
+                        </tr>
+                    @endforeach
+                @endif
+            </tbody>
+        </table>
+    </div>
+@endif
+
 </div>

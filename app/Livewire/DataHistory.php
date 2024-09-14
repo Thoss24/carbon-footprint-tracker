@@ -7,6 +7,7 @@ use App\Models\Household;
 use App\Models\Car;
 use App\Models\Flights;
 use App\Models\BusAndRail;
+use App\Models\Secondary;
 
 class DataHistory extends Component
 {
@@ -52,6 +53,9 @@ class DataHistory extends Component
             case 'bus&rail':
                 $this->data_history = BusAndRail::all();
                 break;
+            case 'secondary':
+                $this->data_history = Secondary::all();
+                break;
         }
     }
 
@@ -75,6 +79,10 @@ class DataHistory extends Component
             case 'bus&rail':
                 $this->compare_entry = BusAndRail::find($entryId);
                 $this->compare_to_entries = BusAndRail::where('id', '!=', $entryId)->get();
+                break;
+            case 'secondary':
+                $this->compare_entry = Secondary::find($entryId);
+                $this->compare_to_entries = Secondary::where('id', '!=', $entryId)->get();
                 break;
         }
         // select entry from filtered list 
@@ -162,6 +170,67 @@ class DataHistory extends Component
         array_push($this->comparison_entries,  $this->compare_entry);
     }
 
+    public function calculateSecondaryDiff()
+    {   
+        // food and drink
+        if ($this->compare_to_entry->food_and_drink != 0) {
+            $food_and_drink_absolute_diff = $this->compare_entry->food_and_drink - $this->compare_to_entry->food_and_drink;
+            $food_and_drink_average = ($this->compare_entry->food_and_drink + $this->compare_to_entry->food_and_drink) / 2;
+            $this->compare_entry->food_and_drink_diff = round(($food_and_drink_absolute_diff / $food_and_drink_average) * 100, 2) . '%';
+        }
+        
+        // pharmaceuticals
+        if ($this->compare_to_entry->pharmaceuticals != 0) {
+            $pharmaceuticals_absolute_diff = $this->compare_entry->pharmaceuticals - $this->compare_to_entry->pharmaceuticals;
+            $pharmaceuticals_average = ($this->compare_entry->pharmaceuticals + $this->compare_to_entry->pharmaceuticals) / 2;
+            $this->compare_entry->pharmaceuticals_diff = round(($pharmaceuticals_absolute_diff / $pharmaceuticals_average) * 100, 2) . '%';
+        }
+
+        // clothing
+        if ($this->compare_to_entry->clothing != 0) {
+            $clothing_absolute_diff = $this->compare_entry->clothing - $this->compare_to_entry->clothing;
+            $clothing_average = ($this->compare_entry->clothing + $this->compare_to_entry->clothing) / 2;
+            $this->compare_entry->clothing_diff = round(($clothing_absolute_diff / $clothing_average) * 100, 2) . '%';
+        }
+
+        // it_equipment
+        if ($this->compare_to_entry->it_equipment != 0) {
+            $it_equipment_absolute_diff = $this->compare_entry->it_equipment - $this->compare_to_entry->it_equipment;
+            $it_equipment_average = ($this->compare_entry->it_equipment + $this->compare_to_entry->it_equipment) / 2;
+            $this->compare_entry->it_equipment_diff = round(($it_equipment_absolute_diff / $it_equipment_average) * 100, 2) . '%';
+        }
+
+        // telephone
+        if ($this->compare_to_entry->telephone != 0) {
+            $telephone_absolute_diff = $this->compare_entry->telephone - $this->compare_to_entry->telephone;
+            $telephone_average = ($this->compare_entry->telephone + $this->compare_to_entry->telephone) / 2;
+            $this->compare_entry->telephone_diff = round(($telephone_absolute_diff / $telephone_average) * 100, 2) . '%';
+        }
+
+        // insurance
+        if ($this->compare_to_entry->insurance != 0) {
+            $insurance_absolute_diff = $this->compare_entry->insurance - $this->compare_to_entry->insurance;
+            $insurance_average = ($this->compare_entry->insurance + $this->compare_to_entry->insurance) / 2;
+            $this->compare_entry->insurance_diff = round(($insurance_absolute_diff / $insurance_average) * 100, 2) . '%';
+        }
+
+        // educational
+        if ($this->compare_to_entry->educational != 0) {
+            $educational_absolute_diff = $this->compare_entry->educational - $this->compare_to_entry->educational;
+            $educational_average = ($this->compare_entry->educational + $this->compare_to_entry->educational) / 2;
+            $this->compare_entry->educational_diff = round(($educational_absolute_diff / $educational_average) * 100, 2) . '%';
+        }
+
+        // total co2e used
+        if ($this->compare_to_entry->total_co2e != 0) {
+            $total_co2e_absolute_diff = $this->compare_entry->total_co2e - $this->compare_to_entry->total_co2e;
+            $total_co2e_average = ($this->compare_entry->total_co2e + $this->compare_to_entry->total_co2e) / 2;
+            $this->compare_entry->total_co2e_diff = round(($total_co2e_absolute_diff / $total_co2e_average) * 100, 2) . '%';
+        }
+
+        array_push($this->comparison_entries,  $this->compare_entry);
+    }
+
     public function calculateBusAndRailDiff()
     {   
         // bus distance
@@ -225,6 +294,11 @@ class DataHistory extends Component
             case 'bus&rail':
                 $this->compare_to_entry = BusAndRail::find($entryId);
                 $this->calculateBusAndRailDiff();
+                array_push($this->comparison_entries,  $this->compare_to_entry);
+                break;
+            case 'secondary':
+                $this->compare_to_entry = Secondary::find($entryId);
+                $this->calculateSecondaryDiff();
                 array_push($this->comparison_entries,  $this->compare_to_entry);
                 break;
         }

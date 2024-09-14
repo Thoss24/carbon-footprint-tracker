@@ -9,6 +9,8 @@ class Secondary extends Model
 {
     use HasFactory;
 
+    protected $table = 'secondary';
+
     protected $fillable = [
         'user_id',
         'food_and_drink',
