@@ -20,7 +20,6 @@ class Household extends Component
 
     //achievements variables
     public $achievements;
-    public $test;
 
     // carbon footrpint data properties
     public $electricity = 0;

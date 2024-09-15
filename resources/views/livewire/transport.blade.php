@@ -5,6 +5,12 @@
 
     <h1 class="underline text-xl">Transport carbon footprint</h1>
 
+    
+    @php
+        echo "Count: " . count($achievements) . "\n"
+    @endphp
+   
+
     {{-- Car transport data --}}
     <section>
         <h2 class="underline text-xl">Car</h2>

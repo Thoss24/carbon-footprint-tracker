@@ -5,7 +5,10 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Car;
 use App\Models\Flights;
+use App\Models\Achievements;
+use App\Models\AchievementMet;
 use App\Models\BusAndRail;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class Transport extends Component
@@ -13,6 +16,8 @@ class Transport extends Component
 
     public $responseMessage;
     public $user_id;
+    public $carbonFootrpintHistoryData;
+    public $achievements;
     // car variables
     public $mileage = 0;
     public $mileage_metric = 'miles';
@@ -34,6 +39,39 @@ class Transport extends Component
     {
         $user = Auth::user();
         $this->user_id = $user->id;
+        $cars = Car::where('user_id', $this->user_id)->get()->toArray();
+        $flights = Flights::where('user_id', $this->user_id)->get()->toArray();
+        $busesAndRails = BusAndRail::where('user_id', $this->user_id)->get()->toArray();
+
+        // Merge all results into a single array
+        $this->carbonFootrpintHistoryData = array_merge($cars, $flights, $busesAndRails);
+
+        $this->achievements = Achievements::where('carbon_footprint_type', 'car')->where('carbon_footprint_type', 'flights')
+        ->where('carbon_footprint_type', 'bus&rail')
+        -> where('achievement_type', 'submit_data')
+        ->get();
+
+        foreach ($this->achievements as $achievement) {
+            if (count($this->carbonFootrpintHistoryData) >= $achievement->count_requirement) {
+                $achievement_already_met = AchievementMet::where('user_id', $this->user_id)->where('achievement_id', $achievement->id)->get();
+                if (count($achievement_already_met) == 0) {
+
+                    AchievementMet::create([
+                        'user_id' => $this->user_id,
+                        'achievement_id' => $achievement->id
+                    ]);
+
+                    $user_request = User::find($this->user_id);
+
+                    $user_request->points += $achievement->points;
+
+                    $user_request->save();
+
+                    session()->flash('message', 'Achievement met!.');
+                    //$this->test = "Achievement met!";
+                }
+            }
+        }
     }
 
     public function addFlightsData()
@@ -46,12 +84,14 @@ class Transport extends Component
         $emission_factor = 0.14;
         $total_co2e =  $this->distance * $emission_factor * $this->num_passengers;
 
-        Flights::create([
+        if (Flights::create([
             'user_id' => $this->user_id,
             'distance' => $this->distance,
             'num_passengers' => $this->num_passengers,
             'total_co2e' => $total_co2e
-        ]);
+        ])) {
+            $this->mount();
+        };
     }
 
     public function addBusAndRailData()
@@ -77,7 +117,7 @@ class Transport extends Component
 
         $total_co2e = ($train_co2e + $bus_co2e + $coach_co2e + $tram_co2e + $taxi_co2e + $subway_co2e) / 1000; // convert grams to kg
 
-        BusAndRail::create([
+        if (BusAndRail::create([
             'user_id' => $this->user_id,
             'coach_distance' => $this->coach_distance,
             'bus_distance' => $this->bus_distance,
@@ -86,7 +126,9 @@ class Transport extends Component
             'subway_distance' => $this->subway_distance,
             'taxi_distance' => $this->taxi_distance,
             'total_co2e' => $total_co2e // in kg
-        ]);
+        ])) {
+            $this->mount();
+        };
     }
 
     public function addTransportData()
@@ -131,6 +173,7 @@ class Transport extends Component
         ])) {
             $this->addFlightsData();
             $this->addBusAndRailData();
+            $this->mount();
         };
     }
 

@@ -5,7 +5,7 @@
 
     <div>
         @if (session()->has('message'))
-            <div class="alert alert-success">
+            <div id="flash-message" class="alert alert-success">
                 {{ session('message') }}
             </div>
         @endif
@@ -130,7 +130,6 @@
             }, 3000);
 
         });
-
 
     });
 </script>
