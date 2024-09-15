@@ -2,8 +2,19 @@
     
     <x-dialog-confirmation-modal title="Add Household Carbon Footprint Data" content="Are you sure you want to submit this data?"
         submitData='submitCarbonFootrpintData'/>
+
+    <div>
+        @if (session()->has('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
+    </div>
   
     <h1 class="underline text-xl">Household carbon footprint</h1>
+    {{-- @php
+       echo "Item: " .  json_encode($test);
+    @endphp --}}
     <form class="mt-2">
         <fieldset>
             <label for="num_people_in_household">How many people are in your household?</label>
