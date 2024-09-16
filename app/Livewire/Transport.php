@@ -10,6 +10,7 @@ use App\Models\AchievementMet;
 use App\Models\BusAndRail;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Services\MyServices;
 
 class Transport extends Component
 {
@@ -37,6 +38,10 @@ class Transport extends Component
 
     public function mount()
     {
+
+        $service = new MyServices();
+        $service->clearFlash();
+
         $user = Auth::user();
         $this->user_id = $user->id;
         $cars = Car::where('user_id', $this->user_id)->get()->toArray();
@@ -46,10 +51,7 @@ class Transport extends Component
         // Merge all results into a single array
         $this->carbonFootrpintHistoryData = array_merge($cars, $flights, $busesAndRails);
 
-        $this->achievements = Achievements::where('carbon_footprint_type', 'car')->where('carbon_footprint_type', 'flights')
-        ->where('carbon_footprint_type', 'bus&rail')
-        -> where('achievement_type', 'submit_data')
-        ->get();
+        $this->achievements = Achievements::where('carbon_footprint_type', 'transport')->where('achievement_type', 'submit_data')->get();
 
         foreach ($this->achievements as $achievement) {
             if (count($this->carbonFootrpintHistoryData) >= $achievement->count_requirement) {
@@ -67,8 +69,11 @@ class Transport extends Component
 
                     $user_request->save();
 
-                    session()->flash('message', 'Achievement met!.');
-                    //$this->test = "Achievement met!";
+                    // if (session()->has('message')) {
+                    //     session()->forget('message');
+                    // }
+
+                    session()->flash('message', 'Achievement met! - Submit transport related data 8 times!');
                 }
             }
         }

@@ -9,10 +9,10 @@ use App\Models\User;
 use App\Models\AchievementMet;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On; 
+use App\Services\MyServices;
 
 class Household extends Component
 {
-
     public $user_id;
     public $carbonFootrpintHistoryData;
     public $responseMessage = '';
@@ -55,6 +55,10 @@ class Household extends Component
     #[On('entry-added')]
     public function mount() 
     {
+
+        $service = new MyServices();
+        $service->clearFlash();
+
         $user = Auth::user();
         $this->user_id = $user->id;
         $this->carbonFootrpintHistoryData = HouseholdModel::where('user_id', $this->user_id)->get();
@@ -77,8 +81,8 @@ class Household extends Component
 
                     $user_request->save();
 
-                    session()->flash('message', 'Achievement met!.');
-                    //$this->test = "Achievement met!";
+                    session()->flash('message', 'Achievement met! - Submit household related data 4 times!');
+
                 }
             }
         }

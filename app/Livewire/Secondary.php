@@ -5,6 +5,10 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Secondary as SecondaryModel;
 use Illuminate\Support\Facades\Auth;
+use App\Services\MyServices;
+use App\Models\AchievementMet;
+use App\Models\Achievements;
+use App\Models\User;
 
 class Secondary extends Component
 {
@@ -18,11 +22,44 @@ class Secondary extends Component
     public $telephone = 0;
     public $insurance = 0;
     public $educational = 0;
+    public $carbonFootrpintHistoryData;
+    public $achievements;
 
     public function mount()
     {
         $user = Auth::user();
         $this->user_id = $user->id;
+
+        $service = new MyServices();
+        $service->clearFlash();
+
+        $user = Auth::user();
+        $this->user_id = $user->id;
+        $this->carbonFootrpintHistoryData = SecondaryModel::where('user_id', $this->user_id)->get();
+        // check if achievement has been met here
+        // get all achievements by type submit_data & household - loop through achievements and check if count($this->carbonFootrpintHistoryData) >= achievement count (count == times added)
+        $this->achievements = Achievements::where('carbon_footprint_type', 'secondary')->where('achievement_type', 'submit_data')->get();
+        foreach ($this->achievements as $achievement) {
+            if (count($this->carbonFootrpintHistoryData) >= $achievement->count_requirement) {
+                $achievement_already_met = AchievementMet::where('user_id', $this->user_id)->where('achievement_id', $achievement->id)->get();
+                if (count($achievement_already_met) == 0) {
+
+                    AchievementMet::create([
+                        'user_id' => $this->user_id,
+                        'achievement_id' => $achievement->id
+                    ]);
+
+                    $user_request = User::find($this->user_id);
+
+                    $user_request->points += $achievement->points;
+
+                    $user_request->save();
+
+                    session()->flash('message', 'Achievement met! - Submit Secondary related data 4 times!');
+
+                }
+            }
+        }
     }
 
     public function addSecondaryData()

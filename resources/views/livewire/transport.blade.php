@@ -3,14 +3,16 @@
     <x-dialog-confirmation-modal title="Add Transport Carbon Footprint Data"
         content="Are you sure you want to submit this data?" submitData='addTransportData' />
 
+    <div>
+        @if (session()->has('message'))
+            <div id="flash-message" class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
+    </div>
+
     <h1 class="underline text-xl">Transport carbon footprint</h1>
-
-    
-    @php
-        echo "Count: " . count($achievements) . "\n"
-    @endphp
    
-
     {{-- Car transport data --}}
     <section>
         <h2 class="underline text-xl">Car</h2>

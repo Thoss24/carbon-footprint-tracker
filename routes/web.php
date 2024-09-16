@@ -6,6 +6,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+function clearFlash() {
+    if (session()->has('message')) {
+        session()->forget('message');
+    }
+};
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
