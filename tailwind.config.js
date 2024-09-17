@@ -13,6 +13,11 @@ export default {
 
     theme: {
         extend: {
+            colors: {
+                greenBorder: '#badbcc',
+                greenBg: '#d1e7dd',
+                greenText: '#0f5132'
+            },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },

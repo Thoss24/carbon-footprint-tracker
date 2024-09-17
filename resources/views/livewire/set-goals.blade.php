@@ -1,5 +1,12 @@
 <div class="flex flex-col mt-4 justify-between bg-white shadow-xl" x-data="{ prevEntriesModal: false }">
     <section class="mt-2">
+        <div>
+            @if (session()->has('message'))
+                <div id="flash-message" class="text-greenText bg-greenBg border-greenBorder p-4 mb-4 border-solid">
+                    {{ session('message') }}
+                </div>
+            @endif
+        </div>
     <h2 class="text-2xl">All active goals: goals that havent been met yet</h2>
     @foreach ($active_goals as $active_goal)
         {{-- <x-goal-shell key="{{$active_goal}}" targetDate="{{$active_goal->target_date}}" goalAchieved="{{null}}" previousCo2e="{{$active_goal->previous_co2e}}" type="{{$active_goal->type}}"/> --}}

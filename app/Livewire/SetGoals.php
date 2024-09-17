@@ -11,6 +11,10 @@ use App\Models\Flights;
 use App\Models\BusAndRail;
 use App\Models\Secondary;
 use App\Models\Solution;
+use App\Models\Achievements;
+use App\Models\AchievementMet;
+use App\Models\User;
+use App\Services\MyServices;
 
 class SetGoals extends Component
 {
@@ -23,12 +27,13 @@ class SetGoals extends Component
     public $previous_entries; // previous carbon footprint entries by type
     public $active_goals; // all active goals
     public $past_goals; // achieved or not achieved goals
-
-    public $test_electricity;
-    public $test_amount;
+    public $achievements;
+    public $goals_met;
 
     public function mount()
     {
+        $service = new MyServices();
+        $service->clearFlash();
         $user = Auth::user();
         $this->user_id = $user->id;
         $this->previous_entries = Household::where('user_id', $this->user_id)->get();
@@ -94,26 +99,31 @@ class SetGoals extends Component
 
     public function checkGoalMet()
     {
+
         $current_date = date('Y-m-d');
-        $last_entry_date = '';
         $most_recently_submitted_data = [];
         
         switch($this->type){
             case 'household':
                 // calculate time betwwen last entry and todays date
                 $most_recently_submitted_data = Household::latest()->first();
+                $this->achievements = Achievements::where('carbon_footprint_type', 'household')->where('achievement_type', 'goals')->get();
                 break;
             case 'car':
                 $most_recently_submitted_data = Car::latest()->first(); // change when new types are added
+                $this->achievements = Achievements::where('carbon_footprint_type', 'car')->where('achievement_type', 'goals')->get();
                 break;
             case 'flights':
                 $most_recently_submitted_data = Flights::latest()->first(); // change when new types are added
+                $this->achievements = Achievements::where('carbon_footprint_type', 'flights')->where('achievement_type', 'goals')->get();
                 break;
             case 'bus & rail':
                 $most_recently_submitted_data = BusAndRail::latest()->first(); // change when new types are added
+                $this->achievements = Achievements::where('carbon_footprint_type', 'bus&rail')->where('achievement_type', 'goals')->get();
                 break;
             case 'secondary':
                 $most_recently_submitted_data = Secondary::latest()->first(); // change when new types are added
+                $this->achievements = Achievements::where('carbon_footprint_type', 'secondary')->where('achievement_type', 'goals')->get();
                 break;
         }
 
@@ -124,6 +134,8 @@ class SetGoals extends Component
         $diff_in_seconds = strtotime($most_recent_entry_date) - strtotime($current_date);
 
         $weeks = trim(floor($diff_in_seconds / (7 * 24 * 60 * 60)), '-');
+
+        $this->checkAchievementsMet();
 
         foreach ($active_goals as $goal) {
             if ($current_date >= $goal->target_date) {
@@ -144,6 +156,7 @@ class SetGoals extends Component
                     $goal->goal_met = 1;
                     $goal->goal_seen = 1;
                     $goal->save();
+                    $this->checkAchievementsMet();
                 }
             }
         }
@@ -152,6 +165,33 @@ class SetGoals extends Component
 
         // get current day and compare most recently submitted entry against target date & data - if they are the same, check if percentage goal was reached
         // award point if true - otherwise return data telling user goal was not met
+    }
+
+    public function checkAchievementsMet() 
+    {
+        $this->goals_met = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_met', 0)->get();
+
+        foreach ($this->achievements as $achievement) {
+            if (count($this->goals_met) >= $achievement->count_requirement) {
+                $achievement_already_met = AchievementMet::where('user_id', $this->user_id)->where('achievement_id', $achievement->id)->get();
+                if (count($achievement_already_met) == 0) {
+
+                    AchievementMet::create([
+                        'user_id' => $this->user_id,
+                        'achievement_id' => $achievement->id
+                    ]);
+
+                    $user_request = User::find($this->user_id);
+
+                    $user_request->points += $achievement->points;
+
+                    $user_request->save();
+
+                    session()->flash('message', 'Achievement met! - You have met your ' . $this->type . ' related goal ' . $achievement->count_requirement .  ' times!');
+
+                }
+            }
+        }
     }
 
     public function provideHouseholdSolutions($entryId, $goalId, $weeks)
@@ -170,9 +210,6 @@ class SetGoals extends Component
         $householdWood = $householdToAnalyse->wood;
         
         if (($householdElectricity / $householdSize) > 500 * $weeks) {
-
-            $this->test_amount = 500 * $weeks;
-            $this->test_electricity = $householdElectricity / $householdSize;
 
             $recommendation = array('Title'=>'Solution to reduce Electricity consumption', 'Description'=>'Choose appliances with a high energy rating, such as A+++, when shopping for new appliances. Take quick showers, turn off running taps when unused, and use the required amount of water while cooking. ');
 
