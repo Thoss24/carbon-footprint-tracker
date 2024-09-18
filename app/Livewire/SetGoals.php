@@ -169,7 +169,7 @@ class SetGoals extends Component
 
     public function checkAchievementsMet() 
     {
-        $this->goals_met = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_met', 0)->get();
+        $this->goals_met = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_met', 0  )->get();
 
         foreach ($this->achievements as $achievement) {
             if (count($this->goals_met) >= $achievement->count_requirement) {

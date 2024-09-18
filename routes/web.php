@@ -42,6 +42,10 @@ Route::middleware([
         return view('data-history-view');
     })->name('data-history-view');
 
+    Route::get('/achievements', function () {
+        return view('achievements-view');
+    })->name('achievements');
+
 });
 
 
