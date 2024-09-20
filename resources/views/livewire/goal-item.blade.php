@@ -4,6 +4,7 @@
     @if ($goalSeen == 1)
         @if ($goalAchieved)
             <p class="text-emerald-500">Goal Achieved</p>
+            <h2>share</h2>
         @else
             <p class="text-red-500">Goal Not Achieved</p>
         @endif
@@ -22,3 +23,14 @@
         </div>
     @endif
 </div>
+
+<script>
+    // {{-- listen for post-modal-opened event (dispatched from PostItem.php) and pass event data to post item modal --}}
+    document.addEventListener('livewire:init', () => {
+
+        const responseMessageElement = document.getElementById('response-message');
+
+        
+
+    });
+</script>

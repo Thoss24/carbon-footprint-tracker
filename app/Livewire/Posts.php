@@ -5,6 +5,7 @@ use Livewire\Component;
 use App\Models\Post;
 use Livewire\Attributes\On; 
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Computed;
 
 class Posts extends Component
 {
@@ -16,8 +17,10 @@ class Posts extends Component
 
     #[On('post-created')]
     #[On('post-deleted')]
+    #[Computed]
     public function mount()
     {
+        unset($this->posts); 
         $user = Auth::user();
         $this->user_id = $user->id;
         $this->user_name = $user->name;
