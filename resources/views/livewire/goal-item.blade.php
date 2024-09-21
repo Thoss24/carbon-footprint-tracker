@@ -1,14 +1,18 @@
 <div class="flex flex-col rounded-full bg-slate-200 w-fit p-4 justify-center items-center" x-data="{ solutionsDisplaying: false }">
     {{ $targetDate }}
     {{ $goalSeen }}
-    @if ($goalSeen == 1)
-        @if ($goalAchieved)
+  
+        <div class="{{!$goalAchieved && $goalSeen == 1 ? 'hidden' : 'visible'}}">
             <p class="text-emerald-500">Goal Achieved</p>
-            <h2>share</h2>
-        @else
-            <p class="text-red-500">Goal Not Achieved</p>
-        @endif
-    @endif
+            <p value="{{$previousCo2e}}" class="prev-co2e">{{$previousCo2e}}</p>
+            <p class="next-co2e">{{$nextCo2e}}</p>
+            <p class="percentage-goal">{{$percentageGoal}}</p>
+            <button wire:click='share' class="share">share</button>
+        </div>
+       
+        <p class="{{$goalAchieved && $goalSeen == 1 ? 'hidden' : 'visible'}} text-red-500">Goal Not Achieved</p>
+       
+
     @if ($goalSeen == 1 && $goalAchieved == 0)
         <button class="bg-emerald-300 p-1 rounded-xl" x-text="solutionsDisplaying ? 'Hide solutions' : 'Show solutions'"
             x-on:click="solutionsDisplaying = ! solutionsDisplaying"></button>
@@ -23,14 +27,3 @@
         </div>
     @endif
 </div>
-
-<script>
-    // {{-- listen for post-modal-opened event (dispatched from PostItem.php) and pass event data to post item modal --}}
-    document.addEventListener('livewire:init', () => {
-
-        const responseMessageElement = document.getElementById('response-message');
-
-        
-
-    });
-</script>

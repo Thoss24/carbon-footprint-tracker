@@ -10,12 +10,15 @@
     <h2 class="text-2xl">All active goals: goals that havent been met yet</h2>
     @foreach ($active_goals as $active_goal)
         {{-- <x-goal-shell key="{{$active_goal}}" targetDate="{{$active_goal->target_date}}" goalAchieved="{{null}}" previousCo2e="{{$active_goal->previous_co2e}}" type="{{$active_goal->type}}"/> --}}
-            <livewire:goal-item :key="$active_goal->id" :goalId="$active_goal->id" :goalSeen="$active_goal->goal_seen" :targetDate="$active_goal->target_date" :goalAchieved="$active_goal->goal_met" :previousCo2e="$active_goal->previous_co2e" :type="$active_goal->type" /> 
+            <livewire:goal-item :key="$active_goal->id" :goalId="$active_goal->id" :goalSeen="$active_goal->goal_seen"
+                :targetDate="$active_goal->target_date" :goalAchieved="$active_goal->goal_met" :nextCo2e="$active_goal->co2e_time_of_goal_met"
+                :previousCo2e="$active_goal->previous_co2e" :percentageGoal="$past_goal->improve_percentage_goal" :type="$active_goal->type" /> 
     @endforeach
-    <h2 class="text-2xl">All previous goals: acheived or failed goals X</h2>
+    <h2 class="text-2xl">All previous goals: acheived or failed goals</h2>
     <div class="flex flex-row flex-wrap">
     @foreach ($past_goals as $past_goal)
-        <livewire:goal-item :key="$past_goal->id" :goalSeen="$past_goal->goal_seen" :goalId="$past_goal->id" :targetDate="$past_goal->target_date" :goalAchieved="$past_goal->goal_met" :previousCo2e="$past_goal->previous_co2e" :type="$past_goal->type" /> 
+        <livewire:goal-item :key="$past_goal->id" :goal="$past_goal" :goalSeen="$past_goal->goal_seen" :goalId="$past_goal->id" :targetDate="$past_goal->target_date"
+            :goalAchieved="$past_goal->goal_met" :percentageGoal="$past_goal->improve_percentage_goal" :previousCo2e="$past_goal->previous_co2e" :nextCo2e="$past_goal->co2e_time_of_goal_met" :type="$past_goal->type" /> 
     @endforeach
     </div>
     </section>

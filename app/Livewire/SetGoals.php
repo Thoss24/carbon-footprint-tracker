@@ -28,7 +28,7 @@ class SetGoals extends Component
     public $active_goals; // all active goals
     public $past_goals; // achieved or not achieved goals
     public $achievements;
-    public $goals_met;
+    public $goals_not_met; // goals not met
 
     public function mount()
     {
@@ -67,32 +67,27 @@ class SetGoals extends Component
             case 'household':
                 $this->previous_entries = Household::where('user_id', $this->user_id)->get();
                 $this->active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
-                $this->past_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 1)->get();
-                $this->checkGoalMet(); // check goals have been met each time a user changes the co2e type
+                $this->mount();
                 break;
             case 'car':
                 $this->previous_entries = Car::where('user_id', $this->user_id)->get();
                 $this->active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
-                $this->past_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 1)->get();
-                $this->checkGoalMet(); // check goals have been met each time a user changes the co2e type
+                $this->mount();
                 break;
             case 'flights':
                 $this->previous_entries = Flights::where('user_id', $this->user_id)->get();
                 $this->active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
-                $this->past_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 1)->get();
-                $this->checkGoalMet(); // check goals have been met each time a user changes the co2e type
+                $this->mount();
                 break;
             case 'bus & rail':
                 $this->previous_entries = BusAndRail::where('user_id', $this->user_id)->get();
                 $this->active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
-                $this->past_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 1)->get();
-                $this->checkGoalMet(); // check goals have been met each time a user changes the co2e type
+                $this->mount();
                 break;
             case 'secondary':
                 $this->previous_entries = Secondary::where('user_id', $this->user_id)->get();
                 $this->active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
-                $this->past_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 1)->get();
-                $this->checkGoalMet(); // check goals have been met each time a user changes the co2e type
+                $this->mount();
                 break;
         }
     }
@@ -143,11 +138,11 @@ class SetGoals extends Component
                 // do claculation to check if % goal was reached
                 // compare most recently submitted household data with target co2e using the target %
                 $co2e_to_compare_against = $goal->previous_co2e;
-                $difference = $most_recently_submitted_data->total_household_co2e - $co2e_to_compare_against;
+                $difference = $most_recently_submitted_data->total_co2e - $co2e_to_compare_against;
 
                 $percentage_diff = ($difference / $co2e_to_compare_against) * 100;
 
-                if ($percentage_diff < $goal->improve_percentage_goal) { // goal not met    
+                if ($percentage_diff > $goal->improve_percentage_goal) { // goal not met    
                     $goal->goal_met = 0;
                     $goal->goal_seen = 1;
                     $goal->save();
@@ -155,6 +150,7 @@ class SetGoals extends Component
                 } else { // goal met
                     $goal->goal_met = 1;
                     $goal->goal_seen = 1;
+                    $goal->co2e_time_of_goal_met = $most_recently_submitted_data->total_co2e;
                     $goal->save();
                     $this->checkAchievementsMet();
                 }
@@ -169,10 +165,10 @@ class SetGoals extends Component
 
     public function checkAchievementsMet() 
     {
-        $this->goals_met = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_met', 0  )->get();
+        $this->goals_not_met = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_met', 0  )->get();
 
         foreach ($this->achievements as $achievement) {
-            if (count($this->goals_met) >= $achievement->count_requirement) {
+            if (count($this->goals_not_met) >= $achievement->count_requirement) {
                 $achievement_already_met = AchievementMet::where('user_id', $this->user_id)->where('achievement_id', $achievement->id)->get();
                 if (count($achievement_already_met) == 0) {
 

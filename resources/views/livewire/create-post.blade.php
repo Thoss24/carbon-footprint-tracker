@@ -1,4 +1,4 @@
-<div x-data="{ postModalOpen: false }" class="w-full">
+<div x-data="{ postModalOpen: @entangle('postModalOpen') }" class="w-full">
     {{-- @if ($post_modal_open) --}}
     <div class="flex flex-col p-2 m-4">
     <h3>Say whats on your mind...</h3>
@@ -33,8 +33,10 @@
 
 
                 <textarea type="text" wire:model='post_content'
-                    class="resize-none h-36 border-none m-1 p-1 focus:outline-emerald-300 focus:ring focus:ring-emerald-200"
-                    placeholder="What's on your mind..."></textarea>
+                    class="resize-none w-full h-36 border-none focus:outline-emerald-300 focus:ring focus:ring-emerald-200"
+                    placeholder="What's on your mind...">
+                    test
+                </textarea>
                 <div class="flex w-full justify-end">
                     <button type="submit" class="flex w-fit p-4">Create Post</button>
                 </div>
