@@ -27,7 +27,7 @@ class Transport extends Component
     public $fuel_metric = 'gallons';
     // flights variables
     public $distance  = 0;
-    public $num_passengers = 0;
+    public $num_passengers = 1;
     // bus & rail variables
     public $bus_distance = 0;
     public $coach_distance = 0;

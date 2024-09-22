@@ -1,118 +1,56 @@
-<div x-data="{ previousTransportEntriesDisplaying: false, conformationModalDisplaying: false }" class="p-2">
-
+<div x-data="{ previousTransportEntriesDisplaying: false, conformationModalDisplaying: false }" class="p-4">
     <x-dialog-confirmation-modal title="Add Transport Carbon Footprint Data"
         content="Are you sure you want to submit this data?" submitData='addSecondaryData' />
 
     <div>
         @if (session()->has('message'))
-            <div id="flash-message" class="alert alert-success">
+            <div id="flash-message" class="bg-emerald-100 border border-emerald-400 text-emerald-700 px-4 py-3 rounded relative" role="alert">
                 {{ session('message') }}
             </div>
         @endif
     </div>
 
-    <h1 class="underline text-xl">Secondary carbon footprint</h1>
+    <h1 class="underline text-xl mb-4">Secondary Carbon Footprint</h1>
 
-    {{-- Car transport data --}}
     <section>
-        <h2 class="underline text-xl">Secondary Data</h2>
-        <form action="">
-            <fieldset class="flex flex-row">
-                <label for="food_and_drink">Food and Drink: </label>
-                <p>£ </p>
-                <input wire:model='food_and_drink' id="food_and_drink" type="number">
-                <select name="food_and_drink" wire:model='food_and_drink' id="food_and_drink">
-                    <option value="miles" selected>Weekly</option>
-                </select>
-            </fieldset>
-            <fieldset class="flex flex-row">
-                <label for="pharmaceuticals">Pharmaceuticals: </label>
-                <p>£ </p>
-                <input wire:model='pharmaceuticals' id="pharmaceuticals" type="number">
-                <select name="pharmaceuticals" wire:model='pharmaceuticals' id="pharmaceuticals">
-                    <option value="miles" selected>Weekly</option>
-                </select>
-            </fieldset>
-            <fieldset class="flex flex-row">
-                <label for="clothing">Clothing: </label>
-                <p>£ </p>
-                <input wire:model='clothing' id="clothing" type="number">
-                <select name="clothing" wire:model='clothing' id="clothing">
-                    <option value="miles" selected>Weekly</option>
-                </select>
-            </fieldset>
-            <fieldset class="flex flex-row">
-                <label for="it_equipment">IT Equipment: </label>
-                <p>£ </p>
-                <input wire:model='it_equipment' id="it_equipment" type="number">
-                <select name="it_equipment" wire:model='it_equipment' id="it_equipment">
-                    <option value="miles" selected>Weekly</option>
-                </select>
-            </fieldset>
-            <fieldset class="flex flex-row">
-                <label for="telephone">Telephone: </label>
-                <p>£ </p>
-                <input wire:model='telephone' id="telephone" type="number">
-                <select name="telephone" wire:model='telephone' id="telephone">
-                    <option value="miles" selected>Weekly</option>
-                </select>
-            </fieldset>
-            <fieldset class="flex flex-row">
-                <label for="insurance">Insurance: </label>
-                <p>£ </p>
-                <input wire:model='insurance' id="insurance" type="number">
-                <select name="insurance" wire:model='insurance' id="insurance">
-                    <option value="miles" selected>Weekly</option>
-                </select>
-            </fieldset>
-            <fieldset class="flex flex-row">
-                <label for="educational">Educational: </label>
-                <p>£ </p>
-                <input wire:model='educational' id="educational" type="number">
-                <select name="educational" wire:model='educational' id="insurance">
-                    <option value="miles" selected>Weekly</option>
-                </select>
-            </fieldset>
+        <form action="" class="mt-6 max-w-3xl mx-auto p-4 bg-white rounded-lg shadow-md">
 
-    <div class="flex flex-row">
-        <button x-on:click='conformationModalDisplaying = true' type="button" class=" p-1 m-1 rounded">Add</button>
-        <p id="response-message" class="ml-4 text-emerald-400">
-            @if ($responseMessage)
-                {{ $responseMessage }}
-            @endif
-        </p>
-    </div>
+            <h2 class="underline text-xl">Secondary Data</h2>
+            @foreach (['food_and_drink', 'pharmaceuticals', 'clothing', 'it_equipment', 'telephone', 'insurance', 'educational'] as $item)
+                <fieldset class="mb-4">
+                    <label for="{{ $item }}" class="block text-lg font-medium text-black mb-2">{{ ucfirst(str_replace('_', ' ', $item)) }}:</label>
+                    <div class="flex flex-col sm:flex-row items-center space-x-0 sm:space-x-2">
+                        <p class="flex-shrink-0">£</p>
+                        <input wire:model='{{ $item }}' id="{{ $item }}" type="number" class="flex-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Enter amount">
+                        <select name="{{ $item }}_metric" wire:model='{{ $item }}' id="{{ $item }}_metric" class="border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500">
+                            <option value="weekly" selected>Weekly</option>
+                        </select>
+                    </div>
+                </fieldset>
+            @endforeach
 
-
-
-    {{-- <section class="flex flex-col justify-center">
-        <button x-on:click="previousTransportEntriesDisplaying = ! previousTransportEntriesDisplaying"
-            class="bg-emerald-400 p-1 m-1 rounded"
-            x-text="previousTransportEntriesDisplaying ? 'Hide my previous entries' : 'See my previous entries'">
-        </button>
-        <div x-show="previousTransportEntriesDisplaying">
-         
-        </div>
-    </section> --}}
+            <div class="flex flex-col sm:flex-row items-center mt-6">
+                <button x-on:click='conformationModalDisplaying = true' type="button" class="w-full sm:w-auto p-2 bg-emerald-500 text-white rounded hover:bg-emerald-600 transition">Add</button>
+                <p id="response-message" class="mt-2 sm:mt-0 sm:ml-4 text-emerald-400">
+                    @if ($responseMessage)
+                        {{ $responseMessage }}
+                    @endif
+                </p>
+            </div>
+        </form>
+    </section>
 
     <livewire:carbon-footprint-data-visualisation />
-
 </div>
 
 <script>
-    // {{-- listen for post-modal-opened event (dispatched from PostItem.php) and pass event data to post item modal --}}
     document.addEventListener('livewire:init', () => {
-
         const responseMessageElement = document.getElementById('response-message');
 
         Livewire.on('entry-added', (event) => {
-
             setTimeout(() => {
                 responseMessageElement.style.display = "none";
             }, 3000);
-
         });
-
-
     });
 </script>

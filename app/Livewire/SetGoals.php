@@ -262,22 +262,224 @@ class SetGoals extends Component
 
     public function provideCarSolutions($entryId, $goalId, $weeks)
     {
-        // handle solution logic for each type
+        $recommendations = [];
+
+        $carToAnalyse = Car::find($entryId);
+        $carMileage = $carToAnalyse->mileage;
+        $carFuelType = $carToAnalyse->fuel_type;
+        
+        if (($carMileage) > 400 * $weeks && $carFuelType == 'diesel') {
+
+            $recommendation = array('Title'=>'Solution to reduce car mileage', 'Description'=>'Transitioning to hybrid or electric cars can significantly reduce emissions, electric vehicles (EVs) produce zero tailpipe emissions and can be charged using renewable energy sources. Utilizing ride-sharing apps can help consolidate trips, reducing the total distance driven per person. For short distances, biking or walking not only eliminates emissions but also promotes physical health.');
+
+            array_push($recommendations, $recommendation);
+        }
+        else if (($carMileage ) > 400 * $weeks) {
+
+            $recommendation = array('Title'=>'Solution to reduce car mileage', 'Description'=>'Transitioning to hybrid or electric cars can significantly reduce emissions, electric vehicles (EVs) produce zero tailpipe emissions and can be charged using renewable energy sources. Utilizing ride-sharing apps can help consolidate trips, reducing the total distance driven per person. For short distances, biking or walking not only eliminates emissions but also promotes physical health.');
+
+            array_push($recommendations, $recommendation);
+        }
+
+        foreach ($recommendations as $recommendation) {
+            Solution::create([
+                'goal_id' => $goalId,
+                'title' => $recommendation['Title'],
+                'description' => $recommendation['Description'],
+                'category' => $this->type,
+                'impact_score' => 0,
+            ]);
+        }
     }
 
     public function provideFlightsSolutions($entryId, $goalId, $weeks)
     {
-        // handle solution logic for each type
+        $recommendations = [];
+
+        $flightsToAnalyse = Flights::find($entryId);
+        $flightsDistance = $flightsToAnalyse->distance;
+        $flightPassengers = $flightsToAnalyse->num_passengers;
+        
+        if (($flightsDistance  / $flightPassengers) > 1500 * $weeks) {
+
+            $recommendation = array('Title'=>'Solution to reduce flight co2e', 'Description'=>'Some airlines have more fuel-efficient fleets and better sustainability practices. Look for those with newer aircraft or carbon offset programs. Consider alternatives such as trains, buses, or cars for shorter distances, lighter luggage means less fuel consumption, try to pack minimally. Economy class seats have a lower carbon footprint per passenger compared to business or first class, which take up more space.');
+
+            array_push($recommendations, $recommendation);
+        }
+
+        foreach ($recommendations as $recommendation) {
+            Solution::create([
+                'goal_id' => $goalId,
+                'title' => $recommendation['Title'],
+                'description' => $recommendation['Description'],
+                'category' => $this->type,
+                'impact_score' => 0,
+            ]);
+        }
     }
 
     public function provideBusAndRailSolutions($entryId, $goalId, $weeks)
     {
-        // handle solution logic for each type
+        $recommendations = [];
+
+        $busAndRailToAnalyse = BusAndRail::find($entryId);
+        $busDistance = $busAndRailToAnalyse->bus_distance;
+        $coachDistance = $busAndRailToAnalyse->coach_distance;
+        $trainDistance = $busAndRailToAnalyse->train_distance;
+        $tramDistance = $busAndRailToAnalyse->tram_distance;
+        $subwayDistance = $busAndRailToAnalyse->subway_distance;
+        $taxiDistance = $busAndRailToAnalyse->taxi_distance;
+        
+        if (($busDistance) > 100 * $weeks) {
+
+            $recommendation = array('Title'=>'Solution to reduce flight co2e', 'Description'=>'Use route planning apps to find the most efficient routes, avoiding unnecessary transfers or longer travel times.
+            Consider biking for shorter distances. It’s eco-friendly and can be faster than waiting for a bus.
+            If using the bus frequently, consider purchasing a monthly or quarterly pass, which can be more economical than paying per trip.
+            ');
+
+            array_push($recommendations, $recommendation);
+        }
+        if (($coachDistance) > 100 * $weeks) {
+
+            $recommendation = array('Title'=>'Solution to reduce coach co2e', 'Description'=>'Use route planning apps to find the most efficient routes, avoiding unnecessary transfers or longer travel times.
+            Consider biking for shorter distances. It’s eco-friendly and can be faster than waiting for a bus.
+            If using the bus frequently, consider purchasing a monthly or quarterly pass, which can be more economical than paying per trip.');
+
+            array_push($recommendations, $recommendation);
+        }
+        if (($trainDistance) > 100 * $weeks) {
+
+            $recommendation = array('Title'=>'Solution to reduce train co2e', 'Description'=>'Look for options like monthly or annual rail passes that offer unlimited travel or discounts for frequent riders.
+            Use train schedule apps to monitor real-time departures, track trains, and book tickets efficiently.
+            Schedule multiple appointments or activities in one trip to reduce the number of journeys.
+            If the destination is close, walking is a healthy alternative.
+            ');
+
+            array_push($recommendations, $recommendation);
+        }
+        if (($tramDistance) > 100 * $weeks) {
+
+            $recommendation = array('Title'=>'Solution to reduce tram co2e', 'Description'=>'Use apps or maps to find the most direct tram routes and avoid unnecessary transfers.
+            For shorter distances, consider biking instead of taking the tram.
+            Schedule multiple errands or activities in one trip to minimize the number of tram rides.
+            ');
+
+            array_push($recommendations, $recommendation);
+        }
+        if (($subwayDistance) > 100 * $weeks) {
+
+            $recommendation = array('Title'=>'Solution to reduce subway co2e', 'Description'=>'Schedule multiple errands or activities in one trip to minimize the number of tram rides.
+            For shorter distances, consider biking instead of taking the tram.
+            Use apps or maps to find the most direct tram routes and avoid unnecessary transfers.
+
+            ');
+
+            array_push($recommendations, $recommendation);
+        }
+        if (($taxiDistance) > 100 * $weeks) {
+
+            $recommendation = array('Title'=>'Solution to reduce taxi co2e', 'Description'=>'Use navigation apps to find the quickest routes and avoid traffic congestion, some apps offer route optimization features.
+            Schedule multiple errands or appointments in one taxi ride to minimize the number of trips.
+            For short trips, consider biking or using e-scooters, which can be more economical and environmentally friendly.
+            ');
+
+            array_push($recommendations, $recommendation);
+        }
+
+        foreach ($recommendations as $recommendation) {
+            Solution::create([
+                'goal_id' => $goalId,
+                'title' => $recommendation['Title'],
+                'description' => $recommendation['Description'],
+                'category' => $this->type,
+                'impact_score' => 0,
+            ]);
+        }
     }
 
     public function provideSecondarySolutions($entryId, $goalId, $weeks)
     {
-        // handle solution logic for each type
+        $recommendations = [];
+
+        $secondaryToAnalyse = Secondary::find($entryId);
+        $secondaryFoodAndDrink = $secondaryToAnalyse->food_and_drink;
+        $secondaryPharmaceuticals = $secondaryToAnalyse->food_and_drink;
+        $secondaryClothing = $secondaryToAnalyse->food_and_drink;
+        $secondaryItEquipment = $secondaryToAnalyse->food_and_drink;
+        $secondaryTelephone = $secondaryToAnalyse->food_and_drink;
+        $secondaryInsurance = $secondaryToAnalyse->food_and_drink;
+        $secondaryEducational = $secondaryToAnalyse->food_and_drink;
+
+        if (($secondaryFoodAndDrink) > 100 * $weeks) {
+
+            $recommendation = array('Title'=>'Solution to reduce food and drink consumption', 'Description'=>'Create a weekly meal plan to avoid impulse purchases and ensure you buy only what you need.
+            Determine a realistic budget for food and drink each week and stick to it.
+            Cooking at home is often cheaper than eating out, try making larger batches and freezing portions for later.
+            Stick to a list to avoid buying unnecessary items.
+            ');
+
+            array_push($recommendations, $recommendation);
+        }
+        if (($secondaryPharmaceuticals) > 200 * $weeks) {
+
+            $recommendation = array('Title'=>'Solution to reduce pharmaceuticals consumption', 'Description'=>'Regularly review your medications with your healthcare provider to assess if all are necessary or if alternatives exist.
+            Discuss the possibility of adjusting dosages or switching to lower-cost alternatives, such as generics.
+            Many pharmacies offer discount programs or cards that can significantly reduce the cost of medications.
+            Explore resources from nonprofit organizations that provide financial assistance for specific medications.
+            ');
+
+            array_push($recommendations, $recommendation);
+        }
+        if (($secondaryClothing) > 200 * $weeks) {
+
+            $recommendation = array('Title'=>'Solution to reduce clothing consumption', 'Description'=>'Go through your existing clothing to identify items you no longer wear. This can help you understand what you truly need.
+            Focus on versatile, timeless pieces that can be mixed and matched to create various outfits.
+            Establish a monthly limit for clothing spending to help you stay within your financial means.
+            Before shopping, create a list of specific items you need to avoid impulse buys.
+            ');
+
+            array_push($recommendations, $recommendation);
+        }
+        if (($secondaryItEquipment) > 500 * $weeks) {
+
+            $recommendation = array('Title'=>'Solution to reduce IT equipment consumption', 'Description'=>'Determine what equipment is essential for your work or personal use, avoid purchasing unnecessary upgrades or features.
+            Make a list of the most critical items you need and focus on acquiring those first.
+            Establish a monthly or yearly budget specifically for IT equipment to help control spending.
+            Consider purchasing certified refurbished items, which can be significantly cheaper than new products but still come with warranties.
+            ');
+
+            array_push($recommendations, $recommendation);
+        }
+        if (($secondaryTelephone) > 100 * $weeks) {
+
+            $recommendation = array('Title'=>'Solution to reduce telecommunication consumption', 'Description'=>'Evaluate your usage patterns for data, calls, and texts to determine if your current plan meets your needs or if you’re overpaying.
+            Research different plans available from various providers to find one that better fits your usage and budget.
+            Consider bundling your phone, internet, and television services with one provider, which can often lead to discounts.
+            If applicable, look into family or shared plans that allow multiple users to share data and costs.
+            ');
+
+            array_push($recommendations, $recommendation);
+        }
+        if (($secondaryInsurance) > 150 * $weeks) {
+
+            $recommendation = array('Title'=>'Solution to reduce insurance consumption', 'Description'=>'Regularly review your insurance policies (auto, home, health, etc.) to ensure you have the appropriate coverage without unnecessary extras.
+            Ensure you’re not paying for overlapping coverage across different policies.
+            Obtain quotes from multiple insurers for the same coverage to find the best rates.
+            Utilize online tools to compare insurance rates and coverage options from various providers.
+            ');
+
+            array_push($recommendations, $recommendation);
+        }
+        if (($secondaryEducational) > 400 * $weeks) {
+
+            $recommendation = array('Title'=>'Solution to reduce education consumption', 'Description'=>'Determine what educational services or materials are essential and eliminate unnecessary expenses.
+            Identify the most critical areas of spending (tuition, textbooks, supplies) and focus on those.
+            Explore available scholarships, grants, and financial aid programs that can significantly reduce costs.
+            Investigate work-study opportunities that allow you to earn money while attending school.
+            ');
+
+            array_push($recommendations, $recommendation);
+        }
     }
 
     public function provideSolutions($lastEntryId, $goalId, $weeks)
