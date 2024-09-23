@@ -40,6 +40,10 @@ Route::middleware([
         return view('achievements-view');
     })->name('achievements');
 
+    Route::get('/friends/{friend_id}', function () {
+        return view('friend-profile');
+    })->name('friend-profile');
+
 });
 
 
