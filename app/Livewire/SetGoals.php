@@ -28,7 +28,7 @@ class SetGoals extends Component
     public $active_goals; // all active goals
     public $past_goals; // achieved or not achieved goals
     public $achievements;
-    public $goals_not_met; // goals not met
+    public $goals_not_met; // goals not met#
 
     public function mount()
     {
@@ -37,7 +37,7 @@ class SetGoals extends Component
         $user = Auth::user();
         $this->user_id = $user->id;
         $this->previous_entries = Household::where('user_id', $this->user_id)->get();
-        #$this->active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
+        $this->active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
         $this->checkGoalMet();
         $this->past_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 1)->get();
     }
@@ -50,7 +50,8 @@ class SetGoals extends Component
             'improve_percentage_goal' => $this->improve_percentage_goal,
             'previous_co2e' => $this->previous_co2e,
             'type' => $this->type,
-            'original_entry_id' => $this-> original_entry_id
+            'original_entry_id' => $this-> original_entry_id,
+            'co2e_time_of_goal_met' => 0
         ]);
        
     }
@@ -65,29 +66,29 @@ class SetGoals extends Component
     {
         switch($this->type){
             case 'household':
+                $this->mount();
                 $this->previous_entries = Household::where('user_id', $this->user_id)->get();
                 $this->active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
-                $this->mount();
                 break;
             case 'car':
+                $this->mount();
                 $this->previous_entries = Car::where('user_id', $this->user_id)->get();
                 $this->active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
-                $this->mount();
                 break;
             case 'flights':
+                $this->mount();
                 $this->previous_entries = Flights::where('user_id', $this->user_id)->get();
                 $this->active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
-                $this->mount();
                 break;
             case 'bus & rail':
+                $this->mount();
                 $this->previous_entries = BusAndRail::where('user_id', $this->user_id)->get();
                 $this->active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
-                $this->mount();
                 break;
             case 'secondary':
+                $this->mount();
                 $this->previous_entries = Secondary::where('user_id', $this->user_id)->get();
                 $this->active_goals = Goal::where('user_id', $this->user_id)->where('type', $this->type)->where('goal_seen', 0)->get();
-                $this->mount();
                 break;
         }
     }

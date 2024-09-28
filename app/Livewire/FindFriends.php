@@ -10,7 +10,7 @@ class FindFriends extends Component
 {       
     public $users;
     public $queried_users;
-    public $query;
+    public $query = '';
     public $user_id; // currently authenticated user
 
     public function searchForUser()

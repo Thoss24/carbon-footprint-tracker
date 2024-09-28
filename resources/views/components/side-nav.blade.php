@@ -1,6 +1,17 @@
-<div class="bg-white overflow-hidden rounded-xl shadow-xl basis-4/12 w-full">
-  <livewire:CreatePost />
-  <livewire:find-friends>
-  <livewire:friends-list />
-  <livewire:create-journal-entry />
+<div class="bg-gray-100 rounded-xl shadow-lg w-full">
+  <div class="bg-white mb-6 p-4 rounded-xl shadow-md">
+      <livewire:CreatePost />
+  </div>
+  
+  <div class="bg-white mb-6 p-4 rounded-xl shadow-md">
+      <livewire:find-friends />
+  </div>
+
+  <div class="bg-white mb-6 p-4 rounded-xl shadow-md">
+      <livewire:friends-list />
+  </div>
+
+  <div class="bg-white mb-6 p-4 rounded-xl shadow-md">
+      <livewire:create-journal-entry />
+  </div>
 </div>

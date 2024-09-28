@@ -29,7 +29,7 @@ class Household extends Model
         'wood_metric',
         'user_id',
         'num_people_in_household',
-        'total_household_co2e'
+        'total_co2e'
     ];
 
     public function user() 

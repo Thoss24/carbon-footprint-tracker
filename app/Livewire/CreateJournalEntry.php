@@ -18,7 +18,7 @@ class CreateJournalEntry extends Component
     {
         $user = Auth::user();
         $this->user_id = $user->id;
-        $this->all_entries = Journal::all();
+        $this->all_entries = Journal::where('user_id', $this->user_id)->get();
     }
 
     public function createEntry()

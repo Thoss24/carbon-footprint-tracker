@@ -1,29 +1,46 @@
-<div class="flex flex-col rounded-full bg-slate-200 w-fit p-4 justify-center items-center" x-data="{ solutionsDisplaying: false }">
-    {{ $targetDate }}
-    {{ $goalSeen }}
-  
-        <div class="{{!$goalAchieved && $goalSeen == 1 ? 'hidden' : 'visible'}}">
-            <p class="text-emerald-500">Goal Achieved</p>
-            <p value="{{$previousCo2e}}" class="prev-co2e">{{$previousCo2e}}</p>
-            <p class="next-co2e">{{$nextCo2e}}</p>
-            <p class="percentage-goal">{{$percentageGoal}}</p>
-            <button wire:click='share' class="share">share</button>
-        </div>
-       
-        <p class="{{$goalAchieved && $goalSeen == 1 ? 'hidden' : 'visible'}} text-red-500">Goal Not Achieved</p>
-       
+<div class="flex flex-col rounded-lg bg-slate-200 w-fit p-2 justify-center items-center shadow-md m-2"
+    x-data="{ solutionsDisplaying: false }">
+    <p class="text-lg font-semibold text-gray-800 mb-2">{{ $targetDate }}</p>
 
-    @if ($goalSeen == 1 && $goalAchieved == 0)
-        <button class="bg-emerald-300 p-1 rounded-xl" x-text="solutionsDisplaying ? 'Hide solutions' : 'Show solutions'"
-            x-on:click="solutionsDisplaying = ! solutionsDisplaying"></button>
-        <div x-show="solutionsDisplaying">
-            @foreach ($solutions as $solution)
-                <div class="flex flex-row gap-1">
-                    <h2>{{ $solution->title }}:</h2>
-                    <p>{{ $solution->description }}:</p>
-                    <p>{{ $solution->id }}</p>
-                </div>
-            @endforeach
+    @if ($goalSeen == 1 && !$goalAchieved == 0)
+    <div class="mb-4">
+        <p class="text-emerald-600 font-medium text-lg">Goal Achieved</p>
+        <button wire:click='share' 
+                class="bg-emerald-500 text-white rounded-md px-4 py-2 mt-2 hover:bg-emerald-600 transition duration-200">
+            Share
+        </button>
+    </div>
+@endif
+
+@if ($goalSeen == 1 && $goalAchieved == 0)
+    <div class="mb-4">
+        <p class="text-red-600 font-medium text-lg mt-2">Goal Not Achieved</p>
+        <button class="bg-emerald-300 text-black rounded-md px-4 py-2 mt-2 hover:bg-emerald-400 transition duration-200"
+                x-on:click="solutionsDisplaying = true">
+            Show Solutions
+        </button>
+    </div>
+@endif
+
+    <!-- Solutions Modal -->
+    <div x-show="solutionsDisplaying"
+        class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-25 z-50"
+        x-on:click.away="solutionsDisplaying = false" style="display: none;">
+        <div class="bg-white rounded-lg p-6 w-11/12 md:w-1/3 relative opacity-100">
+            <div class="flex flex-row justify-between">
+                <h2 class="text-xl font-semibold mb-4">Solutions</h2>
+                <button class="text-gray-500 hover:text-gray-800 text-2xl"
+                    x-on:click="solutionsDisplaying = false">&times;</button>
+            </div>
+            <div class="mt-4">
+                @foreach ($solutions as $solution)
+                    <div
+                        class="flex flex-col bg-gray-100 p-4 rounded-lg shadow-sm mb-4 transition-transform transform hover:scale-105">
+                        <h2 class="font-semibold text-lg text-gray-800 mb-1">{{ $solution->title }}</h2>
+                        <p class="text-gray-700">{{ $solution->description }}</p>
+                    </div>
+                @endforeach
+            </div>
         </div>
-    @endif
+    </div>
 </div>

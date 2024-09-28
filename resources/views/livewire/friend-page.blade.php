@@ -1,3 +1,5 @@
+
+<div>
 <div>
     <h1>profile section with name and image</h1>
 </div>
@@ -6,4 +8,5 @@
 </div>
 <div>
     
+</div>
 </div>

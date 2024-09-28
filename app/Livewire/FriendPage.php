@@ -12,6 +12,16 @@ class FriendPage extends Component
         
     }
 
+    public function getAllPosts()
+    {
+
+    }
+
+    public function getCarbonFootprintData()
+    {
+        
+    }
+
     public function render()
     {
         return view('livewire.friend-page');
