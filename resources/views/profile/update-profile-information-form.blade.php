@@ -78,6 +78,13 @@
                 @endif
             @endif
         </div>
+
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="bio" value="{{ __('Bio') }}" class="font-semibold text-gray-800" />
+            <textarea id="bio" maxlength="255" class="mt-1 block w-full border border-gray-300 rounded-md focus:border-emerald-500 focus:ring focus:ring-emerald-500" wire:model="state.bio" required autocomplete="bio">
+            </textarea>
+            <x-input-error for="name" class="mt-2" />
+        </div>
     </x-slot>
 
     <x-slot name="actions">
