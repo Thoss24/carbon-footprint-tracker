@@ -20,6 +20,8 @@ class CarbonFootprintDataVisualisation extends Component
     public $url_test;
     public $transport_type = 'car';
     public $url;
+    public $friend_page = false;
+    public $data_type;
 
     public function updateChartType()
     {
@@ -98,17 +100,33 @@ class CarbonFootprintDataVisualisation extends Component
 
         $this->url = $carbon_footrpint_type_url;
 
-        switch($this->url)
-        {
-            case 'log-household-carbon-footprint':
-                $this->getHouseholdData();
-                break;
-            case 'log-transport-carbon-footprint':
-                $this->getTransportData();
-                break;
-            case 'log-secondary-carbon-footprint':
-                $this->getSecondaryData();
-                break;
+        if ($this->friend_page)
+        {   
+            switch($this->data_type)
+            {
+                case 'log-household-carbon-footprint':
+                    $this->getHouseholdData();
+                    break;
+                case 'log-transport-carbon-footprint':
+                    $this->getTransportData();
+                    break;
+                case 'log-secondary-carbon-footprint':
+                    $this->getSecondaryData();
+                    break;
+            }
+        } else {
+            switch($this->url)
+            {
+                case 'log-household-carbon-footprint':
+                    $this->getHouseholdData();
+                    break;
+                case 'log-transport-carbon-footprint':
+                    $this->getTransportData();
+                    break;
+                case 'log-secondary-carbon-footprint':
+                    $this->getSecondaryData();
+                    break;
+            }
         }
    
     }

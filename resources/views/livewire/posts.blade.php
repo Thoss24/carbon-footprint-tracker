@@ -13,7 +13,7 @@
 
     <div class="flex flex-col gap-4">
         @foreach ($posts as $post)
-            <livewire:post-item :$post :user_name="$post->user->name" :post_id="$post->id" :user_id="$post->user_id" :auth_user_id="$user_id" :post_content="$post->content" :key="$post->id" />
+            <livewire:post-item :$post :profile_photo="$post->user->profile_photo_url" :user_name="$post->user->name" :post_id="$post->id" :user_id="$post->user_id" :auth_user_id="$user_id" :post_content="$post->content" :key="$post->id" />
         @endforeach
     </div>
 

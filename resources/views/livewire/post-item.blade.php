@@ -2,7 +2,7 @@
     <div class="w-11/12" x-on:click="modalOpen = true" wire:click="openModal">
         <div class="flex flex-row justify-between p-2">
             <div class="flex flex-row gap-2">
-                <img src="" alt="Profile pic">
+                <img class="w-12 h-12 rounded-full border-2 border-emerald-500" src="{{$profile_photo}}" alt="Profile pic">
                 <p>{{ $user_name }}</p>
             </div>
         </div>

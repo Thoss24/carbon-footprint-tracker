@@ -14,6 +14,7 @@ class PostItem extends Component
     public $post_id;
     public $user_id;
     public $auth_user_id;
+    public $profile_photo;
 
     public function deletePost()
     {
