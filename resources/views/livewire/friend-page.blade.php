@@ -23,11 +23,8 @@
 
     <livewire:post-item-modal user_id="{{ $user_id }}"/>
 
-    @foreach ($data_types as $url)
-        <livewire:carbon-footprint-data-visualisation :friend_page="true" :data_type="$url"/>
-    @endforeach
-
-    {{-- <livewire:carbon-footprint-data-visualisation :friend_page="true" /> --}}
-
+    <livewire:carbon-footprint-data-visualisation :friend_page="true" :friend_id="$friend_id" :data_type="'log-household-carbon-footprint'"/>
+    <livewire:carbon-footprint-data-visualisation :friend_page="true" :friend_id="$friend_id" :data_type="'log-transport-carbon-footprint'"/>
+    <livewire:carbon-footprint-data-visualisation :friend_page="true" :friend_id="$friend_id" :data_type="'log-secondary-carbon-footprint'"/>
 
 </div>

@@ -1,6 +1,11 @@
 <div class="flex flex-col rounded-lg bg-slate-200 w-fit p-2 justify-center items-center shadow-md m-2"
     x-data="{ solutionsDisplaying: false }">
-    <p class="text-lg font-semibold text-gray-800 mb-2">{{ $targetDate }}</p>
+
+    <div class="flex flex-col">
+        <p class="text-base font-semibold text-gray-800 mb-2">{{ $targetDate }}</p>
+        <p class="text-sm font-semibold text-gray-600 mb-2">Reduce co2e of {{$previousCo2e}} by %{{$percentageGoal}}</p>
+        <p class="text-sm font-semibold text-gray-600 mb-2">Target date: {{$targetDate}}</p>
+    </div>
 
     @if ($goalSeen == 1 && !$goalAchieved == 0)
     <div class="mb-4">

@@ -11,14 +11,15 @@
          style="display: none;">
         <div class="fixed inset-0 transform transition-all">
             <div class="absolute inset-0 bg-black opacity-50 hover:cursor-pointer" 
-                 x-on:click='postModalOpen = false'></div>
+                 x-on:click='postModalOpen = false'>
+            </div>
         </div>
 
         <div class="flex bg-white rounded-lg overflow-hidden shadow-xl transform transition-all ml-4 mr-4 max-w-md mx-auto">
             <form wire:submit='createPost' class="w-full p-4">
                 <fieldset class="flex flex-row justify-between items-center mb-4">
                     <div class="flex flex-row gap-2">
-                        <img src="" alt="Profile pic" class="w-10 h-10 rounded-full">
+                        <img class="w-12 h-12 rounded-full border-2 border-emerald-500" src="{{$user->profile_photo_url}}" alt="Profile pic" class="w-10 h-10 rounded-full">
                         <h3 class="text-lg font-medium text-black">{{ $user_name }}</h3>
                     </div>
                     <div>

@@ -21,7 +21,8 @@ class CarbonFootprintDataVisualisation extends Component
     public $transport_type = 'car';
     public $url;
     public $friend_page = false;
-    public $data_type;
+    public $data_type = "";
+    public $friend_id;
 
     public function updateChartType()
     {
@@ -36,13 +37,25 @@ class CarbonFootprintDataVisualisation extends Component
 
     public function getHouseholdData()
     {
-        $this->entries = Household::where('user_id', $this->user_id)
-        ->pluck('total_co2e')
-        ->toArray();
 
-        $this->labels = Household::where('user_id', $this->user_id)
-        ->pluck('created_at')
-        ->toArray();
+        if ($this->friend_page){
+            $this->entries = Household::where('user_id', $this->friend_id)
+            ->pluck('total_co2e')
+            ->toArray();
+
+            $this->labels = Household::where('user_id', $this->friend_id)
+            ->pluck('created_at')
+            ->toArray();
+
+        } else {
+            $this->entries = Household::where('user_id', $this->user_id)
+            ->pluck('total_co2e')
+            ->toArray();
+
+            $this->labels = Household::where('user_id', $this->user_id)
+            ->pluck('created_at')
+            ->toArray();
+        }
     }
 
     public function getTransportData()

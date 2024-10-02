@@ -5,8 +5,14 @@
     
     <div class="container mt-4">
 
+        @php
+            echo "Entries" . json_encode($entries, true);
+        @endphp
+
         @if ($friend_page)
             <h2>FRIEND PAGE</h2>
+            {{$data_type}}
+            {{$friend_id}}
         @else
             <div class="text-center mb-4">
                 @if ($url == 'log-household-carbon-footprint')

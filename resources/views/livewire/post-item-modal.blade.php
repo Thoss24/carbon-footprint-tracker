@@ -1,4 +1,3 @@
-@props(['user_id'])
 
 <div class="w-full">
     <div x-show="modalOpen" x-transition.delay.50ms
@@ -12,9 +11,11 @@
         <div class="flex flex-col m-4 bg-white rounded-lg overflow-y-auto shadow-xl transform transition-all min-h-96">
             <form wire:submit='submitForm' class="w-full h-full">
                 <fieldset class="flex flex-row justify-between">
-                    <div class="flex flex-row gap-2 p-2">
-                        <img src="" alt="Profile pic">
-                        <h3 id="user_name"></h3>
+                    <div class="flex flex-row gap-2 p-2 items-center">
+                        @if ($user)
+                            <img class="w-12 h-12 rounded-full border-2 border-emerald-500" src="{{$user->profile_photo_url}}" alt="Profile pic">
+                            <h3 id="user_name">{{$user->name}}</h3>
+                        @endif
                     </div>
                     <div class="flex gap-6 p-2 justify-center items-center">
                         <i id="close-post" class="fa fa-times" wire:click='resetPerPage'
@@ -27,6 +28,7 @@
                 </fieldset>
             </form>
             <livewire:comments />
+
         </div>
 
     </div>

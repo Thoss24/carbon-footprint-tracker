@@ -26,7 +26,7 @@
             @if (is_object($comments) && count($comments) > 0)
                 @foreach ($comments as $post_comment)
                     <x-post-comment content="{{ $post_comment->content }}" userName="{{ $post_comment->user->name }}"
-                        profilePhoto="{{ $post_comment->user->profile_photo_path }}" />
+                        profilePhoto="{{ $post_comment->user->profile_photo_url }}" />
                 @endforeach
                 <div wire:loading.delay>
                     Loading more items...

@@ -17,5 +17,5 @@
         @endforeach
     </div>
 
-    <livewire:post-item-modal user_id="{{ $user_id }}"/>
+    <livewire:post-item-modal :user_id="$user_id"/>
 </div>
