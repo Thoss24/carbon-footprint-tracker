@@ -5,14 +5,17 @@
     
     <div class="container mt-4">
 
-        @php
-            echo "Entries" . json_encode($entries, true);
-        @endphp
-
         @if ($friend_page)
-            <h2>FRIEND PAGE</h2>
-            {{$data_type}}
-            {{$friend_id}}
+        <div class="card mb-2">
+            <form action="" class="mb-3">
+                <label for="data_type" class="form-label">Select Friend's Carbon Footprint Data Type</label>
+                <select wire:model="data_type" id="data_type" class="form-select" wire:change="updateDataType">
+                    <option value="log-household-carbon-footprint" selected>Household Data</option>
+                    <option value="log-transport-carbon-footprint">Transport Data</option>
+                    <option value="log-secondary-carbon-footprint">Secondary Data</option>
+                </select>
+            </form>
+        </div>
         @else
             <div class="text-center mb-4">
                 @if ($url == 'log-household-carbon-footprint')

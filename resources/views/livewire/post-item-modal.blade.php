@@ -24,7 +24,7 @@
                     </div>
                 </fieldset>
                 <fieldset class="flex flex-col p-2">
-                    <p id="post_content"></p>
+                    <p id="post_content">{{$postContent}}</p>
                 </fieldset>
             </form>
             <livewire:comments />
@@ -35,43 +35,47 @@
 </div>
 
 <script>
-    // {{-- listen for post-modal-opened event (dispatched from PostItem.php) and pass event data to post item modal --}}
     document.addEventListener('livewire:init', () => {
         Livewire.on('post-modal-opened', (event) => {
+            // Add event listeners for dynamic elements
+            const arrowIcon = document.getElementById('arrow-icon');
+            if (arrowIcon) {
+                arrowIcon.addEventListener('click', () => {
+                    arrowIcon.classList.toggle('rotate-180');
+                });
+            }
 
-            const commentsSection = document.getElementById('post-comments-section');
+            const backdrop = document.getElementById('backdrop');
+            if (backdrop) {
+                backdrop.addEventListener('click', () => {
+                    if (arrowIcon) {
+                        arrowIcon.classList.remove('rotate-180');
+                    }
+                });
+            }
 
-            // display post creator name and post content
-            const postContentElement = document.getElementById('post_content');
-            const userNameElement = document.getElementById('user_name');
-            postContentElement.textContent = event.postContent;
-            userNameElement.textContent = event.userName;
+            const closePostButton = document.getElementById('close-post');
+            if (closePostButton) {
+                closePostButton.addEventListener('click', () => {
+                    if (arrowIcon) {
+                        arrowIcon.classList.remove('rotate-180');
+                    }
+                });
+            }
 
-            // display menu & delete post button if post belongs to currently authenticated user
+            // Display menu & delete post button if post belongs to currently authenticated user
             const postDropdownContainer = document.getElementById('post-dropdown-container');
             if (event.authUserId === event.postUserId) {
-                postDropdownContainer.classList.remove('hidden')
-                postDropdownContainer.classList.add('inline-flex')
+                if (postDropdownContainer) {
+                    postDropdownContainer.classList.remove('hidden');
+                    postDropdownContainer.classList.add('inline-flex');
+                }
             } else {
-                postDropdownContainer.classList.add('hidden')
-                postDropdownContainer.classList.add('inline-flex')
+                if (postDropdownContainer) {
+                    postDropdownContainer.classList.add('hidden');
+                    postDropdownContainer.classList.remove('inline-flex');
+                }
             }
-        });
-
-        // add rotation animation to arrow icon
-        const arrowIcon = document.getElementById('arrow-icon');
-        arrowIcon.addEventListener('click', () => {
-            arrowIcon.classList.toggle('rotate-180');
-        });
-
-        const backdrop = document.getElementById('backdrop');
-        backdrop.addEventListener('click', () => {
-            arrowIcon.classList.remove('rotate-180');
-        });
-
-        const closePostButton = document.getElementById('close-post');
-        closePostButton.addEventListener('click', () => {
-            arrowIcon.classList.remove('rotate-180');
         });
     });
 </script>

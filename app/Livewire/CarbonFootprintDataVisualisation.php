@@ -35,6 +35,12 @@ class CarbonFootprintDataVisualisation extends Component
         $this->dispatch('updateChart');
     }
 
+    public function updateDataType()
+    {
+        $this->mount();
+        $this->dispatch('updateChart');
+    }
+
     public function getHouseholdData()
     {
 
@@ -60,47 +66,93 @@ class CarbonFootprintDataVisualisation extends Component
 
     public function getTransportData()
     {   
-        switch($this->transport_type)
-        {
-            case 'car':
-                $this->entries = Car::where('user_id', $this->user_id)
-                ->pluck('total_co2e')
-                ->toArray();
-        
-                $this->labels = Car::where('user_id', $this->user_id)
-                ->pluck('created_at')
-                ->toArray();
-                break;
-            case 'flights':
-                $this->entries = Flights::where('user_id', $this->user_id)
-                ->pluck('total_co2e')
-                ->toArray();
-        
-                $this->labels = Flights::where('user_id', $this->user_id)
-                ->pluck('created_at')
-                ->toArray();
-                break;
-            case 'bus&rail':
-                $this->entries = BusAndRail::where('user_id', $this->user_id)
-                ->pluck('total_co2e')
-                ->toArray();
-        
-                $this->labels = BusAndRail::where('user_id', $this->user_id)
-                ->pluck('created_at')
-                ->toArray();
-                break;
+
+        if ($this->friend_page) {
+            switch($this->transport_type)
+            {
+                case 'car':
+                    $this->entries = Car::where('user_id', $this->friend_id)
+                    ->pluck('total_co2e')
+                    ->toArray();
+            
+                    $this->labels = Car::where('user_id', $this->friend_id)
+                    ->pluck('created_at')
+                    ->toArray();
+                    break;
+                case 'flights':
+                    $this->entries = Flights::where('user_id', $this->friend_id)
+                    ->pluck('total_co2e')
+                    ->toArray();
+            
+                    $this->labels = Flights::where('user_id', $this->friend_id)
+                    ->pluck('created_at')
+                    ->toArray();
+                    break;
+                case 'bus&rail':
+                    $this->entries = BusAndRail::where('user_id', $this->friend_id)
+                    ->pluck('total_co2e')
+                    ->toArray();
+            
+                    $this->labels = BusAndRail::where('user_id', $this->friend_id)
+                    ->pluck('created_at')
+                    ->toArray();
+                    break;
+            }
+        } else {
+            switch($this->transport_type)
+            {
+                case 'car':
+                    $this->entries = Car::where('user_id', $this->user_id)
+                    ->pluck('total_co2e')
+                    ->toArray();
+            
+                    $this->labels = Car::where('user_id', $this->user_id)
+                    ->pluck('created_at')
+                    ->toArray();
+                    break;
+                case 'flights':
+                    $this->entries = Flights::where('user_id', $this->user_id)
+                    ->pluck('total_co2e')
+                    ->toArray();
+            
+                    $this->labels = Flights::where('user_id', $this->user_id)
+                    ->pluck('created_at')
+                    ->toArray();
+                    break;
+                case 'bus&rail':
+                    $this->entries = BusAndRail::where('user_id', $this->user_id)
+                    ->pluck('total_co2e')
+                    ->toArray();
+            
+                    $this->labels = BusAndRail::where('user_id', $this->user_id)
+                    ->pluck('created_at')
+                    ->toArray();
+                    break;
+            }
         }
     }
 
     public function getSecondaryData()
     {
-        $this->entries = Secondary::where('user_id', $this->user_id)
-        ->pluck('total_co2e')
-        ->toArray();
 
-        $this->labels = Secondary::where('user_id', $this->user_id)
-        ->pluck('created_at')
-        ->toArray();
+        if ($this->friend_page)
+        {
+            $this->entries = Secondary::where('user_id', $this->friend_id)
+            ->pluck('total_co2e')
+            ->toArray();
+    
+            $this->labels = Secondary::where('user_id', $this->friend_id)
+            ->pluck('created_at')
+            ->toArray();
+        } else {
+            $this->entries = Secondary::where('user_id', $this->user_id)
+            ->pluck('total_co2e')
+            ->toArray();
+    
+            $this->labels = Secondary::where('user_id', $this->user_id)
+            ->pluck('created_at')
+            ->toArray();
+        }
     }
 
     public function mount()
