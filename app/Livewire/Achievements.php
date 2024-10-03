@@ -22,7 +22,7 @@ class Achievements extends Component
         $this->user_id = $user->id;
         $this->goals_achievements = AchievementsModel::where('achievement_type', 'goals')->get();
         $this->submit_data_achievements = AchievementsModel::where('achievement_type', 'submit_data')->get();
-        $this->met_achievements = AchievementMet::all();
+        $this->met_achievements = AchievementMet::where('user_id', $this->user_id)->get();
         //$this->checkSubmitDataAchievements();
 
         $this->checkGoalsAchievements();
