@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="sm:flex sm:flex-row w-screen flex-col items-start">
+    <div class="sm:flex sm:flex-row flex-col items-start">
         
         <div class="flex flex-col p-4 gap-4">
             <x-side-nav />

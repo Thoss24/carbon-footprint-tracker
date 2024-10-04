@@ -13,9 +13,8 @@
     </div>
 
     <h1 class="underline text-xl font-semibold text-black mb-4">Household Carbon Footprint</h1>
-
-    <section>
-        <form class="mt-6 max-w-3xl mx-auto p-4 bg-white rounded-lg shadow-md">
+    
+        <form>
 
             <fieldset class="mb-4">
                 <label for="num_people_in_household" class="block text-lg font-medium text-black mb-2">How many people are in your household?</label>
@@ -30,10 +29,10 @@
                         class="block text-lg font-medium text-black mb-2">{{ ucfirst(str_replace('_', ' ', $resource)) }}</label>
                     <div class="flex flex-col sm:flex-row items-center space-x-0 sm:space-x-2">
                         <input type="number" wire:model='{{ $resource }}' placeholder="0"
-                            class="flex-1 p-2 mb-2 sm:mb-0 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500" />
+                            class="flex-1 w-full sm:w-auto p-2 mb-2 sm:mb-0 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500" />
                         <select name="{{ $resource }}_metric" id="{{ $resource }}_metric"
                             wire:model='{{ $resource }}_metric'
-                            class="border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500">
+                            class="mt-2 sm:mt-0 sm:w-auto border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500">
                             @if ($resource == 'electricity')
                                 <option value="kWh" selected>kWh</option>
                             @elseif ($resource == 'natural_gas')
@@ -61,8 +60,8 @@
                     </div>
                 </fieldset>
             @endforeach
-
-            <div class="flex flex-col w-fit sm:flex-row items-center mt-6">
+        
+            <div class="flex flex-col w-full sm:flex-row items-center mt-6">
                 <button x-on:click='conformationModalDisplaying = true' type="button"
                     class="w-full sm:w-auto p-2 bg-emerald-500 text-white rounded hover:bg-emerald-600 transition">Add</button>
                 <p id="response-message" class="mt-2 sm:mt-0 sm:ml-4 text-emerald-400">
@@ -71,8 +70,9 @@
                     @endif
                 </p>
             </div>
+            
         </form>
-    </section>
+
 
     <livewire:carbon-footprint-data-visualisation />
 </div>
