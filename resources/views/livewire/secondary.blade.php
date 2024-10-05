@@ -19,8 +19,8 @@
             @foreach (['food_and_drink', 'pharmaceuticals', 'clothing', 'it_equipment', 'telephone', 'insurance', 'educational'] as $item)
                 <fieldset class="mb-4">
                     <label for="{{ $item }}" class="block text-lg font-medium text-black mb-2">{{ ucfirst(str_replace('_', ' ', $item)) }}:</label>
-                    <div class="flex flex-col sm:flex-row items-center space-x-0 sm:space-x-2">
-                        <p class="flex-shrink-0">£</p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-2">
+                        <i class="fa-solid fa-sterling-sign"></i>
                         <input wire:model='{{ $item }}' id="{{ $item }}" type="number" class="flex-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Enter amount">
                         <select name="{{ $item }}_metric" wire:model='{{ $item }}' id="{{ $item }}_metric" class="border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500">
                             <option value="weekly" selected>Weekly</option>
