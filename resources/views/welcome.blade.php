@@ -62,7 +62,7 @@
 </style>
 
 <body>
-    <img class="background" src="http://carbon-footprint-tracking-app.test/storage/images/welcome_1.jpg" alt="">
+    <img class="background" src="storage/images/welcome_1.jpg" alt="">
     <div class="main-content-section">
         @if (Route::has('login'))
             <nav class="nav-section">

@@ -33,17 +33,20 @@ class FindFriends extends Component
         $user = Auth::user();
         $this->user_id = $user->id;
         
-        $this->users = User::where('id', '!=', $this->user_id)
-            ->whereNotIn('id', function ($query) {
-                $query->select('user_id')
-                    ->orWhere('friend_id', $this->user_id)
-                    ->from('friendships')
-                    ->where(function ($q)  {
-                        $q->where('user_id', $this->user_id)
-                            ->orWhere('friend_id', $this->user_id);
-                    });
-            })
-            ->get();
+        // $this->users = User::where('id', '!=', $this->user_id)
+        //     ->whereNotIn('id', function ($query) {
+        //         $query->select('user_id')
+        //             ->orWhere('friend_id', $this->user_id)
+        //             ->from('friendships')
+        //             ->where(function ($q)  {
+        //                 $q->where('user_id', $this->user_id)
+        //                     ->orWhere('friend_id', $this->user_id);
+        //             });
+        //     })
+        //     ->get();
+
+        $this->users = User::whereDoesntHave('friendships')->get();
+
     }
 
     public function render()

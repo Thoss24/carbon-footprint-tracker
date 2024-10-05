@@ -1,5 +1,7 @@
 <div class="bg-white m-4 w-96 rounded-lg shadow-md">
     <h2 class="text-2xl font-semibold text-black underline">Find Friends</h2>
+
+    {{-- {{$users}} --}}
     
     <div class="flex flex-col mt-4">
         <label for="search_friends" class="text-sm font-medium text-gray-700">Search for a friend</label>

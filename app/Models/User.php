@@ -12,6 +12,8 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Models\Post;
 use App\Models\Comment;
 use App\Models\Household;
+use App\Models\Friend_request;
+use App\Models\Friendship;
 
 class User extends Authenticatable
 {
@@ -77,8 +79,22 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
-    public function houshold()
+       /**
+     * Get friend requests where the user is the sender or receiver.
+     */
+    public function friendRequests()
+    {
+        return $this->hasMany(Friend_request::class, 'sender_id')
+                    ->orWhere('receiver_id', $this->id);
+    }
+
+    public function household()
     {
         return $this->hasMany(Household::class);
+    }
+
+    public function friendships()
+    {
+        return $this->belongsToMany(User::class, 'friendships', 'user_id', 'friend_id');
     }
 }
