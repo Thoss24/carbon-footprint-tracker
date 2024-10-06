@@ -1,4 +1,4 @@
-<div class="bg-white m-4 w-96 rounded-lg shadow-md p-4">
+<div class="bg-white m-4 rounded-lg shadow-md p-4">
     <h2 class="text-2xl font-semibold text-black underline mb-4">My Friends</h2>
 
 

@@ -171,9 +171,6 @@
             <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            {{-- <x-responsive-nav-link href="{{ route('my-feed') }}" :active="request()->routeIs('my-feed')">
-                {{ __('My Feed') }}
-            </x-responsive-nav-link> --}}
             <x-responsive-nav-link href="{{ route('household-carbon-footprint') }}" :active="request()->routeIs('household-carbon-footprint')">
                 {{ __('Log Household Carbon Footprint') }}
             </x-responsive-nav-link>
@@ -202,6 +199,9 @@
             </div>
 
             <div class="mt-3 space-y-1">
+                <div class="flex justify-start ml-4">
+                    <livewire:notifications />
+                </div>
                 <!-- Account Management -->
                 <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
                     {{ __('Profile') }}

@@ -10,6 +10,7 @@
 
         <h2 class="text-2xl font-semibold mt-4">All Active Goals</h2>
         <p class="text-gray-600 text-sm mb-4">Goals that haven't been met yet</p>
+        <div class="flex flex-row flex-wrap">
         @foreach ($active_goals as $active_goal)
             <livewire:goal-item :key="$active_goal->id" 
                 :goalId="$active_goal->id" 
@@ -21,6 +22,7 @@
                 :percentageGoal="$active_goal->improve_percentage_goal" 
                 :type="$active_goal->type" />
         @endforeach
+        </div>
 
         <h2 class="text-2xl font-semibold mt-4">All Previous Goals</h2>
         <p class="text-gray-600 text-sm mb-4">Achieved or failed goals</p>

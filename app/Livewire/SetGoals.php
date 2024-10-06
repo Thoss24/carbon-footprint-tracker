@@ -22,7 +22,7 @@ class SetGoals extends Component
     public $target_date = "1999/12/12"; // yyyy/mm/dd
     public $improve_percentage_goal;
     public $original_entry_id = 0; // id of entry to compare to 
-    public $previous_co2e; // co2e of entry to compare to
+    public $previous_co2e = 0; // co2e of entry to compare to
     public $type = 'household'; // default value is household
     public $previous_entries; // previous carbon footprint entries by type
     public $active_goals; // all active goals
@@ -44,6 +44,11 @@ class SetGoals extends Component
 
     public function setGoal()
     {
+
+        if ($this->previous_co2e == 0) {
+            return;
+        }
+
         Goal::create([
             'user_id' => $this->user_id,
             'target_date' => $this->target_date,
