@@ -89,7 +89,13 @@
             <label for="target_date" class="block text-gray-700">Target Date</label>
             <input wire:model='target_date' id="target_date" type="date" class="border border-gray-300 rounded-md p-2 mt-1 w-full" required>
         </fieldset>
-
-        <button type="submit" class="bg-emerald-500 text-white rounded-md px-4 py-2 hover:bg-emerald-600 transition duration-200">Submit Goal</button>
+        <div class="flex flex-row gap-4">
+            <button type="submit" class="bg-emerald-500 text-white rounded-md px-4 py-2 hover:bg-emerald-600 transition duration-200">Submit Goal</button>
+            <p id="response-message" class="ml-4 text-emerald-400">
+                @if ($responseMessage)
+                    {{ $responseMessage }}
+                @endif
+            </p>
+        </div>
     </form>
 </div>

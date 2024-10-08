@@ -29,6 +29,7 @@ class SetGoals extends Component
     public $past_goals; // achieved or not achieved goals
     public $achievements;
     public $goals_not_met; // goals not met#
+    public $responseMessage;
 
     public function mount()
     {
@@ -49,7 +50,7 @@ class SetGoals extends Component
             return;
         }
 
-        Goal::create([
+        if (Goal::create([
             'user_id' => $this->user_id,
             'target_date' => $this->target_date,
             'improve_percentage_goal' => $this->improve_percentage_goal,
@@ -57,7 +58,12 @@ class SetGoals extends Component
             'type' => $this->type,
             'original_entry_id' => $this-> original_entry_id,
             'co2e_time_of_goal_met' => 0
-        ]);
+        ])) {
+            $this->dispatch('entry-added');
+            $this->responseMessage = 'Data inserted successfully!';
+        } else {
+            $this->responseMessage = 'Data could not be inserted.';
+        };
        
     }
 

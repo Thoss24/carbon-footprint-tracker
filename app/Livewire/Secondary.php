@@ -79,7 +79,7 @@ class Secondary extends Component
 
         $total_co2e_in_kg = $food_and_drink_co2e + $pharmaceuticals_co2e + $clothing_co2e + $it_equipment_co2e + $telephone_co2e + $insurance_co2e + $educational_co2e;
 
-        SecondaryModel::create([
+        if (SecondaryModel::create([
         'user_id' => $this->user_id,
         'food_and_drink' => $this->food_and_drink,
         'pharmaceuticals' => $this->pharmaceuticals,
@@ -89,7 +89,12 @@ class Secondary extends Component
         'insurance' => $this->insurance,
         'educational' => $this->educational,
         'total_co2e' => $total_co2e_in_kg
-        ]);
+        ])) {
+            $this->dispatch('entry-added');
+            $this->responseMessage = 'Data inserted successfully!';
+        } else {
+            $this->responseMessage = 'Data could not be inserted.';
+        };
     }
 
     public function render()

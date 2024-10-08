@@ -179,7 +179,12 @@ class Transport extends Component
             $this->addFlightsData();
             $this->addBusAndRailData();
             $this->mount();
-        };
+           
+            $this->dispatch('entry-added');
+            $this->responseMessage = 'Data inserted successfully!';
+        }  else {
+            $this->responseMessage = 'Data could not be inserted.';
+        }
     }
 
     public function render()
