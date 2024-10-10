@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class CreatePost extends Component
 {
 
-    public $post_content;
+    public $post_content = '';
     public $user_id;
     public $user_name;
     public $share_post = [];
