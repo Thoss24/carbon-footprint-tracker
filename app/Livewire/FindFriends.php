@@ -45,7 +45,14 @@ class FindFriends extends Component
         //     })
         //     ->get();
 
-        $this->users = User::whereDoesntHave('friendships')->get();
+        //$this->users = User::whereDoesntHave('friendships')->get();
+
+        $this->users = User::whereDoesntHave('friendships', function ($query) {
+            $query->where(function ($query) {
+                $query->where('friend_id', Auth::id())
+                      ->orWhere('user_id', Auth::id());
+            });
+        })->get();
 
     }
 
