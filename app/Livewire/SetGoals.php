@@ -152,7 +152,10 @@ class SetGoals extends Component
                 $co2e_to_compare_against = $goal->previous_co2e;
                 $difference = $most_recently_submitted_data->total_co2e - $co2e_to_compare_against;
 
-                $percentage_diff = ($difference / $co2e_to_compare_against) * 100;
+                #$percentage_diff = ($difference / $co2e_to_compare_against) * 100;
+
+                $percentage_diff = $difference == 0 && $co2e_to_compare_against == 0 ? 0 : ($difference / $co2e_to_compare_against) * 100;
+
 
                 if ($percentage_diff > $goal->improve_percentage_goal) { // goal not met    
                     $goal->goal_met = 0;
