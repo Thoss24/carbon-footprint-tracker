@@ -154,7 +154,11 @@ class SetGoals extends Component
 
                 #$percentage_diff = ($difference / $co2e_to_compare_against) * 100;
 
-                $percentage_diff = $difference == 0 && $co2e_to_compare_against == 0 ? 0 : ($difference / $co2e_to_compare_against) * 100;
+                if ($co2e_to_compare_against == 0) {
+                    $percentage_diff = ($difference == 0) ? 0 : 'Undefined'; // or any appropriate value/error message
+                } else {
+                    $percentage_diff = ($difference / $co2e_to_compare_against) * 100;
+                }
 
 
                 if ($percentage_diff > $goal->improve_percentage_goal) { // goal not met    
