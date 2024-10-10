@@ -14,7 +14,11 @@
     <div class="flex flex-col h-96 overflow-y-auto mt-4">
         <h2 class="underline text-lg font-semibold text-black">Previous Journal Entries</h2>
         @foreach ($all_entries as $entry)
-            <livewire:journal-entry :time="$entry->created_at" :entry_data="$entry->entry" />
+            {{-- <livewire:journal-entry :time="$entry->created_at" :entry_data="$entry->entry" /> --}}
+                <div class="bg-white p-4 rounded-lg shadow-sm mb-2">
+                    <p class="text-gray-800">{{ $entry->entry }}</p>
+                    <span class="text-gray-500 text-sm">{{ $entry->created_at }}</span>
+                </div>
         @endforeach
     </div>
 </div>

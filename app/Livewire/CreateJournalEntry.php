@@ -16,6 +16,7 @@ class CreateJournalEntry extends Component
 
     public function mount()
     {
+        unset($this->all_entries);
         $user = Auth::user();
         $this->user_id = $user->id;
         $this->all_entries = Journal::where('user_id', $this->user_id)->get();
@@ -28,6 +29,8 @@ class CreateJournalEntry extends Component
             'user_id' => $this->user_id,
             'date' => $this->entry_date
         ]);
+
+        $this->mount();
     }
 
     public function render()

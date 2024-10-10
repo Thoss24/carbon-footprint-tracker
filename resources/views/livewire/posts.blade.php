@@ -6,7 +6,7 @@
         <label for="post_type" class="block text-gray-700 font-semibold mb-2">Filter posts</label>
         <select name="post_type" id="post_type" wire:model='post_type' wire:change='togglePosts'
                 class="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-emerald-400 transition duration-200">
-            <option value="all" selected>All posts</option>
+            <option value="all" >All posts</option>
             <option value="personal">My posts only</option>
         </select>
     </div>
