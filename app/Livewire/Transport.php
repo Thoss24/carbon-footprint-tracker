@@ -96,7 +96,12 @@ class Transport extends Component
             'total_co2e' => $total_co2e
         ])) {
             $this->mount();
+            $this->dispatch('entry-added');
+            $this->responseMessage = 'Data inserted successfully!';
+        } else {
+            $this->responseMessage = 'Data could not be inserted.';
         };
+     
     }
 
     public function addBusAndRailData()
@@ -133,7 +138,11 @@ class Transport extends Component
             'total_co2e' => $total_co2e // in kg
         ])) {
             $this->mount();
-        };
+            $this->dispatch('entry-added');
+            $this->responseMessage = 'Data inserted successfully!';
+        } else {
+            $this->responseMessage = 'Data could not be inserted.';
+        }
     }
 
     public function addTransportData()
