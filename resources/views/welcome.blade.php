@@ -50,7 +50,6 @@
     .about-section {
         display: flex;
         position: relative;
-        bottom: 10%;
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
