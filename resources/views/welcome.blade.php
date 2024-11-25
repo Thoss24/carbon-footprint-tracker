@@ -23,6 +23,10 @@
         font-family: Verdana, Geneva, Tahoma, sans-serif
     }
 
+    .nav-section .links {
+        margin-top: 20px;
+    }
+
     .background {
         position: fixed;
         height: 100dvh;

@@ -11,11 +11,17 @@
         </select>
     </div>
 
-    <div class="flex flex-col gap-4">
+    {{-- <div class="flex flex-col gap-4">
         @foreach ($posts as $post)
             <livewire:post-item :$post :profile_photo="$post->user->profile_photo_url" :user_name="$post->user->name" :post_id="$post->id" :user_id="$post->user_id" :auth_user_id="$user_id" :post_content="$post->content" :key="$post->id" />
         @endforeach
-    </div>
+    </div> --}}
+
+    
+    @foreach ($bookedRanges as $range) {
+       <p>Start Date: {{$range['start_date']}} - End Date: {{$range['end_date']}} - Booked: {{$range['booked']}} - Nights: {{$range['nights']}}</p>
+    }
+    @endforeach
 
     <livewire:post-item-modal :user_id="$user_id"/>
 </div>

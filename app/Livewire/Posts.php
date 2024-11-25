@@ -14,6 +14,7 @@ class Posts extends Component
     public $user_name;
     public $user_id;
     public $post_type = 'all';
+    public $bookedRanges = [];
 
     #[On('post-created')]
     #[On('post-deleted')]
@@ -25,6 +26,7 @@ class Posts extends Component
         $this->user_id = $user->id;
         $this->user_name = $user->name;
         $this->posts =  Post::all();
+        $this->test();
     }
 
     public function togglePosts()
