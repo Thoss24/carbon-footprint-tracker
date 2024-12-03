@@ -26,7 +26,7 @@ class Posts extends Component
         $this->user_id = $user->id;
         $this->user_name = $user->name;
         $this->posts =  Post::all();
-        $this->test();
+        #$this->test();
     }
 
     public function togglePosts()
