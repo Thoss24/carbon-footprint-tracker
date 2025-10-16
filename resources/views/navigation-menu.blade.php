@@ -11,11 +11,11 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
-                {{-- <div class="hidden space-x-4 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden space-x-4 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link href="{{ route('my-feed') }}" :active="request()->routeIs('my-feed')">
                         {{ 'My Feed' }}
                     </x-nav-link>
-                </div> --}}
+                </div>
                 <div class="hidden space-x-4 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link href="{{ route('household-carbon-footprint') }}" :active="request()->routeIs('household-carbon-footprint')">
                         {{ 'Log Household Carbon Footprint' }}

@@ -142,7 +142,7 @@ class SetGoals extends Component
 
         $weeks = trim(floor($diff_in_seconds / (7 * 24 * 60 * 60)), '-');
 
-        $this->checkAchievementsMet();
+        //$this->checkAchievementsMet();
 
         foreach ($active_goals as $goal) {
             if ($current_date >= $goal->target_date) {
