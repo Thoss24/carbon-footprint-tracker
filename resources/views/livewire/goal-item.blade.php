@@ -8,24 +8,33 @@
     </div>
 
     @if ($goalSeen == 1 && !$goalAchieved == 0)
-    <div class="mb-4">
-        <p class="text-emerald-600 font-medium text-lg">Goal Achieved</p>
-        <button wire:click='share' 
-                class="bg-emerald-500 text-white rounded-md px-4 py-2 mt-2 hover:bg-emerald-600 transition duration-200">
-            Share
-        </button>
-    </div>
-@endif
+        {{-- hidden html - to copy to clipboard start --}}
+        <div id="htmlToCopy" style="display: none;">
+            {!! $sharedGoalHtmlData !!}
+        </div>
+        {{-- hidden html - to copy to clipboard end --}}
 
-@if ($goalSeen == 1 && $goalAchieved == 0)
-    <div class="mb-4">
-        <p class="text-red-600 font-medium text-lg mt-2">Goal Not Achieved</p>
-        <button class="bg-emerald-300 text-black rounded-md px-4 py-2 mt-2 hover:bg-emerald-400 transition duration-200"
-                x-on:click="solutionsDisplaying = true">
-            Show Solutions
-        </button>
-    </div>
-@endif
+        {{-- @php 
+            echo "Shared goal data" . $sharedGoalHtmlData;
+        @endphp --}}
+
+        <div class="mb-4">
+            <p class="text-emerald-600 font-medium text-lg">Goal Achieved</p>
+            <button wire:click='share' id="copyBtn" class="bg-emerald-500 text-white rounded-md px-4 py-2 mt-2 hover:bg-emerald-600 transition duration-200">
+                Share
+            </button>
+        </div>
+    @endif
+
+    @if ($goalSeen == 1 && $goalAchieved == 0)
+        <div class="mb-4">
+            <p class="text-red-600 font-medium text-lg mt-2">Goal Not Achieved</p>
+            <button class="bg-emerald-300 text-black rounded-md px-4 py-2 mt-2 hover:bg-emerald-400 transition duration-200"
+                    x-on:click="solutionsDisplaying = true">
+                Show Solutions
+            </button>
+        </div>
+    @endif
 
     <!-- Solutions Modal -->
     <div x-show="solutionsDisplaying"
@@ -49,3 +58,20 @@
         </div>
     </div>
 </div>
+
+
+<script>
+document.getElementById('copyBtn').addEventListener('click', async () => {
+    const html = document.getElementById('htmlToCopy').innerHTML;
+
+    function copyHtmlAsText(html) {
+    navigator.clipboard.writeText(html)
+        .then(() => console.log("HTML copied as text"))
+        .catch(err => console.error("Copy failed:", err));
+    }
+
+    copyHtmlAsText(html);
+
+});
+
+</script>

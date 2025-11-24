@@ -33,7 +33,8 @@
 
                 <textarea wire:model='post_content'
                           class="resize-none w-full h-36 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                          placeholder="What's on your mind..."></textarea>
+                          placeholder="What's on your mind...">
+                </textarea>
 
                 <div class="flex w-full justify-end mt-4">
                     <button type="submit" class="bg-emerald-500 text-white flex w-fit p-2 rounded-md shadow hover:bg-emerald-600 transition duration-300">

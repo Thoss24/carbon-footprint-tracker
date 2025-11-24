@@ -5,7 +5,9 @@
             <x-notifications-modal :notifications="$pending_friend_requests"/>
         </div>
     </div>
+    @if ($pending_friend_requests_count > 0)
     <div class="flex justify-center rounded-3xl  w-4 bg-red-600 text-white text-xs">
         {{ $pending_friend_requests_count }}
     </div>
+    @endif
 </div>
