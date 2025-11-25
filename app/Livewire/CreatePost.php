@@ -39,13 +39,13 @@ class CreatePost extends Component
     // create post my feed
     public function createPost() 
     {
-        Post::create([
-            'content' => $this->post_content,
-            'user_id' => $this->user_id,
-            'creator_name' => $this->user_name
-        ]);
+        // Post::create([
+        //     'content' => $this->post_content,
+        //     'user_id' => $this->user_id,
+        //     'creator_name' => $this->user_name
+        // ]);
 
-        $this->dispatch('post-created', post: $this->post_content);
+        // $this->dispatch('post-created', post: $this->post_content);
     }
 
     public function render()

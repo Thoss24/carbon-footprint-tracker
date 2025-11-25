@@ -31,10 +31,17 @@
                     </div>
                 </fieldset>
 
-                <textarea wire:model='post_content'
+                {{-- <textarea wire:model='post_content' id='post-area'
                           class="resize-none w-full h-36 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
                           placeholder="What's on your mind...">
-                </textarea>
+                </textarea> --}}
+
+                <div id="editor" 
+                    wire:model='post_content' 
+                    contenteditable="true" 
+                    data-placeholder="Write your post content here..."
+                    class=" w-full min-h-36 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent p-3">
+                </div>
 
                 <div class="flex w-full justify-end mt-4">
                     <button type="submit" class="bg-emerald-500 text-white flex w-fit p-2 rounded-md shadow hover:bg-emerald-600 transition duration-300">

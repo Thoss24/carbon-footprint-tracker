@@ -64,14 +64,16 @@
 document.getElementById('copyBtn').addEventListener('click', async () => {
     const html = document.getElementById('htmlToCopy').innerHTML;
 
-    function copyHtmlAsText(html) {
-    navigator.clipboard.writeText(html)
-        .then(() => console.log("HTML copied as text"))
-        .catch(err => console.error("Copy failed:", err));
+    function copyHtmlAsHtml(html) {
+        const blob = new Blob([html], { type: "text/html" });
+        const item = [new ClipboardItem({ "text/html": blob })];
+
+        navigator.clipboard.write(item)
+            .then(() => console.log("Copied HTML to clipboard"))
+            .catch(err => console.error("Copy failed:", err));
     }
 
-    copyHtmlAsText(html);
-
+    copyHtmlAsHtml(html);
 });
 
 </script>

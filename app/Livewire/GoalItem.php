@@ -24,19 +24,63 @@ class GoalItem extends Component
         $this->solutions = Solution::where('goal_id', $this->goalId)->get();
 
         $this->sharedGoalDataAsHtml = 
-        "<dl>
-            <dt>Original CO₂e</dt>
-            <dd>{$this->previousCo2e}</dd>
+        '<div contenteditable="false" style="
+        padding: 16px;
+        border-radius: 10px;
+        background: rgb(16 185 129);
+        color: white;
+        font-family: Arial, sans-serif;
+        max-width: 420px;
+        ">
+            <h3 style="
+                margin: 0 0 16px;
+                font-size: 18px;
+                font-weight: bold;
+                color: white;
+            ">
+            CO₂e Summary
+            </h3>
+            <dl style="margin: 0;">
+                <div style="
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 6px 0;
+                    border-bottom: 1px solid rgba(255,255,255,0.3);
+                ">
+                    <dt style="font-weight: bold;">Original CO₂e</dt>
+                    <dd style="margin: 0; font-weight: bold;">{$this->previousCo2e}</dd>
+                </div>
 
-            <dt>Most Recent CO₂e</dt>
-            <dd>{$this->nextCo2e}</dd>
+                <div style="
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 6px 0;
+                    border-bottom: 1px solid rgba(255,255,255,0.3);
+                ">
+                    <dt style="font-weight: bold;">Most Recent CO₂e</dt>
+                    <dd style="margin: 0; font-weight: bold;">{$this->nextCo2e}</dd>
+                </div>
 
-            <dt>Percentage Goal</dt>
-            <dd>{$this->percentageGoal}</dd>
+                <div style="
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 6px 0;
+                    border-bottom: 1px solid rgba(255,255,255,0.3);
+                ">
+                    <dt style="font-weight: bold;">Percentage Goal</dt>
+                    <dd style="margin: 0; font-weight: bold;">{$this->percentageGoal}</dd>
+                </div>
 
-            <dt>Type</dt>
-            <dd>{$this->type}</dd>
-        </dl>";
+                <div style="
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 6px 0 0;
+                ">
+                    <dt style="font-weight: bold;">Type</dt>
+                    <dd style="margin: 0; font-weight: bold;">{$this->type}</dd>
+                </div>
+            </dl>
+        </div><br><br>';
 
     }
 
