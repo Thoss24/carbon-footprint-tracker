@@ -1,6 +1,8 @@
 <div class="flex flex-col rounded-lg bg-slate-200 w-fit p-2 justify-center items-center shadow-md m-2"
     x-data="{ solutionsDisplaying: false }">
 
+    <div id="flash-container" class="fixed top-10 left-1/2 transform -translate-x-1/2 z-50 flex flex-col items-center"></div>
+
     <div class="flex flex-col">
         <p class="text-base font-semibold text-gray-800 mb-2">{{ $targetDate }}</p>
         <p class="text-sm font-semibold text-gray-600 mb-2">Reduce co2e of {{$previousCo2e}} by %{{$percentageGoal}}</p>
@@ -20,7 +22,7 @@
 
         <div class="mb-4">
             <p class="text-emerald-600 font-medium text-lg">Goal Achieved</p>
-            <button wire:click='share' id="copyBtn" class="bg-emerald-500 text-white rounded-md px-4 py-2 mt-2 hover:bg-emerald-600 transition duration-200">
+            <button id="copyBtn" class="bg-emerald-500 text-white rounded-md px-4 py-2 mt-2 hover:bg-emerald-600 transition duration-200">
                 Share
             </button>
         </div>
@@ -69,11 +71,53 @@ document.getElementById('copyBtn').addEventListener('click', async () => {
         const item = [new ClipboardItem({ "text/html": blob })];
 
         navigator.clipboard.write(item)
-            .then(() => console.log("Copied HTML to clipboard"))
+            .then(() => console.log("Copied HTML to clipboard", html))
             .catch(err => console.error("Copy failed:", err));
     }
 
     copyHtmlAsHtml(html);
 });
+
+function showFlashMessage(message, duration = 2000) {
+    // Create flash div
+    const flash = document.createElement('div');
+    flash.className = `
+        bg-emerald-500 text-white font-semibold px-6 py-3 rounded-lg shadow-lg
+        mb-2 opacity-0 transition-opacity duration-300
+    `;
+    flash.innerText = message;
+
+    // Append to container
+    const container = document.getElementById('flash-container');
+    container.appendChild(flash);
+
+    // Trigger fade in
+    requestAnimationFrame(() => {
+        flash.classList.add('opacity-100');
+    });
+
+    // Fade out and remove after duration
+    setTimeout(() => {
+        flash.classList.remove('opacity-100');
+        setTimeout(() => flash.remove(), 300); // matches CSS transition duration
+    }, duration);
+}
+
+document.getElementById('copyBtn').addEventListener('click', async () => {
+    const html = document.getElementById('htmlToCopy').innerHTML;
+
+    const blob = new Blob([html], { type: "text/html" });
+    const item = [new ClipboardItem({ "text/html": blob })];
+
+    try {
+        await navigator.clipboard.write(item);
+        console.log("Copied HTML to clipboard", html);
+        showFlashMessage("Goal data copied to clipboard!", 2000);
+    } catch (err) {
+        console.error("Copy failed:", err);
+        showFlashMessage("Copy failed!", 2000);
+    }
+});
+
 
 </script>

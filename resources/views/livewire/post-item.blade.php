@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="p-2">
-            <p>{{ $post_content }}</p>
+            <p>{!! $post_content !!}</p>
         </div>
     </div>
     <div class="flex justify-center p-2 w-1/12">

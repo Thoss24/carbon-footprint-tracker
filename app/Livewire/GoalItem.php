@@ -21,16 +21,19 @@ class GoalItem extends Component
 
     public function mount()
     {
+
+
         $this->solutions = Solution::where('goal_id', $this->goalId)->get();
 
         $this->sharedGoalDataAsHtml = 
-        '<div contenteditable="false" style="
-        padding: 16px;
-        border-radius: 10px;
-        background: rgb(16 185 129);
-        color: white;
-        font-family: Arial, sans-serif;
-        max-width: 420px;
+        <<<HTML
+        <div contenteditable="false" style="
+            padding: 16px;
+            border-radius: 10px;
+            background: rgb(16 185 129);
+            color: white;
+            font-family: Arial, sans-serif;
+            max-width: 420px;
         ">
             <h3 style="
                 margin: 0 0 16px;
@@ -80,14 +83,8 @@ class GoalItem extends Component
                     <dd style="margin: 0; font-weight: bold;">{$this->type}</dd>
                 </div>
             </dl>
-        </div><br><br>';
-
-    }
-
-    public function share()
-    {
-
-       # $this->dispatch('share-post', post: ['Original co2e' => $this->previousCo2e, 'Most recent co2e' => $this->nextCo2e, 'Percentage goal' => $this->percentageGoal, 'Type' => $this->type]);
+        </div><br><br>
+        HTML;
     }
 
     public function render()

@@ -39,7 +39,7 @@
                 <div id="editor" 
                     wire:model='post_content' 
                     contenteditable="true" 
-                    data-placeholder="Write your post content here..."
+                    wire:ignore
                     class=" w-full min-h-36 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent p-3">
                 </div>
 
@@ -52,3 +52,14 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const editor = document.getElementById('editor');
+
+    editor.addEventListener('input', () => {
+        Livewire.find(editor.closest('[wire\\:id]').getAttribute('wire:id'))
+            .set('post_content', editor.innerHTML);
+    });
+});
+</script>
