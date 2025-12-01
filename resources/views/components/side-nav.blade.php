@@ -10,8 +10,4 @@
   <div class="bg-white mb-6 p-4 rounded-xl shadow-md">
       <livewire:friends-list />
   </div>
-
-  <div class="bg-white mb-6 p-4 rounded-xl shadow-md">
-      <livewire:create-journal-entry />
-  </div>
 </div>

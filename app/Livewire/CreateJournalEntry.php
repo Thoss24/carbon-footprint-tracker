@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Journal;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On; 
 
 class CreateJournalEntry extends Component
 {
@@ -20,6 +21,14 @@ class CreateJournalEntry extends Component
         $user = Auth::user();
         $this->user_id = $user->id;
         $this->all_entries = Journal::where('user_id', $this->user_id)->get();
+    }
+
+    #[On('entryDeleted')]
+    public function refreshEntries()
+    {
+        $this->all_entries = Journal::where('user_id', auth()->id())
+            ->latest()
+            ->get();
     }
 
     public function createEntry()

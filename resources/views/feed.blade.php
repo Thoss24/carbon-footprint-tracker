@@ -13,7 +13,7 @@
         <div class="overflow-hidden shadow-xl sm:rounded-lg w-full m-2">
           <livewire:posts />
         </div>
-    </div>
+    </div> 
 
   </div>
 </x-app-layout>

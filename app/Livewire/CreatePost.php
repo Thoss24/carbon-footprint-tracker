@@ -49,6 +49,8 @@ class CreatePost extends Component
         ]);
 
         $this->dispatch('post-created', post: $this->post_content);
+        $this->postModalOpen = false;
+
     }
 
     public function render()

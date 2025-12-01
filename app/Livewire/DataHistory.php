@@ -26,7 +26,8 @@ class DataHistory extends Component
         $user = Auth::user();
         $this->user_id = $user->id;
         $url_arr = explode("/", url()->current()); 
-        $this->data_type = end($url_arr);
+
+        end($url_arr) == 'dashboard' ? $this->data_type = 'household' : $this->data_type = end($url_arr);
         // get all data for a certain data type
         $this->switchType();
     }
