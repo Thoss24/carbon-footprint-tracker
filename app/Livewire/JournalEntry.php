@@ -11,6 +11,7 @@ class JournalEntry extends Component
     public $time;
     public $entry_data;
     public $entryId;
+    public $delete_entry_modal_showing = false;
 
     public function mount($time, $entry_data)
     {
@@ -40,6 +41,11 @@ class JournalEntry extends Component
             
             session()->flash('message', 'Journal entry deleted successfully.');
         }
+    }
+
+    public function toggleModal()
+    {
+        
     }
 
     public function render()

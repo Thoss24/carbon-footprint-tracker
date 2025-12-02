@@ -1,4 +1,4 @@
-<div class="bg-gray-50 rounded-lg p-5 hover:border-gray-300 transition-colors duration-200 mb-3">
+<div x-data="{ conformationModalDisplaying:false }" class="bg-gray-50 rounded-lg p-5 hover:border-gray-300 transition-colors duration-200 mb-3">
     <!-- Header with Date and Actions -->
     <div class="flex items-start justify-between mb-3">
         <div class="flex-1">
@@ -9,21 +9,10 @@
         
         <!-- Action Buttons -->
         <div class="flex items-center space-x-2 ml-4">
-            <!-- Edit Button -->
-            <button 
-                wire:click="edit"
-                class="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors duration-200"
-                title="Edit entry"
-            >
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                </svg>
-            </button>
             
             <!-- Delete Button -->
-            <button 
-                wire:click="delete"
-                wire:confirm="Are you sure you want to delete this journal entry?"
+            <button
+                x-on:click='conformationModalDisplaying = ! conformationModalDisplaying'
                 class="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors duration-200"
                 title="Delete entry"
             >
@@ -38,4 +27,7 @@
     <div class="text-gray-700 text-sm leading-relaxed">
         {{ $entry_data }}
     </div>
+
+    <x-dialog-modal x-show="conformationModalDisplaying" title="Test" :content="$entry_data"/>
+
 </div>

@@ -16,7 +16,7 @@ class PostItem extends Component
     public $auth_user_id;
     public $profile_photo;
 
-    public function deletePost()
+    public function delete()
     {
         $post = Post::find($this->post_id);
 

@@ -1,4 +1,4 @@
-<div class="flex flex-row justify-between bg-white overflow-hidden shadow-xl sm:rounded-lg hover:cursor-pointer">
+<div x-data="{ conformationModalDisplaying:false }" class="flex flex-row justify-between bg-white overflow-hidden shadow-xl sm:rounded-lg hover:cursor-pointer">
     <div class="w-11/12" x-on:click="modalOpen = true" wire:click="openModal">
         <div class="flex flex-row justify-between p-2">
             <div class="flex flex-row gap-2">
@@ -12,7 +12,9 @@
     </div>
     <div class="flex justify-center p-2 w-1/12">
     @if ($user_id == $auth_user_id)
-    <i wire:click='deletePost' class="fa-solid fa-trash"></i>
+    <i x-on:click='conformationModalDisplaying = ! conformationModalDisplaying' class="fa-solid fa-trash"></i>
     @endif
     </div>
+
+    <x-dialog-modal x-show="conformationModalDisplaying" :title="$user_name" :content="$post_content"/>
 </div>
