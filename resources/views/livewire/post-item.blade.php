@@ -16,5 +16,5 @@
     @endif
     </div>
 
-    <x-dialog-modal x-show="conformationModalDisplaying" :title="$user_name" :content="$post_content"/>
+    <x-dialog-modal x-show="conformationModalDisplaying" title="Are you sure you want to delete this post?" :content="$post_content"/>
 </div>

@@ -28,6 +28,6 @@
         {{ $entry_data }}
     </div>
 
-    <x-dialog-modal x-show="conformationModalDisplaying" title="Test" :content="$entry_data"/>
+    <x-dialog-modal x-show="conformationModalDisplaying" title="Are you sure you want to delete this journal entry?" :content="$entry_data"/>
 
 </div>

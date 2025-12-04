@@ -1,4 +1,4 @@
-<div x-data="{ modalOpen: false, postItemMenuOpen: false, commentsSectionOpen: false }" class="px-4 py-6 bg-white shadow-lg rounded-lg mt-2">
+<div x-data="{ modalOpen: false, postItemMenuOpen: false, commentsSectionOpen: false }" class="px-4 py-6 bg-white shadow-lg rounded-lg mt-2 max-h-[700px] overflow-y-auto">
 
     <h2 class="text-2xl font-semibold text-black underline mb-2">My Feed</h2>
     
