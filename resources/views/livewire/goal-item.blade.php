@@ -22,7 +22,7 @@
 
         <div class="mb-4">
             <p class="text-emerald-600 font-medium text-lg">Goal Achieved</p>
-            <button id="copyBtn" class="bg-emerald-500 text-white rounded-md px-4 py-2 mt-2 hover:bg-emerald-600 transition duration-200">
+            <button class="copyBtn" class="bg-emerald-500 text-white rounded-md px-4 py-2 mt-2 hover:bg-emerald-600 transition duration-200">
                 Share
             </button>
         </div>
@@ -63,20 +63,30 @@
 
 
 <script>
-document.getElementById('copyBtn').addEventListener('click', async () => {
-    const html = document.getElementById('htmlToCopy').innerHTML;
 
-    function copyHtmlAsHtml(html) {
-        const blob = new Blob([html], { type: "text/html" });
+if (!window.__copyListenerAttached) {
+    window.__copyListenerAttached = true;
+
+    document.addEventListener('click', async (e) => {
+        const button = e.target.closest('.copyBtn');
+        if (!button) return;
+
+        const el = button.closest('.flex')?.querySelector('#htmlToCopy');
+        if (!el) return;
+
+        const blob = new Blob([el.innerHTML], { type: "text/html" });
         const item = [new ClipboardItem({ "text/html": blob })];
 
-        navigator.clipboard.write(item)
-            .then(() => console.log("Copied HTML to clipboard", html))
-            .catch(err => console.error("Copy failed:", err));
-    }
+        try {
+            await navigator.clipboard.write(item);
+            showFlashMessage("Goal data copied to clipboard!");
+        } catch (err) {
+            console.error(err);
+            showFlashMessage("Copy failed!");
+        }
+    });
+}
 
-    copyHtmlAsHtml(html);
-});
 
 function showFlashMessage(message, duration = 2000) {
     // Create flash div

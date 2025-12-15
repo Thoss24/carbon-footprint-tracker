@@ -1,6 +1,6 @@
 @props(['name', 'profile_photo_path', 'id'])
 
-<div class="flex m-2 content-center items-center gap-4">
+<div class="flex m-2 content-center justify-between items-center gap-4">
     <div class="flex row gap-2 content-center items-center">
         @if (strlen($profile_photo_path) != 0)
             <img src="{{ $profile_photo_path }}" alt="profile img">
@@ -8,9 +8,8 @@
             <div id='profile-icon' class="flex rounded-3xl bg-slate-200 p-1">
               @php
                 $initials = explode(" ", $name);
-                foreach ($initials as $value) {
-                  echo $value[0];
-                }
+                echo $initials[0][0];
+
               @endphp
             </div>
         @endif

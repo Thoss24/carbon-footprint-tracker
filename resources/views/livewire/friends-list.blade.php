@@ -1,8 +1,6 @@
-<div class="bg-white m-4 rounded-lg shadow-md p-4">
+<div class="bg-white m-4 p-4 max-h-[400px] overflow-y-auto">
     <h2 class="text-2xl font-semibold text-black underline mb-4">My Friends</h2>
 
-
-    
     @foreach ($friends as $friend)
         <livewire:friend 
             :key="$friend->id" 
