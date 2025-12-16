@@ -1,4 +1,4 @@
-<div x-data="{ previousTransportEntriesDisplaying: false, conformationModalDisplaying: false }" class="p-4">
+<div x-data="{ previousTransportEntriesDisplaying: false, conformationModalDisplaying: false }" class="p-4 flex flex-col w-screen sm:flex-row">
     <x-dialog-confirmation-modal title="Add Transport Carbon Footprint Data"
         content="Are you sure you want to submit this data?" submitData='addSecondaryData' />
 
@@ -10,12 +10,9 @@
         @endif
     </div>
 
-    <h1 class="underline text-xl mb-4">Secondary Carbon Footprint</h1>
-
-    <section>
-        <form action="" class="mt-6 max-w-3xl mx-auto p-4 bg-white rounded-lg shadow-md">
-
-            <h2 class="underline text-xl">Secondary Data</h2>
+    <section class="w-full sm:w-1/2">
+        <h1 class="underline text-xl font-semibold text-black mb-4">Secondary Carbon Footprint</h1>
+        <form action="" >
             @foreach (['food_and_drink', 'pharmaceuticals', 'clothing', 'it_equipment', 'telephone', 'insurance', 'educational'] as $item)
                 <fieldset class="mb-4">
                     <label for="{{ $item }}" class="block text-lg font-medium text-black mb-2">{{ ucfirst(str_replace('_', ' ', $item)) }}:</label>

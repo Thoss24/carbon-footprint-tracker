@@ -1,4 +1,4 @@
-<div x-data="{ previousEntriesDisplaying: false, conformationModalDisplaying: false }" class="p-4">
+<div x-data="{ previousEntriesDisplaying: false, conformationModalDisplaying: false }" class="p-4 flex flex-col w-screen sm:flex-row">
     <x-dialog-confirmation-modal title="Add Household Carbon Footprint Data"
         content="Are you sure you want to submit this data?" submitData='submitCarbonFootrpintData' />
 
@@ -12,10 +12,9 @@
         @endif
     </div>
 
-    <h1 class="underline text-xl font-semibold text-black mb-4">Household Carbon Footprint</h1>
-    
+    <section class="w-full sm:w-1/2">
+        <h1 class="underline text-xl font-semibold text-black mb-4">Household Carbon Footprint</h1>
         <form>
-
             <fieldset class="mb-4">
                 <label for="num_people_in_household" class="block text-lg font-medium text-black mb-2">How many people are in your household?</label>
                 <input wire:model='num_people_in_household' id="num_people_in_household" type="number"
@@ -72,7 +71,7 @@
             </div>
             
         </form>
-
+    </section>
 
     <livewire:carbon-footprint-data-visualisation />
 </div>
