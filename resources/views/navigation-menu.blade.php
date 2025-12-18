@@ -171,6 +171,9 @@
             <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('my-feed') }}" :active="request()->routeIs('my-feed')">
+                {{ __('My Feed') }}
+            </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('household-carbon-footprint') }}" :active="request()->routeIs('household-carbon-footprint')">
                 {{ __('Log Household Carbon Footprint') }}
             </x-responsive-nav-link>
